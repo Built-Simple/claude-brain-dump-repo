@@ -1,0 +1,18 @@
+{
+  "filesystem": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-filesystem", "${USERPROFILE:-${HOME}}/Projects"]
+  },
+  "postgres": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:Password@localhost:5432/postgres"]
+  },
+  "ssh": {
+    "command": "npx",
+    "args": ["-y", "ssh-mcp"]
+  },
+  "crawl4ai": {
+    "command": "uvx",
+    "args": ["crawl4ai-mcp"]
+  }
+}

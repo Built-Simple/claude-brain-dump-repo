@@ -1,0 +1,27 @@
+{
+	"mcpServers": {
+		"filesystem": {
+			"command": "mcp-server-filesystem",
+			"args": [
+				"C:\\Users\\[USERNAME]\\Projects"
+			]
+		},
+		"postgres": {
+			"command": "mcp-server-postgres",
+			"args": [
+				"postgresql://postgres:Password@localhost:5432/postgres"
+			]
+		},
+		"ssh": {
+			"command": "ssh-mcp",
+			"args": []
+		},
+		"crawl4ai": {
+			"command": "python",
+			"args": [
+				"-m",
+				"crawl4ai_mcp"
+			]
+		}
+	}
+}

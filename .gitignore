@@ -1,0 +1,41 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node modules (if any scripts need them)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sensitive files - DO NOT COMMIT
+*.credentials.json
+*secrets*
+.env
+.env.local
+.env.*.local
+
+# Machine-specific local overrides (use templates instead)
+settings.local.json
+
+# Cache directories
+.cache/
+__pycache__/
+*.pyc
+
+# Temporary files
+*.tmp
+*.temp

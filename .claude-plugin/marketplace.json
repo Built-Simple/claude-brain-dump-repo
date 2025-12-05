@@ -1,0 +1,20 @@
+{
+  "name": "neely-brain-dump-marketplace",
+  "owner": {
+    "name": "Talon Neely",
+    "url": "https://github.com/neely"
+  },
+  "plugins": [
+    {
+      "name": "neely-brain-dump",
+      "source": {
+        "type": "GitHub",
+        "repository": "neely/claude-brain-dump-repo",
+        "branch": "main",
+        "path": "."
+      },
+      "version": "1.0.0",
+      "description": "Personal brain dump: machine profiles, SSH configs, MCP servers, workflow documentation"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+# Claude's Brain Dump System
+
+## Overview
+This is a persistent memory system for documenting solutions, patterns, and knowledge gained through our coding sessions. This file will be automatically loaded in future conversations to provide context and previously learned information.
+
+## Project Information
+- **Working Directory**: [PATH]
+- **Platform**: [Windows/Mac/Linux]
+- **Last Updated**: [YYYY-MM-DD]
+
+## Documented Solutions
+
+### Solution Template
+<!--
+### [Problem/Task Name] - [Date]
+**Problem**: Brief description of the issue or task
+**Solution**:
+- Step-by-step solution
+- Code snippets if applicable
+**Key Learnings**:
+- Important insights
+- Patterns to remember
+**Related Files**: List of files created/modified
+-->
+
+## Common Commands & Patterns
+
+### Git Commands
+```bash
+# Check status
+git status
+
+# Add all files
+git add .
+
+# Commit with message
+git commit -m "message"
+
+# Push to remote
+git push origin master
+```
+
+### Project-Specific Commands
+<!-- Add project-specific commands here as we discover them -->
+
+## Directory Structure
+```
+[User Home Path]
+├── .claude/           # Claude-specific documentation
+├── Documents/         # User documents
+├── Desktop/           # Desktop files
+└── [project folders]
+```
+
+## Known Issues & Workarounds
+<!-- Document any recurring issues and their solutions -->
+
+## Useful Resources
+<!-- Links, documentation references, etc. -->
+
+## Session History
+<!-- Brief notes about significant sessions and what was accomplished -->
+
+### [YYYY-MM-DD] - Brain Dump System Setup
+- Created this CLAUDE.md file for persistent memory
+- Established documentation structure
+- Set up system for capturing solutions and learnings
+
+## Machine Profile
+Comprehensive environment documentation:
+- **Profile Location**: `.claude/MACHINE_PROFILE.md`
+- **System**: [Brief system description]
+- **Dev Tools**: [Key tools and versions]
+
+## Active Projects
+<!-- List active projects with brief descriptions -->
+
+## Preferences & Patterns
+<!-- Document coding preferences and common patterns -->
+
+---
+*This file is automatically read at the start of Claude Code sessions to provide context.*

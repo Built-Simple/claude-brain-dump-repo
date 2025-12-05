@@ -1,0 +1,15 @@
+{
+  "name": "neely-brain-dump",
+  "version": "1.0.0",
+  "description": "Personal brain dump: machine profiles, SSH configs, MCP servers, workflow documentation",
+  "author": {
+    "name": "Talon Neely",
+    "email": "neelytalon@gmail.com"
+  },
+  "repository": "https://github.com/neely/claude-brain-dump-repo",
+  "license": "MIT",
+  "keywords": ["brain-dump", "ssh", "mcp", "workflow", "personal"],
+  "skills": ["./skills"],
+  "commands": ["./commands"],
+  "mcpServers": "./.mcp.json"
+}

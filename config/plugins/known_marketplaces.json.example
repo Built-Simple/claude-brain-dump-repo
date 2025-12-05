@@ -1,0 +1,30 @@
+{
+  "anthropic-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/skills"
+    },
+    "installLocation": "~/.claude/plugins/marketplaces/anthropic-agent-skills"
+  },
+  "claude-code-plugins": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-code"
+    },
+    "installLocation": "~/.claude/plugins/marketplaces/claude-code-plugins"
+  },
+  "claude-code-plugins-plus": {
+    "source": {
+      "source": "github",
+      "repo": "jeremylongshore/claude-code-plugins"
+    },
+    "installLocation": "~/.claude/plugins/marketplaces/claude-code-plugins-plus"
+  },
+  "superpowers-marketplace": {
+    "source": {
+      "source": "github",
+      "repo": "obra/superpowers-marketplace"
+    },
+    "installLocation": "~/.claude/plugins/marketplaces/superpowers-marketplace"
+  }
+}

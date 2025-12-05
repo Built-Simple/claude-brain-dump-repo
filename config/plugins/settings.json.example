@@ -1,0 +1,21 @@
+{
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "superpowers@superpowers-marketplace": true,
+    "conversational-api-debugger@claude-code-plugins-plus": true,
+    "project-health-auditor@claude-code-plugins-plus": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "hello-world@claude-code-plugins-plus": true,
+    "formatter@claude-code-plugins-plus": true,
+    "security-agent@claude-code-plugins-plus": true,
+    "overnight-dev@claude-code-plugins-plus": true,
+    "git-commit-smart@claude-code-plugins-plus": true,
+    "ai-ml-engineering-pack@claude-code-plugins-plus": true,
+    "fullstack-starter-pack@claude-code-plugins-plus": true,
+    "security-pro-pack@claude-code-plugins-plus": true,
+    "devops-automation-pack@claude-code-plugins-plus": true,
+    "domain-memory-agent@claude-code-plugins-plus": true,
+    "design-to-code@claude-code-plugins-plus": true,
+    "workflow-orchestrator@claude-code-plugins-plus": true
+  }
+}
