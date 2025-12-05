@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "neely-brain-dump",
-      "source": ".",
+      "source": "./plugins/neely-brain-dump",
       "version": "1.0.0",
       "description": "Personal brain dump: machine profiles, SSH configs, MCP servers, workflow documentation"
     }
