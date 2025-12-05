@@ -9,7 +9,7 @@
       "name": "neely-brain-dump",
       "source": {
         "type": "GitHub",
-        "repository": "neely/claude-brain-dump-repo",
+        "repository": "Built-Simple/claude-brain-dump-repo",
         "branch": "main",
         "path": "."
       },
