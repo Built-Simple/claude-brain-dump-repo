@@ -14,12 +14,12 @@ This skill provides context about the user's machines and development environmen
 | Node     | IP            | CPU                          | Cores/Threads | RAM    | GPU                              |
 |----------|---------------|------------------------------|---------------|--------|----------------------------------|
 | Giratina | 192.168.1.100 | 2x Xeon Silver 4216 @ 2.1GHz | 32C/64T       | 314GB  | 2x Tesla T4 (30GB)               |
-| Hoopa    | 192.168.1.79  | 2x Xeon E5-2620 v3 @ 2.4GHz  | 12C/24T       | 126GB  | RTX 5090 + 2x RTX 3090 (81GB)    |
+| Hoopa    | 192.168.1.79  | 2x Xeon E5-2620 v3 @ 2.4GHz  | 12C/24T       | 126GB  | RTX 5090 + 3x RTX 3090 (106GB)   |
 | Talon    | 192.168.1.7   | AMD Ryzen 9 7900 @ 3.7GHz    | 12C/24T       | 125GB  | 2x RTX 3090 (49GB)               |
 | Victini  | 192.168.1.115 | Intel i5-14400T @ 3.5GHz     | 10C/16T       | 31GB   | None                             |
 | Silvally | 192.168.1.52  | 2x Xeon E5-2630 v3 @ 2.4GHz  | 16C/32T       | 32GB   | None                             |
 
-**Total Cluster Resources:** 82 cores / 160 threads, ~628GB RAM, ~160GB VRAM
+**Total Cluster Resources:** 82 cores / 160 threads, ~628GB RAM, ~185GB VRAM
 
 ---
 
@@ -73,7 +73,7 @@ This skill provides context about the user's machines and development environmen
 ### Hardware
 - CPU: 2x Intel Xeon E5-2620 v3 @ 2.40GHz (24 threads)
 - RAM: 126GB
-- GPU: **NVIDIA GeForce RTX 5090 (32GB) + 2x RTX 3090 (24GB each) = 81GB VRAM**
+- GPU: **NVIDIA GeForce RTX 5090 (32GB) + 3x RTX 3090 (24GB each) = 106GB VRAM**
 
 ### Storage
 - Root: 94GB (55GB used, 61%)
