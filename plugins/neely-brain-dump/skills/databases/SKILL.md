@@ -213,15 +213,14 @@ LIMIT 20;
 
 ### User Credentials
 
-**Admin User (Full Access)**
-- Username: `postgres`
-- Password: `BuiltSimple2025!`
-- Permissions: Full read/write access
-
 **Read-Only User (Recommended for Scripts)**
 - Username: `readonly`
-- Password: `ReadOnly2025!`
+- Password: `ReadOnly2025`
 - Permissions: SELECT only (cannot modify data)
+
+**Admin User (Local Only)**
+- Username: `postgres`
+- Network access: Not configured (use locally on Giratina)
 
 ### From Giratina (localhost)
 ```bash
@@ -233,21 +232,16 @@ psql -U postgres -d arxiv_papers
 
 ### From Other Nodes (192.168.1.x)
 ```bash
-# Read-only access (recommended)
-PGPASSWORD='ReadOnly2025!' psql -h 192.168.1.100 -U readonly -d pmc_fulltext
-
-# Admin access
-PGPASSWORD='BuiltSimple2025!' psql -h 192.168.1.100 -U postgres -d legal_db
+# Read-only access (recommended for all network connections)
+PGPASSWORD='ReadOnly2025' psql -h 192.168.1.100 -U readonly -d pmc_fulltext
 ```
 
-### Connection Strings
+### Connection String
 ```
-# Read-only
-postgresql://readonly:ReadOnly2025!@192.168.1.100:5432/DATABASE_NAME
+postgresql://readonly:ReadOnly2025@192.168.1.100:5432/DATABASE_NAME
+```
 
-# Admin
-postgresql://postgres:BuiltSimple2025!@192.168.1.100:5432/DATABASE_NAME
-```
+**Note:** No special characters in password - exclamation marks cause md5 auth failures with psycopg2.
 
 ---
 
@@ -262,7 +256,7 @@ conn = psycopg2.connect(
     port=5432,
     database="pmc_fulltext",
     user="readonly",
-    password="ReadOnly2025!"
+    password="ReadOnly2025"
 )
 cursor = conn.cursor()
 cursor.execute("SELECT COUNT(*) FROM articles")
@@ -275,7 +269,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 engine = create_engine(
-    "postgresql://readonly:ReadOnly2025!@192.168.1.100:5432/legal_db"
+    "postgresql://readonly:ReadOnly2025@192.168.1.100:5432/legal_db"
 )
 df = pd.read_sql("SELECT * FROM documents LIMIT 1000", engine)
 ```
@@ -289,7 +283,7 @@ const client = new Client({
   port: 5432,
   database: 'stackoverflow_complete',
   user: 'readonly',
-  password: 'ReadOnly2025!'
+  password: 'ReadOnly2025'
 });
 
 await client.connect();
@@ -305,7 +299,7 @@ conn = psycopg2.connect(
     host="192.168.1.100",
     database="pmc_fulltext",
     user="readonly",
-    password="ReadOnly2025!"
+    password="ReadOnly2025"
 )
 
 # Named cursor = server-side cursor (streams results)
