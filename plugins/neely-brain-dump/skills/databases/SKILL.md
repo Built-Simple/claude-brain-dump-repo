@@ -211,6 +211,18 @@ LIMIT 20;
 
 ## Connection Details
 
+### User Credentials
+
+**Admin User (Full Access)**
+- Username: `postgres`
+- Password: `BuiltSimple2025!`
+- Permissions: Full read/write access
+
+**Read-Only User (Recommended for Scripts)**
+- Username: `readonly`
+- Password: `ReadOnly2025!`
+- Permissions: SELECT only (cannot modify data)
+
 ### From Giratina (localhost)
 ```bash
 psql -U postgres -d pmc_fulltext
@@ -219,16 +231,132 @@ psql -U postgres -d stackoverflow_complete
 psql -U postgres -d arxiv_papers
 ```
 
-### From Other Nodes
+### From Other Nodes (192.168.1.x)
 ```bash
-psql -h 192.168.1.100 -U postgres -d DATABASE_NAME
-# Password: (set in environment)
+# Read-only access (recommended)
+PGPASSWORD='ReadOnly2025!' psql -h 192.168.1.100 -U readonly -d pmc_fulltext
+
+# Admin access
+PGPASSWORD='BuiltSimple2025!' psql -h 192.168.1.100 -U postgres -d legal_db
 ```
 
-### Connection String
+### Connection Strings
 ```
-postgresql://postgres:${POSTGRES_PASSWORD}@192.168.1.100:5432/DATABASE_NAME
+# Read-only
+postgresql://readonly:ReadOnly2025!@192.168.1.100:5432/DATABASE_NAME
+
+# Admin
+postgresql://postgres:BuiltSimple2025!@192.168.1.100:5432/DATABASE_NAME
 ```
+
+---
+
+## Code Examples
+
+### Python (psycopg2)
+```python
+import psycopg2
+
+conn = psycopg2.connect(
+    host="192.168.1.100",
+    port=5432,
+    database="pmc_fulltext",
+    user="readonly",
+    password="ReadOnly2025!"
+)
+cursor = conn.cursor()
+cursor.execute("SELECT COUNT(*) FROM articles")
+print(cursor.fetchone())
+```
+
+### Python (SQLAlchemy + Pandas)
+```python
+from sqlalchemy import create_engine
+import pandas as pd
+
+engine = create_engine(
+    "postgresql://readonly:ReadOnly2025!@192.168.1.100:5432/legal_db"
+)
+df = pd.read_sql("SELECT * FROM documents LIMIT 1000", engine)
+```
+
+### Node.js (pg)
+```javascript
+const { Client } = require('pg');
+
+const client = new Client({
+  host: '192.168.1.100',
+  port: 5432,
+  database: 'stackoverflow_complete',
+  user: 'readonly',
+  password: 'ReadOnly2025!'
+});
+
+await client.connect();
+const res = await client.query('SELECT COUNT(*) FROM solutions');
+console.log(res.rows);
+```
+
+### Server-Side Cursors (Large Datasets)
+```python
+import psycopg2
+
+conn = psycopg2.connect(
+    host="192.168.1.100",
+    database="pmc_fulltext",
+    user="readonly",
+    password="ReadOnly2025!"
+)
+
+# Named cursor = server-side cursor (streams results)
+cursor = conn.cursor(name='fetch_large_data')
+cursor.execute("SELECT * FROM citations WHERE cited_year > 2020")
+
+# Fetch in batches to avoid memory issues
+while True:
+    rows = cursor.fetchmany(10000)  # 10k rows at a time
+    if not rows:
+        break
+    for row in rows:
+        process(row)
+```
+
+---
+
+## Network Access
+
+### Local Network (192.168.1.x) ✅
+Direct connection works from any cluster node:
+- Silvally (192.168.1.52)
+- Hoopa (192.168.1.79)
+- Victini (192.168.1.115)
+- Talon (192.168.1.7)
+- Any laptop/desktop on the network
+
+### External Access
+Use Cloudflare Tunnel:
+```bash
+cloudflared access tcp --hostname giratina-db.built-simple.ai --url localhost:5432 &
+psql -h localhost -p 5432 -U readonly -d pmc_fulltext
+```
+
+---
+
+## Performance Tips
+
+| Operation | Speed | Notes |
+|-----------|-------|-------|
+| Simple SELECT by ID | ~1ms | Using indexes |
+| Category filter | ~23ms | Indexed columns |
+| Full-text search | Fast | GIN indexes enabled |
+| Complex joins | Varies | Use EXPLAIN ANALYZE |
+
+**Best Practices:**
+- Use `readonly` user for analysis scripts
+- Fetch only needed columns (avoid `SELECT *`)
+- Filter on server side, not in Python
+- Use server-side cursors for large results
+- Use parallel processing for big jobs
 
 ---
 
