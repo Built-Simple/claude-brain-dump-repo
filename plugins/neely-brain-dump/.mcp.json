@@ -5,7 +5,7 @@
   },
   "postgres": {
     "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:Password@localhost:5432/postgres"]
+    "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:${POSTGRES_PASSWORD}@localhost:5432/postgres"]
   },
   "ssh": {
     "command": "npx",
