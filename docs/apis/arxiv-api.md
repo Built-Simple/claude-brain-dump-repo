@@ -128,7 +128,7 @@ curl -X POST https://arxiv.built-simple.ai/api/contact \
 | Service | Host | Purpose |
 |---------|------|---------|
 | PostgreSQL | 192.168.1.206:5432 | Paper metadata + full-text search |
-| Redis | localhost:6379 | Search result caching |
+| Redis | localhost:6379 | Search result caching + **rate limiting** |
 | Google OAuth | accounts.google.com | User authentication |
 | Stripe | api.stripe.com | Payment processing |
 | Gmail SMTP | smtp.gmail.com:587 | Contact form emails |
@@ -166,8 +166,16 @@ pct exec 122 -- python3 -c "import ast; ast.parse(open('/opt/arxiv/main.py').rea
 - **Startup time**: ~5 minutes due to FAISS index (8.5GB) + RAM cache load
 - **Memory usage**: ~12GB RAM required (model + index + cache)
 - **GPU keepalive**: Background thread prevents cold start latency
+- **GPU required**: API will fail to start if CUDA/GPU is unavailable
+
+## Recent Changes (January 10, 2026)
+
+- **Rate limiting migrated to Redis** - Now persists across restarts, uses sliding window with sorted sets
+- **GPU check added** - API fails fast at startup if CUDA unavailable
+- **Deprecated metadata code removed** - load_metadata() call removed from startup
 
 ---
+*Redis rate limiting: January 10, 2026*
 *Code documentation added: January 10, 2026*
 *ArXiv RAM cache optimization: January 6, 2026*
 *Contact form added: January 6, 2026*
