@@ -1,56 +1,225 @@
 # Legal API - Legal Document Search
 
-**Last Updated:** January 9, 2026
-**Status:** In Development
+**Last Updated:** January 10, 2026
+**Status:** Partially Operational (FAISS v4 build in progress)
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
-| **Containers** | CT 210, 211, 212 on Hoopa |
+| **API Container** | CT 210 on Hoopa |
+| **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **Host** | Hoopa (192.168.1.79) |
-| **Status** | In Development |
-
-## Container Inventory
-
-| VMID | Name | Purpose | Status |
-|------|------|---------|--------|
-| CT 210 | LegalDocs-Production | Main API (16 cores, 48GB RAM) | Running |
-| CT 211 | LegalSearch-DB | Database backend | Running |
-| CT 212 | LegalSearch-ES | Elasticsearch | Stopped |
+| **External URL** | Not yet configured |
+| **Internal URL** | http://192.168.1.79:5002 (via CT 210) |
+| **API Version** | 3.0.0 |
 
 ## Architecture
 
-- Legal document search using hybrid pattern (like Wikipedia/FixIt)
-- Mounts indexes from `/mnt/network_transfer/legal-indexes`
-- High resource allocation for large index handling
+```
+                    ┌─────────────────────────────────────────────────────────┐
+                    │                    Legal Search System                   │
+                    └─────────────────────────────────────────────────────────┘
+
+     ┌──────────────────────────────────────────────────────────────────────────┐
+     │                          HOOPA (192.168.1.79)                            │
+     │                                                                          │
+     │  ┌─────────────────────────────────────────────────────────────────┐    │
+     │  │ CT 210 - LegalDocs-Production                                    │    │
+     │  │ 16 cores, 48GB RAM, RTX 3090 GPU passthrough                    │    │
+     │  │                                                                  │    │
+     │  │  FastAPI (port 5002)                                            │    │
+     │  │    ├─ ModernBERT embedding model (GPU)                          │    │
+     │  │    ├─ FAISS IVF-PQ index (8M+ vectors when ready)              │    │
+     │  │    └─ Query encoding + similarity search                        │    │
+     │  │                                                                  │    │
+     │  │  /mnt/indexes (bind mount from /mnt/network_transfer/...)      │    │
+     │  │    ├─ legal_modernbert_v4.index (pending)                       │    │
+     │  │    ├─ legal_modernbert_v4_metadata.jsonl (pending)              │    │
+     │  │    └─ courtlistener_combined.index (fallback, 2,453 vectors)   │    │
+     │  └─────────────────────────────────────────────────────────────────┘    │
+     │                                                                          │
+     │  ┌─────────────────────────────────────────────────────────────────┐    │
+     │  │ CT 211 - LegalSearch-DB                                          │    │
+     │  │ 8 cores, 16GB RAM                                                │    │
+     │  │ STATUS: Empty container (PostgreSQL NOT installed)               │    │
+     │  │ INTENDED: Future PostgreSQL replica for Hoopa-local queries     │    │
+     │  └─────────────────────────────────────────────────────────────────┘    │
+     │                                                                          │
+     │  ┌─────────────────────────────────────────────────────────────────┐    │
+     │  │ CT 212 - LegalSearch-ES                                          │    │
+     │  │ 8 cores, 16GB RAM                                                │    │
+     │  │ STATUS: Empty container (Elasticsearch NOT installed)            │    │
+     │  │ INTENDED: Full-text search complement to vector search          │    │
+     │  └─────────────────────────────────────────────────────────────────┘    │
+     └──────────────────────────────────────────────────────────────────────────┘
+
+     ┌──────────────────────────────────────────────────────────────────────────┐
+     │                        GIRATINA (192.168.1.100)                          │
+     │                                                                          │
+     │  PostgreSQL (port 5432)                                                  │
+     │    └─ legal_db (81 GB)                                                   │
+     │         ├─ documents table (9.2M rows)                                   │
+     │         │    ├─ caselaw: 5,947,629                                       │
+     │         │    ├─ misc: 2,249,613                                          │
+     │         │    ├─ patents: 543,336                                         │
+     │         │    ├─ contracts: 353,187                                       │
+     │         │    ├─ legislative: 112,716                                     │
+     │         │    └─ regulations: 182                                         │
+     │         ├─ migration_status                                              │
+     │         └─ search_cache                                                  │
+     │                                                                          │
+     │  /mnt/raid6/courtlistener-data/                                          │
+     │    ├─ opinions-2025-12-02.csv (321 GB, 57M+ rows)                       │
+     │    └─ opinion-clusters-2025-12-02.csv (12 GB, 10M rows)                 │
+     │                                                                          │
+     │  /mnt/raid6/legal-indexes/                                               │
+     │    ├─ build_legal_index_v4.py (production builder)                       │
+     │    └─ CRITICAL_PATHS.md (documentation)                                  │
+     └──────────────────────────────────────────────────────────────────────────┘
+```
+
+## Container Inventory
+
+| VMID | Name | Purpose | Status | Resources |
+|------|------|---------|--------|-----------|
+| CT 210 | LegalDocs-Production | Main API + GPU inference | **Running** | 16 cores, 48GB RAM, 100GB disk |
+| CT 211 | LegalSearch-DB | Planned PostgreSQL replica | Empty | 8 cores, 16GB RAM, 50GB disk |
+| CT 212 | LegalSearch-ES | Planned Elasticsearch | Stopped/Empty | 8 cores, 16GB RAM, 50GB disk |
+
+## Data Sources
+
+### PostgreSQL (Giratina - legal_db)
+- **Size**: 81 GB
+- **Documents**: 9,206,663 total
+- **User**: `readonly` / `LegalReadOnly2025`
+- **Tables**:
+  - `documents` - Full document content with search vectors
+  - `search_cache` - Query result caching
+  - `migration_status` - Data import tracking
+
+### CourtListener CSV Data (Giratina)
+- **opinions-2025-12-02.csv**: 321 GB, 57M+ opinion records
+- **opinion-clusters-2025-12-02.csv**: 12 GB, 10M cluster records
+- **Published opinions**: ~8.3M (filtered from clusters)
+- **Source**: CourtListener bulk data export
+
+### FAISS Index (Building)
+- **Type**: IVF-PQ (nlist=4096, m=48, nbits=8)
+- **Model**: freelawproject/modernbert-embed-base_finetune_512
+- **Dimensions**: 768
+- **Target vectors**: ~8M
+- **Estimated size**: 15-20 GB
+
+## API Endpoints
+
+| Endpoint | Method | Auth | Description |
+|----------|--------|------|-------------|
+| `/health` | GET | None | Service health + index info |
+| `/status` | GET | None | Detailed system status |
+| `/search` | POST | Optional | Vector similarity search |
+| `/document/{id}` | GET | Optional | Fetch full document from DB |
+| `/api/register` | POST | None | Get free API key |
+| `/api/checkout` | POST | API Key | Stripe Pro upgrade |
+| `/webhook/stripe` | POST | Signature | Payment webhooks |
+
+## Current Status
+
+### Working
+- CT 210 API running (v3.0.0)
+- Fallback to small index (2,453 vectors)
+- PostgreSQL connection to Giratina
+- Health/status endpoints
+
+### In Progress
+- FAISS v4 index build on Hoopa GPU 0
+  - Reading clusters: ~3M / 10M rows
+  - Total published: ~8.3M opinions
+  - Estimated completion: 25-35 hours from restart
+
+### Not Yet Implemented
+- CT 211 PostgreSQL (container empty)
+- CT 212 Elasticsearch (container empty)
+- Cloudflare tunnel (no external URL)
+- Monitoring integration
+
+## Tech Debt
+
+| Issue | Severity | Description |
+|-------|----------|-------------|
+| CT 211 unused | Medium | 16GB RAM allocated, no PostgreSQL installed |
+| CT 212 unused | Medium | 16GB RAM allocated, no Elasticsearch installed |
+| No Cloudflare tunnel | Medium | API not externally accessible |
+| No monitoring | Low | Not in application_health_monitor |
+| DB on remote host | Low | Queries go to Giratina instead of local CT 211 |
+
+## Planned Architecture
+
+When fully deployed:
+
+1. **Vector Search** (CT 210): FAISS + ModernBERT for semantic similarity
+2. **Full-Text Search** (CT 212): Elasticsearch for keyword/phrase search
+3. **Source of Truth** (CT 211): PostgreSQL replica with full document text
+4. **Hybrid Results**: Combine vector + full-text scores for best results
 
 ## Quick Commands
 
 ```bash
+# Check API health
+ssh root@192.168.1.79 "pct exec 210 -- curl -s localhost:5002/health | python3 -m json.tool"
+
 # Check container status
 ssh root@192.168.1.79 "pct list | grep -i legal"
 
-# Access main container
-ssh root@192.168.1.79 "pct enter 210"
+# View API logs
+ssh root@192.168.1.79 "pct exec 210 -- journalctl -u legal-search -n 50 --no-pager"
 
-# Start Elasticsearch if needed
-ssh root@192.168.1.79 "pct start 212"
+# Check FAISS build progress
+ssh root@192.168.1.79 "tail -c 3000 /mnt/network_transfer/legal-indexes/build_v4_hoopa.log | tail -10"
+
+# Check PostgreSQL on Giratina
+sudo -u postgres psql -d legal_db -c "SELECT COUNT(*) FROM documents;"
+
+# Restart API
+ssh root@192.168.1.79 "pct exec 210 -- systemctl restart legal-search"
 ```
 
-## Planned Features
+## Configuration Files
 
-- Legal document full-text search
-- Vector similarity search
-- Case law citations
-- API key authentication
-- Rate limiting and Stripe integration
+| File | Location | Purpose |
+|------|----------|---------|
+| API Code | CT 210: `/opt/legal-search-api/legal_api_fastapi_v4.py` | Main API |
+| Service Unit | CT 210: `/etc/systemd/system/legal-search.service` | Systemd service |
+| Index Builder | Giratina: `/mnt/raid6/legal-indexes/build_legal_index_v4.py` | FAISS builder |
+| Critical Paths | Giratina: `/mnt/raid6/legal-indexes/CRITICAL_PATHS.md` | Documentation |
 
-## Notes
+## Index Configuration
 
-- Waiting for index building to complete
-- Will follow same pattern as other APIs
-- Target: Production ready Q1 2026
+The API auto-selects index based on availability:
+
+```python
+INDEX_CONFIG = {
+    "primary": {
+        "index_file": "legal_modernbert_v4.index",
+        "metadata_file": "legal_modernbert_v4_metadata.jsonl",
+        "model_name": "freelawproject/modernbert-embed-base_finetune_512",
+    },
+    "fallback": {
+        "index_file": "courtlistener_combined.index",
+        "metadata_file": "courtlistener_combined_metadata.json",
+        "model_name": "nlpaueb/legal-bert-base-uncased",
+    }
+}
+```
+
+## Rate Limits
+
+| Tier | Monthly Limit | Rate Limit | Price |
+|------|---------------|------------|-------|
+| Anonymous | N/A | 5/minute | Free |
+| Free | 100/month | 10/minute | Free |
+| Pro | 10,000/month | 100/minute | $49/month |
 
 ---
-*Legal API containers created: December 2025*
+*Documentation updated: January 10, 2026*
+*Previous status: "In Development" -> Now: "Partially Operational"*

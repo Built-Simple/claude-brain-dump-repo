@@ -95,18 +95,29 @@ curl -X POST https://fixitapi.built-simple.ai/auth/login \
 **Modular Design (Refactored Dec 9, 2025):**
 ```
 /var/www/talon-api/
-├── main.py                 # FastAPI app with routes
-├── config.py               # Configuration and env vars
-├── models.py               # Pydantic request/response models
-├── database.py             # Database connection pooling
-├── auth.py                 # Email/password auth (bcrypt)
-├── rate_limit.py           # Monthly rate limiting
-├── stripe_integration.py   # Stripe checkout/webhooks
-├── search.py               # FTS5 search functionality
-├── hybrid_search.py        # Hybrid search module
-├── oauth_module.py         # Google OAuth integration
+├── main.py                 # FastAPI app with routes (CRITICAL)
+├── config.py               # Configuration and env vars (CRITICAL)
+├── models.py               # Pydantic request/response models (MEDIUM)
+├── database.py             # Database connection pooling (CRITICAL)
+├── auth.py                 # Email/password auth (bcrypt) (CRITICAL)
+├── rate_limit.py           # Monthly rate limiting (CRITICAL)
+├── stripe_integration.py   # Stripe checkout/webhooks (CRITICAL)
+├── search.py               # FTS5 search functionality (CRITICAL)
+├── hybrid_search.py        # Hybrid search module (HIGH)
+├── oauth_module.py         # Google OAuth integration (HIGH)
+├── CRITICAL_PATHS.md       # User journey documentation
 └── fixit_frontend.html     # Frontend with Contact Us modal
 ```
+
+**Code Documentation (Added January 9, 2026):**
+All Python modules now include comprehensive dependency maps with:
+- Module metadata (@module, @criticality, @status)
+- Direct dependencies with [REQUIRED]/[OPTIONAL] markers
+- Database operations (reads/writes)
+- External services with endpoints, timeouts, rate limits
+- Side effects, error handling, and breaking changes documentation
+
+See `CRITICAL_PATHS.md` for 8 documented user journeys.
 
 ## Services
 
