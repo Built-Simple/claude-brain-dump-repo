@@ -1,82 +1,181 @@
-# Claude's Brain Dump System
+# Claude.md - Giratina Server
 
-## Overview
-This is a persistent memory system for documenting solutions, patterns, and knowledge gained through our coding sessions. This file will be automatically loaded in future conversations to provide context and previously learned information.
-
-## Project Information
-- **Working Directory**: [PATH]
-- **Platform**: [Windows/Mac/Linux]
-- **Last Updated**: [YYYY-MM-DD]
-
-## Documented Solutions
-
-### Solution Template
-<!--
-### [Problem/Task Name] - [Date]
-**Problem**: Brief description of the issue or task
-**Solution**:
-- Step-by-step solution
-- Code snippets if applicable
-**Key Learnings**:
-- Important insights
-- Patterns to remember
-**Related Files**: List of files created/modified
--->
-
-## Common Commands & Patterns
-
-### Git Commands
-```bash
-# Check status
-git status
-
-# Add all files
-git add .
-
-# Commit with message
-git commit -m "message"
-
-# Push to remote
-git push origin master
-```
-
-### Project-Specific Commands
-<!-- Add project-specific commands here as we discover them -->
-
-## Directory Structure
-```
-[User Home Path]
-├── .claude/           # Claude-specific documentation
-├── Documents/         # User documents
-├── Desktop/           # Desktop files
-└── [project folders]
-```
-
-## Known Issues & Workarounds
-<!-- Document any recurring issues and their solutions -->
-
-## Useful Resources
-<!-- Links, documentation references, etc. -->
-
-## Session History
-<!-- Brief notes about significant sessions and what was accomplished -->
-
-### [YYYY-MM-DD] - Brain Dump System Setup
-- Created this CLAUDE.md file for persistent memory
-- Established documentation structure
-- Set up system for capturing solutions and learnings
-
-## Machine Profile
-Comprehensive environment documentation:
-- **Profile Location**: `.claude/MACHINE_PROFILE.md`
-- **System**: [Brief system description]
-- **Dev Tools**: [Key tools and versions]
-
-## Active Projects
-<!-- List active projects with brief descriptions -->
-
-## Preferences & Patterns
-<!-- Document coding preferences and common patterns -->
+**Machine:** Giratina (192.168.1.100) - Primary Proxmox Node
+**Cluster:** pallet-town (5 nodes)
+**Last Updated:** January 9, 2026
 
 ---
-*This file is automatically read at the start of Claude Code sessions to provide context.*
+
+## CRITICAL: Required Behaviors
+
+### 1. Chat Naming
+**ALWAYS set a descriptive chat title** using `mcp__happy__change_title` that includes:
+- What you're working on (e.g., "Fix PubMed OAuth", "Add Wikipedia caching")
+- Which machine/container if relevant (e.g., "CT 108", "Hoopa")
+
+Examples:
+- "Fix ArXiv search timeout - CT 122"
+- "Add contact form to FixIt API"
+- "Restructure CLAUDE.md documentation"
+
+### 2. Documentation Updates - MANDATORY
+**Update documentation after completing significant work:**
+
+| When | Action |
+|------|--------|
+| **Fix breaks something** | Document what broke, why, and the fix |
+| **Feature added** | Update the relevant API/app doc with new endpoints, config |
+| **Service goes from broken → working** | Document the root cause and solution |
+| **Tech stack issue discovered** | Add to "Known Issues" or "Lessons Learned" |
+| **Configuration changed** | Update machine profile or infrastructure doc |
+
+**Where to update:**
+- API changes → `docs/apis/<api-name>.md`
+- App changes → `docs/apps/<app-name>.md`
+- Infrastructure → `docs/infrastructure/<topic>.md`
+- Machine-specific → `machine-profiles/<machine>.md`
+
+### 3. Code Documentation
+**When writing code**, use the `neely-brain-dump:code-documentation` skill:
+- Add dependency maps to new files
+- Use inline markers (DEPENDENCY, EXTERNAL, DB WRITE, SIDE EFFECT, etc.)
+- Document the "why" not just the "what"
+- Track decisions and workarounds
+
+### 4. Commit Documentation Changes
+After updating docs, commit and push to the brain dump repo:
+```bash
+cd ~/.claude/plugins/marketplaces/neely-brain-dump-marketplace
+git add -A && git commit -m "Update docs: <description>" && git push
+```
+
+---
+
+## Quick Reference
+
+All detailed documentation is in the brain dump repo:
+`~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/`
+
+| Resource | Location |
+|----------|----------|
+| **This Machine** | [machine-profiles/giratina.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/giratina.md) |
+| **All Hosts/IPs** | [HOSTS.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/HOSTS.md) |
+| **Code Documentation** | [docs/frameworks/](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/frameworks/) |
+
+## Documentation Index
+
+### Machine Profiles
+- [giratina.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/giratina.md) - This machine (primary node)
+- [talon.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/talon.md) - Secondary node
+- [silvally.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/silvally.md) - App server
+- [hoopa.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/hoopa.md) - GPU node (4x RTX 3090)
+- [victini.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/machine-profiles/victini.md) - File server
+
+### Infrastructure
+- [network-connectivity.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/infrastructure/network-connectivity.md) - Starlink, IPs, subnets
+- [cloudflare-tunnels.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/infrastructure/cloudflare-tunnels.md) - All tunnel configs
+- [monitoring-alerting.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/infrastructure/monitoring-alerting.md) - Health checks, email alerts
+- [stripe-keys.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/infrastructure/stripe-keys.md) - Payment integration
+- [proxmox-cluster.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/infrastructure/proxmox-cluster.md) - Cluster status
+
+### APIs (Production)
+- [fixit-api.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apis/fixit-api.md) - Stack Overflow search (CT 103)
+- [pubmed-api.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apis/pubmed-api.md) - Medical research (CT 108)
+- [arxiv-api.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apis/arxiv-api.md) - Research papers (CT 122)
+- [wikipedia-api.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apis/wikipedia-api.md) - Hybrid search (CT 213 on Hoopa)
+- [legal-api.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apis/legal-api.md) - In development (Hoopa)
+
+### Applications
+- [buffer-killer.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apps/buffer-killer.md) - Social scheduler (CT 311 on Silvally)
+- [myfit-pro.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apps/myfit-pro.md) - Fitness tracking (CT 312 on Silvally)
+- [reviewmaster-pro.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apps/reviewmaster-pro.md) - AI reviews (CT 313 on Silvally)
+- [receptionists.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apps/receptionists.md) - Voice assistants (CT 114, 116 on Victini)
+- [happy-server.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/apps/happy-server.md) - Claude Code sessions (Docker on Giratina)
+
+### SDK & Frameworks
+- [built-simple-core.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/sdk/built-simple-core.md) - Shared platform SDK
+- [AI_Code_Documentation_Complete_Framework.md](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/frameworks/AI_Code_Documentation_Complete_Framework.md) - Code documentation guide
+
+## Skills Available
+
+Use `Skill` tool to invoke:
+
+| Skill | Purpose |
+|-------|---------|
+| `neely-brain-dump:code-documentation` | AI-optimized code documentation framework |
+| `neely-brain-dump:machine-context` | Machine profiles and environment |
+| `neely-brain-dump:ssh-management` | SSH hosts, credentials, connections |
+| `neely-brain-dump:databases` | PostgreSQL access (PubMed, Legal, etc.) |
+| `neely-brain-dump:file-search` | Elasticsearch file search |
+| `neely-brain-dump:mcp-setup` | MCP server configuration |
+| `neely-brain-dump:environment-setup` | New machine setup |
+
+## Quick Commands
+
+```bash
+# Cluster status
+pvecm status
+
+# Container list
+pct list
+
+# GPU status
+nvidia-smi
+
+# Happy health
+HAPPY_SERVER_URL="https://happy.built-simple.ai" happy doctor
+
+# SSH to other nodes
+ssh root@192.168.1.7      # Talon
+ssh root@192.168.1.52     # Silvally
+ssh root@192.168.1.79     # Hoopa
+ssh root@192.168.1.115    # Victini
+# Password: BuiltSimple2025!
+
+# Check monitoring
+/root/container_health_monitor.sh status
+/root/application_health_monitor_v2.sh status
+```
+
+## External URLs
+
+### APIs
+- https://fixit.built-simple.ai - FixIt Frontend
+- https://fixitapi.built-simple.ai - FixIt API
+- https://pubmed.built-simple.ai - PubMed API
+- https://arxiv.built-simple.ai - ArXiv API
+- https://wikipedia.built-simple.ai - Wikipedia API
+
+### Applications
+- https://buffer-killer-admin.built-simple.ai - Buffer Killer
+- https://myfit.built-simple.ai - MyFit Pro
+- https://reviewmaster.built-simple.ai - ReviewMaster Pro
+- https://happy.built-simple.ai - Happy Server
+
+### Infrastructure
+- https://pallettown.built-simple.ai - Proxmox UI
+- https://built-simple.ai - Marketing website
+
+## Code Documentation
+
+When writing code, use the `neely-brain-dump:code-documentation` skill for:
+- File-level dependency maps
+- Function documentation patterns
+- Inline markers (DEPENDENCY, EXTERNAL, DB WRITE, etc.)
+- Cross-file documentation
+
+See: [docs/frameworks/](~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/docs/frameworks/)
+
+## Brain Dump Repo
+
+**GitHub:** git@github.com:Built-Simple/claude-brain-dump-repo.git
+**Local:** ~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/
+
+To update documentation:
+1. Edit files in the repo
+2. Commit and push to GitHub
+3. Changes sync to all machines
+
+---
+*Refactored: January 9, 2026 - Split into modular documentation*
+*Previous CLAUDE.md: 1,557 lines → Now: ~130 lines + linked docs*
