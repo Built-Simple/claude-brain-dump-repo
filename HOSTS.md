@@ -150,12 +150,22 @@ Internet (Starlink)
 pvecm status
 ```
 
-## LOCAL MACHINE (Your Laptop)
+## DEVELOPMENT LAPTOP (Cluster Control Machine)
 
 - **Hostname:** LAPTOP-FVRA1DSD
+- **IP:** 192.168.1.34 (when connected to local network)
 - **User:** neely
 - **OS:** Windows 11 Home Build 26100
+- **Role:** Primary development laptop - used to operate and manage the entire cluster
 - **SSH Key:** `~/.ssh/id_ed25519`
+- **Local Paths:**
+  - Websites: `~/websites/`
+  - Scripts: `~/Scripts/`
+
+### SSH from Cluster to Laptop
+```bash
+ssh neely@192.168.1.34
+```
 
 ### Public Key
 ```

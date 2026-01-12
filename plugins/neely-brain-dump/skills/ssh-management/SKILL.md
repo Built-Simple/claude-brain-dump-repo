@@ -93,7 +93,27 @@ Tunnel ID: `0f2c7edc-1d40-4930-916c-2e7d0bbcdbc5`
 
 ---
 
-## SSH Keys (Windows Laptop)
+## Development Laptop (Cluster Control Machine)
+
+**Role:** Primary development laptop - used to operate and manage the entire Proxmox cluster
+
+| Property | Value |
+|----------|-------|
+| Hostname | LAPTOP-FVRA1DSD |
+| IP | 192.168.1.34 (when on local network) |
+| User | neely |
+| OS | Windows 11 Home Build 26100 |
+
+### SSH from Cluster to Laptop
+```bash
+ssh neely@192.168.1.34
+```
+
+### Local Paths on Laptop
+- Websites: `~/websites/`
+- Scripts: `~/Scripts/`
+
+### SSH Keys (on Laptop)
 
 ```
 Private: C:\Users\neely\.ssh\id_ed25519
