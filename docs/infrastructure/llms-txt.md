@@ -82,6 +82,38 @@ async def llms_txt():
                    media_type="text/plain", status_code=404)
 ```
 
+## Schema Markup (JSON-LD)
+
+All properties include comprehensive JSON-LD schema markup for enhanced AI visibility:
+
+| Service | Schema Types |
+|---------|--------------|
+| **FixIt API** | WebApplication, TechArticle, FAQPage |
+| **ArXiv API** | WebApplication, TechArticle, FAQPage |
+| **PubMed API** | WebApplication, TechArticle, FAQPage |
+| **Wikipedia API** | WebApplication, TechArticle, FAQPage (via /schema.json) |
+| **ReviewMaster Pro** | SoftwareApplication, Service, FAQPage |
+| **Main Hub** | Organization, WebSite, ItemList, FAQPage |
+
+### Schema File Locations
+
+| Service | Schema Location |
+|---------|-----------------|
+| FixIt | Embedded in index.html + fixit_frontend.html (CT 103) |
+| ArXiv | Embedded in modules/templates.py (CT 122) |
+| PubMed | Embedded in templates/index.html (CT 108) |
+| Wikipedia | /opt/wikipedia-hybrid/schema.json (CT 213 on Hoopa) |
+| ReviewMaster | Embedded in backend/templates/index.html (CT 313 on Silvally) |
+| Hub | Embedded in index.html (CT 400) |
+
+### Schema Content
+
+Each schema includes:
+- **WebApplication/SoftwareApplication**: Product details, features, pricing
+- **TechArticle**: Documentation metadata
+- **FAQPage**: Common questions optimized for AI citation
+- **Organization**: Built Simple brand information
+
 ## Maintenance
 
 To update an llms.txt file:
@@ -92,5 +124,11 @@ To update the route code:
 1. Edit main.py in the appropriate container
 2. Restart the service: `systemctl restart <service-name>`
 
+To update schema markup:
+1. Edit the HTML file or Python template
+2. For APIs: restart the service
+3. For static sites: changes immediate
+
 ---
 *llms.txt deployed: January 13, 2026*
+*Schema markup added: January 13, 2026*
