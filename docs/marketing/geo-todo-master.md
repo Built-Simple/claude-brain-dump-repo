@@ -1,6 +1,6 @@
 # GEO Master TODO List - Built Simple Ecosystem
 
-**Last Updated:** January 13, 2026
+**Last Updated:** January 13, 2026 (23:25 UTC)
 **Owner:** To be assigned
 **Review Cadence:** Weekly
 
@@ -49,47 +49,13 @@
 - [ ] 🟠 P1: Implement SSR/SSG if any pages require JS to render content
 - [ ] 🟠 P1: Add `<noscript>` fallbacks for critical content
 
-### 1.4 Schema Markup Implementation
-- [ ] 🔴 P0: **FixIt API** - Implement TechArticle + SoftwareApplication schema
-  ```json
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "FixIt API - Stack Overflow Search",
-    "about": {
-      "@type": "SoftwareApplication",
-      "name": "FixIt API",
-      "applicationCategory": "DeveloperApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-  }
-  ```
-- [ ] 🔴 P0: **ArXiv API** - TechArticle + SoftwareApplication schema
-- [ ] 🔴 P0: **PubMed API** - TechArticle + SoftwareApplication schema
-- [ ] 🔴 P0: **Wikipedia API** - TechArticle + SoftwareApplication schema
-- [ ] 🔴 P0: **ReviewMaster Pro** - Service + FAQPage schema
-  ```json
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "AI Review Response Generator",
-    "provider": {
-      "@type": "Organization",
-      "name": "Built Simple"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "29",
-      "priceCurrency": "USD",
-      "priceValidUntil": "2026-12-31"
-    }
-  }
-  ```
-- [ ] 🔴 P0: **Built-Simple.ai Hub** - Organization + ItemList schema
+### 1.4 Schema Markup Implementation ✅ COMPLETE (Jan 13, 2026)
+- [x] 🔴 P0: **FixIt API** - WebApplication + SoftwareApplication schema (deployed)
+- [x] 🔴 P0: **ArXiv API** - WebApplication + SoftwareApplication schema (deployed)
+- [x] 🔴 P0: **PubMed API** - WebApplication + SoftwareApplication schema (deployed)
+- [x] 🔴 P0: **Wikipedia API** - WebApplication + SoftwareApplication schema (deployed)
+- [x] 🔴 P0: **ReviewMaster Pro** - WebApplication + Service schema (deployed)
+- [x] 🔴 P0: **Built-Simple.ai Hub** - Organization + ItemList schema (deployed)
 - [ ] 🟠 P1: Validate all schema with Google Rich Results Test
 - [ ] 🟠 P1: Validate all schema with Schema.org validator
 
@@ -155,15 +121,16 @@
   - Add recent customer success stories
 - [ ] 🟡 P2: Automate "dateModified" schema updates on content changes
 
-### 2.5 OpenAPI Specification Optimization
-- [ ] 🔴 P0: Audit OpenAPI spec for completeness (77% of well-formed specs work first time)
-  - All endpoints have complete descriptions
-  - All parameters have examples
-  - All responses documented with schemas
-  - Security schemes fully defined
-  - Absolute base URLs (not relative)
+### 2.5 OpenAPI Specification Optimization ✅ COMPLETE (Jan 13, 2026)
+- [x] 🔴 P0: Audit OpenAPI spec for completeness (77% of well-formed specs work first time)
+  - ✅ FixIt API: All endpoints have descriptions (2 issues fixed)
+  - ✅ ArXiv API: All endpoints have descriptions (1 issue fixed)
+  - ✅ PubMed API: All endpoints have descriptions (8 issues fixed)
+  - ✅ Wikipedia API: All endpoints have descriptions (13 issues fixed)
+  - ✅ All APIs: Added `servers` array with production URLs
+  - ✅ Wikipedia API: Added Field examples to Pydantic models
+- [x] 🟠 P1: Add detailed `description` for every endpoint
 - [ ] 🟠 P1: Add rich `operationId` fields (natural language)
-- [ ] 🟠 P1: Add detailed `description` for every endpoint
 - [ ] 🟠 P1: Create separate spec files per API for clean chunking
 
 ---
