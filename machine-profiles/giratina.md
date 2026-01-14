@@ -57,6 +57,7 @@
 | 103 | FixItAPI | 192.168.1.42 | Stack Overflow Search API | Running |
 | 105 | admin-coder-420 | DHCP | Admin tools | Running |
 | 108 | PubMedSearch | 192.168.1.135 | Medical Research API | Running |
+| 111 | email-sorter | 192.168.1.111 | Inbox Organizer SaaS | Running |
 | 122 | arxiv-gpu-pytorch | 192.168.1.120 | ArXiv Research API | Running |
 | 123 | arxiv-postgres | 192.168.1.121 | ArXiv Database | Running |
 | 300 | smb-server | DHCP | SMB file shares | Running |
@@ -94,6 +95,7 @@
 ├── *.md                         # 50+ documentation files
 ├── documentation/               # Organized docs
 ├── archived_docs/               # Historical docs
+├── email-sorter-web/            # Inbox Organizer git repo (source for CT 111)
 ├── fixit-api-repo/              # FixIt git repo
 ├── arxiv-pipeline/              # ArXiv git repo
 └── sarcastic-receptionist-repo/ # Receptionist git repo
@@ -146,6 +148,7 @@ ssh root@localhost -p 2026
 
 - **Proxmox UI:** https://pallettown.built-simple.ai
 - **Happy Server:** https://happy.built-simple.ai
+- **Inbox Organizer:** https://inbox.built-simple.ai
 
 ---
 *Profile for Giratina - Primary Proxmox node in pallet-town cluster*
