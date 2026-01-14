@@ -127,7 +127,7 @@
   - ✅ ArXiv API: All endpoints have descriptions (1 issue fixed)
   - ✅ PubMed API: All endpoints have descriptions (8 issues fixed)
   - ✅ Wikipedia API: All endpoints have descriptions (13 issues fixed)
-  - ✅ All APIs: Added `servers` array with production URLs
+  - ⚠️ FixIt, ArXiv, Wikipedia: `servers` array added (PubMed blocked by Python 3.13 issue - see pubmed-api.md)
   - ✅ Wikipedia API: Added Field examples to Pydantic models
 - [x] 🟠 P1: Add detailed `description` for every endpoint
 - [ ] 🟠 P1: Add rich `operationId` fields (natural language)
