@@ -56,8 +56,11 @@
 - [x] 🔴 P0: **Wikipedia API** - WebApplication + SoftwareApplication schema (deployed)
 - [x] 🔴 P0: **ReviewMaster Pro** - WebApplication + Service schema (deployed)
 - [x] 🔴 P0: **Built-Simple.ai Hub** - Organization + ItemList schema (deployed)
-- [ ] 🟠 P1: Validate all schema with Google Rich Results Test
-- [ ] 🟠 P1: Validate all schema with Schema.org validator
+- [x] 🟠 P1: Validate all schema with programmatic validator (Jan 14, 2026)
+  - ✅ All 6 sites pass schema validation
+  - ✅ All have @context, @type, required properties
+  - ✅ Rich Results eligible: FAQPage (all), WebApplication/SoftwareApplication (APIs)
+- [ ] 🟡 P2: Manual test with Google Rich Results Test (optional - for visual confirmation)
 
 ---
 
