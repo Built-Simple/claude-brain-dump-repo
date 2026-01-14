@@ -1,6 +1,6 @@
 # PubMed API - Medical Research Search
 
-**Last Updated:** January 9, 2026
+**Last Updated:** January 13, 2026
 **Status:** Production Ready
 
 ## Overview
@@ -147,6 +147,41 @@ pct exec 108 -- journalctl -u pubmed-api -n 50 --no-pager
 
 - CT 502 (pubmed-postgres) is empty - NOT USED
 - All data is on Giratina host PostgreSQL
+
+### OpenAPI Servers Array Not Set (January 2026)
+
+**Status:** Unresolved - Service works, but `/openapi.json` has no `servers` array
+
+**Root Cause:** Python 3.13 + FastAPI 0.123.9 incompatibility
+
+PubMed runs Python 3.13 which has stricter annotation evaluation (PEP 649). FastAPI's `inspect.signature(call, eval_str=True)` forces evaluation of type hints even with `from __future__ import annotations`.
+
+**Error encountered:**
+```
+NameError: name 'CompleteGPUSearcher' is not defined
+```
+
+This occurs when adding `servers=` kwarg to FastAPI() init because it triggers re-evaluation of all route signatures.
+
+**Fixes attempted:**
+1. `servers=` kwarg in FastAPI() - FAILED (caused startup error)
+2. `app.openapi = custom_openapi` override - Not called by FastAPI 0.123.9
+3. Custom `/openapi.json` route - FastAPI's built-in takes precedence
+4. Removed type hints from Depends() params - Fixed startup but not OpenAPI issue
+
+**Files modified during troubleshooting:**
+- `/opt/pubmed-web/main.py` - Removed type hints from health_check
+- `/opt/pubmed-web/routes/search_routes.py` - Removed CompleteGPUSearcher type hints
+- `/opt/pubmed-web/dependencies.py` - Added `from __future__ import annotations`
+- `/opt/pubmed-web/searchers/hybrid_searcher.py` - Added `from __future__ import annotations`
+
+**Potential fixes:**
+1. Upgrade FastAPI to 0.115+ (may have better OpenAPI override support)
+2. Downgrade Python from 3.13 to 3.11
+3. Patch FastAPI internals directly
+4. Use a middleware to intercept `/openapi.json` responses
+
+**Impact:** Low - API works correctly, only affects GEO optimization (LLMs use servers array to determine production URL)
 
 ---
 *PubMed ES full sync completed: December 10, 2025*
