@@ -1,7 +1,7 @@
 # Machine Profile: Talon
 
-**Last Updated:** January 9, 2026
-**Role:** Secondary Proxmox Node
+**Last Updated:** January 15, 2026
+**Role:** Secondary Proxmox Node / GPU Server
 
 ## System Overview
 
@@ -14,8 +14,18 @@
 
 ## Hardware Specifications
 
-- **Type:** Desktop/Server
-- **Purpose:** Secondary cluster node, backup capacity
+### Processor
+- **CPU:** AMD Ryzen 9 7900 12-Core Processor
+- **Cores:** 12 (24 threads)
+- **Architecture:** x86_64
+
+### Memory
+- **Total RAM:** 125GB
+
+### GPUs
+- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM)
+- **GPU 1:** NVIDIA RTX 3090 (24GB VRAM)
+- **Total GPU Memory:** 48GB
 
 ## Network Configuration
 
@@ -48,12 +58,15 @@ pct list
 
 # Check cluster status
 pvecm status
+
+# Check GPU status
+nvidia-smi
 ```
 
 ## Notes
 
-- Minimal workload currently
-- Available for additional containers if needed
+- Secondary GPU node with 48GB VRAM capacity
+- Available for burst AI workloads and failover
 - CT 109 is archived/legacy
 
 ---

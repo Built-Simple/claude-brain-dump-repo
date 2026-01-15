@@ -1,7 +1,7 @@
 # Machine Profile: Hoopa
 
-**Last Updated:** January 9, 2026
-**Role:** GPU Node (4x RTX 3090)
+**Last Updated:** January 15, 2026
+**Role:** GPU Node (3x RTX 3090 + 1x RTX 5090)
 
 ## System Overview
 
@@ -14,12 +14,20 @@
 
 ## Hardware Specifications
 
+### Processor
+- **CPU:** Intel Xeon E5-2620 v3 @ 2.40GHz
+- **Sockets:** 2 (Dual CPU)
+- **Cores:** 12 total (24 threads)
+
+### Memory
+- **Total RAM:** 126GB
+
 ### GPUs
 - **GPU 0:** NVIDIA RTX 3090 (24GB VRAM)
-- **GPU 1:** NVIDIA RTX 3090 (24GB VRAM)
+- **GPU 1:** NVIDIA RTX 5090 (32GB VRAM)
 - **GPU 2:** NVIDIA RTX 3090 (24GB VRAM)
 - **GPU 3:** NVIDIA RTX 3090 (24GB VRAM)
-- **Total GPU Memory:** 96GB
+- **Total GPU Memory:** 104GB
 
 ## Network Configuration
 
@@ -97,9 +105,10 @@ curl -X POST http://192.168.1.79:8090/search \
 ## Notes
 
 - Primary GPU compute node for vector search
+- Flagship RTX 5090 for maximum inference performance
 - Wikipedia API runs entirely on Hoopa (3 containers)
 - Legal API in development
 - FixIt uses GPU 3 for embedding server
 
 ---
-*Profile for Hoopa - GPU node (4x RTX 3090) in pallet-town cluster*
+*Profile for Hoopa - GPU node (3x RTX 3090 + 1x RTX 5090) in pallet-town cluster*
