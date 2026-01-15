@@ -1,6 +1,6 @@
 # Machine Profile: Giratina
 
-**Last Updated:** January 9, 2026
+**Last Updated:** January 15, 2026
 **Role:** Primary Proxmox Node / GPU Server
 
 ## System Overview
@@ -86,6 +86,42 @@
 - `/root/api_health_monitor.sh` - Every 5 min
 - `/root/arxiv_api_monitor.sh` - Every 5 min
 - `/root/backup_sync_offsite.sh` - Every 2 hrs
+
+## Memory & Swap Configuration
+
+### Current Configuration (January 2026)
+- **RAM:** 314GB DDR4 ECC
+- **Swap:** 8GB on LVM partition (`/dev/pve/swap`)
+- **Swappiness:** 60 (default)
+
+### Swap Optimization Notes
+The system has 314GB RAM with only 8GB swap. During heavy workloads (e.g., FSCrawler indexing, Wikipedia builds, multiple Claude Code sessions), swap can become fully utilized.
+
+**If swap becomes a bottleneck:**
+1. **Add swapfile (temporary):**
+   ```bash
+   fallocate -l 16G /swapfile
+   chmod 600 /swapfile
+   mkswap /swapfile
+   swapon /swapfile
+   ```
+
+2. **Reduce swappiness (prefer RAM):**
+   ```bash
+   sysctl vm.swappiness=10  # Temporary
+   echo "vm.swappiness=10" >> /etc/sysctl.conf  # Persistent
+   ```
+
+3. **Clear swap (if memory available):**
+   ```bash
+   swapoff -a && swapon -a
+   ```
+
+**Common swap-heavy processes:**
+- FSCrawler (large file indexing)
+- Wikipedia build processes
+- Multiple concurrent Claude Code sessions via Happy
+- PostgreSQL with large queries on pmc_fulltext (992GB DB)
 
 ## Key Directories
 
