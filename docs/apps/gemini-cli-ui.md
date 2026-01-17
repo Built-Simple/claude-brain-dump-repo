@@ -38,6 +38,30 @@ This SSHs back to Giratina to run the actual Gemini CLI (which requires Google a
 
 ---
 
+## Model Upgrade (January 17, 2026)
+
+### Upgraded to Gemini 3 Flash Preview
+
+**Default Model:** Changed from `gemini-2.5-flash` to `gemini-3-flash-preview`
+
+**Important:** Google's Gemini 3 API naming convention uses `-preview` suffix (not `.0` version numbers):
+- ✅ Correct: `gemini-3-flash-preview`
+- ❌ Wrong: `gemini-3.0-flash` (causes ModelNotFoundError)
+
+**Files Modified:**
+- `server/gemini-cli.js` - Line ~168: `const modelToUse = options.model || 'gemini-3-flash-preview';`
+- `src/components/ToolsSettings.jsx` - Model list and default selection
+
+**Available Models:**
+| Value | Label | Status |
+|-------|-------|--------|
+| `gemini-3-flash-preview` | Gemini 3 Flash | Default (Recommended) |
+| `gemini-2.5-flash` | Gemini 2.5 Flash | Stable |
+| `gemini-2.5-pro` | Gemini 2.5 Pro | Advanced reasoning |
+| `gemini-3-pro-preview` | Gemini 3 Pro | Preview only |
+
+---
+
 ## Bug Fixes (January 16, 2026)
 
 ### 1. Deprecated `--prompt` Flag Error
@@ -169,7 +193,7 @@ pct exec 105 -- tail -50 /root/Gemini-CLI-UI/server.log
 
 ### Test Gemini CLI Directly
 ```bash
-pct exec 105 -- /usr/local/bin/gemini-remote --model gemini-2.5-flash --yolo "Hello"
+pct exec 105 -- /usr/local/bin/gemini-remote --model gemini-3-flash-preview --yolo "Hello"
 ```
 
 ---
