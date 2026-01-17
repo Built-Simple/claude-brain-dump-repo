@@ -16,7 +16,7 @@ AI-powered phone receptionists for Built Simple AI. The main production receptio
 | **Server** | Mew (137.184.235.100) - DigitalOcean droplet |
 | **Port** | 3000 |
 | **Phone** | +1 (702) 704-5706 (Twilio) |
-| **External URL** | https://pro.137.184.235.100.nip.io |
+| **External URL** | https://receptionist.built-simple.ai |
 | **Status** | ✅ Production Ready |
 | **Code Location** | /opt/professional-receptionist/ |
 
