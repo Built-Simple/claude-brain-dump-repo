@@ -119,6 +119,34 @@ if (isStreaming && prev.length > 0) {
 }
 ```
 
+### 4. Ugly Code Block Formatting for Filenames
+
+**Symptom:** Gemini would render filenames like `CLAUDE.md` in large code block boxes that looked like fake tool calls.
+
+**Root Cause:** Gemini model's default formatting puts simple text in full code blocks.
+
+**Fix:** Added `cleanupFormatting()` method to `server/gemini-response-handler.js`:
+
+```javascript
+cleanupFormatting(content) {
+  let cleaned = content;
+
+  // Convert single-line code blocks with filenames to inline code
+  // ```\nCLAUDE.md\n``` becomes `CLAUDE.md`
+  cleaned = cleaned.replace(/```(?:plaintext|text|copy|)?\s*\n([A-Za-z0-9_\-\.\/]+)\s*\n```/gi, "`$1`");
+
+  // Remove "Copy" labels that Gemini adds
+  cleaned = cleaned.replace(/\nCopy\n/g, "\n");
+  cleaned = cleaned.replace(/```\nCopy$/gm, "```");
+  cleaned = cleaned.replace(/^Copy\n/gm, "");
+
+  // Clean up excessive newlines
+  cleaned = cleaned.replace(/\n{3,}/g, "\n\n");
+
+  return cleaned.trim();
+}
+```
+
 ---
 
 ## Maintenance
@@ -163,5 +191,5 @@ Created during fixes:
 
 ---
 
-*Last Updated: January 16, 2026*
+*Last Updated: January 17, 2026*
 *Fixes Applied By: Claude Code via Happy*
