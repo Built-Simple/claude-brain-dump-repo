@@ -1,7 +1,7 @@
 # Machine Profile: Victini
 
-**Last Updated:** January 9, 2026
-**Role:** File Server / Voice Assistants
+**Last Updated:** January 17, 2026
+**Role:** File Server / Voice Assistants / SolidInvoice
 
 ## System Overview
 
@@ -30,6 +30,7 @@
 | 110 | PCBox | 192.168.1.148 | File server | Running |
 | 114 | sarcastic-receptionist | DHCP | Voice assistant (generic) | Running |
 | 116 | thai-receptionist | DHCP | Voice assistant (Peinto Thai) | Running |
+| 117 | solidinvoice | 192.168.1.117 | Invoicing application | Running |
 
 ### Container Details
 
@@ -51,6 +52,14 @@
 - **Phone:** +1 (725) 726-3727 (shared!)
 - **External:** peintothai.built-simple.ai
 - **Status:** Running but DNS not configured
+
+#### CT 117: SolidInvoice
+- **Port:** 80
+- **Stack:** PHP 8.4, Symfony, nginx, SQLite
+- **Version:** 2.3.14
+- **External:** https://invoice.built-simple.ai
+- **Status:** Running - requires initial setup via web installer
+- **Data:** /var/www/solidinvoice (SQLite DB in var/ directory)
 
 ## SSH Access
 
@@ -81,6 +90,7 @@ pct exec 116 -- pm2 logs
 
 - https://pokemoncenter.built-simple.ai - Proxmox UI
 - https://pcbox.built-simple.ai - File access
+- https://invoice.built-simple.ai - SolidInvoice
 - https://receptionist.built-simple.ai - Sarcastic Receptionist (404 issue)
 - https://peintothai.built-simple.ai - Thai Receptionist (DNS needed)
 
