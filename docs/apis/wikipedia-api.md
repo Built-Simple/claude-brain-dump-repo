@@ -145,6 +145,25 @@ curl -X POST https://wikipedia.built-simple.ai/api/hybrid \
 - ES timeout on complex multi-word queries under load
 - Graceful fallback to vector-only when BM25 times out
 
+## Known Issues & Fixes
+
+### CT 213 Network Connectivity (Fixed January 19, 2026)
+
+**Symptom:** Wikipedia API unreachable from outside Hoopa; CT 213 can't ping gateway or other hosts.
+
+**Root Cause:** On Hoopa, `bridge-nf-call-iptables=1` means bridged traffic goes through iptables. The FORWARD chain had `policy DROP` with no rule to accept traffic on non-firewall veth interfaces (CT 213 has `firewall=0` so it uses `veth213i0` directly on `vmbr0`, not through `fwln+` interfaces that PVE firewall rules match on).
+
+**Fix:** Added iptables rule to accept bridged traffic:
+```bash
+iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT
+```
+
+**Persistence:** Added to `/etc/network/interfaces` on Hoopa:
+```
+post-up iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT || true
+```
+
 ---
 *Wikipedia Hybrid API deployed: December 13, 2025*
 *SSD optimization: January 7, 2026*
+*Network fix: January 19, 2026*
