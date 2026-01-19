@@ -1,6 +1,6 @@
 # ArXiv API - Research Paper Search
 
-**Last Updated:** January 10, 2026
+**Last Updated:** January 19, 2026
 **Status:** Production Ready
 
 ## Overview
@@ -168,6 +168,27 @@ pct exec 122 -- python3 -c "import ast; ast.parse(open('/opt/arxiv/main.py').rea
 - **GPU keepalive**: Background thread prevents cold start latency
 - **GPU required**: API will fail to start if CUDA/GPU is unavailable
 
+### IMPORTANT: Duplicate Service (Fixed January 19, 2026)
+
+There was a legacy `arxiv-gpu-search.service` that ran `gpu_search_api.py` on the same port 8082. This service has been **disabled** but NOT deleted. If the API stops working after a reboot, check for duplicate services:
+
+```bash
+# Check for duplicate services
+pct exec 122 -- systemctl list-units --type=service --all | grep arxiv
+
+# If arxiv-gpu-search is running, disable it
+pct exec 122 -- systemctl stop arxiv-gpu-search
+pct exec 122 -- systemctl disable arxiv-gpu-search
+pct exec 122 -- systemctl restart arxiv-api
+```
+
+**Only `arxiv-api.service` (running `main:app`) should be active.**
+
+## Recent Changes (January 19, 2026)
+
+- **SEO implementation** - Added meta description, OG tags, Twitter Cards to homepage template
+- **Duplicate service disabled** - `arxiv-gpu-search.service` disabled to prevent port conflict
+
 ## Recent Changes (January 10, 2026)
 
 - **Rate limiting migrated to Redis** - Now persists across restarts, uses sliding window with sorted sets
@@ -175,6 +196,7 @@ pct exec 122 -- python3 -c "import ast; ast.parse(open('/opt/arxiv/main.py').rea
 - **Deprecated metadata code removed** - load_metadata() call removed from startup
 
 ---
+*SEO implementation + duplicate service fix: January 19, 2026*
 *Redis rate limiting: January 10, 2026*
 *Code documentation added: January 10, 2026*
 *ArXiv RAM cache optimization: January 6, 2026*
