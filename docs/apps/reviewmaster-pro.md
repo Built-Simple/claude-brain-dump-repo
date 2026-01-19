@@ -1,7 +1,7 @@
 # ReviewMaster Pro - AI Review Response Generator
 
-**Last Updated:** January 9, 2026
-**Status:** Production Ready (95%)
+**Last Updated:** January 19, 2026
+**Status:** Production Ready (100%)
 
 ## Overview
 
@@ -18,6 +18,33 @@
 ## What is ReviewMaster Pro?
 
 AI-powered review response generator that helps businesses respond to customer reviews across multiple platforms with brand-appropriate, contextually relevant responses.
+
+## Integrations
+
+### TastyIgniter Integration (CT 315)
+
+ReviewMaster Pro is integrated with the TastyIgniter restaurant platform via the `igniter/reviewmaster` extension.
+
+| Property | Value |
+|----------|-------|
+| **TastyIgniter Container** | CT 315 on Silvally (192.168.1.53) |
+| **Extension Path** | `/var/www/tastyigniter/extensions/igniter/reviewmaster/` |
+| **Service Account** | tastyigniter@built-simple.ai |
+| **Account Status** | Pro (unlimited usage) |
+
+**How it works:**
+1. TastyIgniter extension authenticates via JWT (login → access token → refresh token)
+2. Access tokens cached for 14 minutes, refresh tokens for 30 days
+3. Calls `POST /api/review/generate` to generate AI responses
+4. Pro account enables unlimited response generation
+
+**Configuration:**
+```php
+// config/reviewmaster.php
+'api_url' => 'http://192.168.1.200:8001',
+'api_email' => 'tastyigniter@built-simple.ai',
+'api_password' => 'TastyReviews2025',
+```
 
 ## Supported Platforms
 
@@ -73,6 +100,9 @@ ssh root@192.168.1.52 "pct exec 313 -- systemctl restart reviewmaster"
 
 # Test access
 curl https://reviewmaster.built-simple.ai/health
+
+# Test TastyIgniter integration
+ssh root@192.168.1.52 "pct exec 315 -- bash -c 'cd /var/www/tastyigniter && php artisan tinker --execute=\"print_r(app(\\\"reviewmaster.client\\\")->testConnection());\"'"
 ```
 
 ## Revenue Model
@@ -99,3 +129,4 @@ CT 115 (obsolete "configurable" version) deleted: December 13, 2025
 ---
 *ReviewMaster Pro: Live Stripe keys configured: December 9, 2025*
 *Migrated to Silvally: December 13, 2025*
+*TastyIgniter integration: January 19, 2026*
