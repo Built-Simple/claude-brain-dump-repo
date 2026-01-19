@@ -151,7 +151,7 @@ curl -X POST https://wikipedia.built-simple.ai/api/hybrid \
 
 **Symptom:** Wikipedia API unreachable from outside Hoopa; CT 213 can't ping gateway or other hosts.
 
-**Root Cause:** On Hoopa, `bridge-nf-call-iptables=1` means bridged traffic goes through iptables. The FORWARD chain had `policy DROP` with no rule to accept traffic on non-firewall veth interfaces (CT 213 has `firewall=0` so it uses `veth213i0` directly on `vmbr0`, not through `fwln+` interfaces that PVE firewall rules match on).
+**Root Cause:** Docker was installed on Hoopa at 02:12 on January 19, 2026. Docker sets iptables FORWARD chain to `policy DROP` for container isolation. With `bridge-nf-call-iptables=1`, bridged LXC traffic goes through iptables. CT 213 has `firewall=0` so it uses `veth213i0` directly on `vmbr0` (not through `fwln+` interfaces that PVE firewall rules match on), and there was no ACCEPT rule for this traffic.
 
 **Fix:** Added iptables rule to accept bridged traffic:
 ```bash
