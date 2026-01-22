@@ -195,7 +195,74 @@ pct exec 122 -- systemctl restart arxiv-api
 - **GPU check added** - API fails fast at startup if CUDA unavailable
 - **Deprecated metadata code removed** - load_metadata() call removed from startup
 
+## PDF Full-Text Pipeline
+
+### Location
+- **Scripts:** `/mnt/raid6/arxiv-full-text-pipeline/` on Giratina
+- **PDFs:** `/mnt/pcbox/thunder/arxiv_pdfs/` on Talon (2.2M files)
+
+### Current Status (January 21, 2026)
+
+| Metric | Value |
+|--------|-------|
+| Papers in database | 2,770,235 |
+| Papers with full_text | 888,684 (32%) |
+| PDFs on Talon | 2,212,820 |
+| Valid PDFs (~8%) | ~177,000 |
+| Invalid files (~92%) | ~2,035,000 |
+
+**Issue Found:** ~92% of "PDF" files on Talon are actually ArXiv CAPTCHA error pages (HTML). The original download script hit rate limits.
+
+### Pipeline Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `02_pdf_text_extraction_talon.py` | Extract text from PDFs via SSH to Talon |
+| `arxiv_pdf_downloader.py` | Rate-limited PDF downloader (on Talon) |
+| `identify_invalid_pdfs.sh` | Scan and identify invalid PDFs (on Talon) |
+
+### Running Extraction
+
+```bash
+# From Giratina
+cd /mnt/raid6/arxiv-full-text-pipeline
+source venv/bin/activate
+
+# Extract from valid PDFs (uses /root/valid_pdfs.txt on Talon)
+python 02_pdf_text_extraction_talon.py --limit 100
+
+# Full extraction (no limit)
+python 02_pdf_text_extraction_talon.py
+```
+
+### Running the Downloader (on Talon)
+
+```bash
+# SSH to Talon
+ssh root@192.168.1.7
+
+# Download missing PDFs with rate limiting (2 sec between requests)
+python3 /root/arxiv_pdf_downloader.py --limit 1000
+
+# Check download progress
+tail -f /root/arxiv_download.log
+```
+
+### Identifying Invalid PDFs (on Talon)
+
+```bash
+# Quick sample (1000 files)
+/root/identify_invalid_pdfs.sh sample
+
+# Full scan (takes many hours)
+/root/identify_invalid_pdfs.sh scan
+
+# Check scan status
+wc -l /root/valid_pdfs.txt /root/invalid_pdfs.txt
+```
+
 ---
+*Full-text pipeline documentation: January 21, 2026*
 *SEO implementation + duplicate service fix: January 19, 2026*
 *Redis rate limiting: January 10, 2026*
 *Code documentation added: January 10, 2026*
