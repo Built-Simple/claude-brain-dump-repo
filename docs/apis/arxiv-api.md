@@ -197,42 +197,66 @@ pct exec 122 -- systemctl restart arxiv-api
 
 ## PDF Full-Text Pipeline
 
-### Location
-- **Scripts:** `/mnt/raid6/arxiv-full-text-pipeline/` on Giratina
-- **PDFs:** `/mnt/pcbox/thunder/arxiv_pdfs/` on Talon (2.2M files)
+### PDF Locations
 
-### Current Status (January 21, 2026)
+| Location | Host | PDFs | Status |
+|----------|------|------|--------|
+| `/proxmox-zfs/arxiv_consolidated/papers/` | Giratina (local) | 146,868 | **100% valid** |
+| `/mnt/pcbox/thunder/arxiv_pdfs/` | Talon (via SSH) | 2,212,820 | ~8% valid (CAPTCHA issue) |
+
+**Recommended:** Use local Giratina PDFs first (faster, 100% valid)
+
+### Current Status (January 22, 2026)
 
 | Metric | Value |
 |--------|-------|
 | Papers in database | 2,770,235 |
-| Papers with full_text | 888,684 (32%) |
+| Papers with full_text | ~889,000 (32%) |
+| Local PDFs (Giratina) | 146,868 (100% valid) |
+| Local PDFs needing extraction | 43,104 |
 | PDFs on Talon | 2,212,820 |
-| Valid PDFs (~8%) | ~177,000 |
-| Invalid files (~92%) | ~2,035,000 |
+| Valid Talon PDFs (~8%) | ~177,000 |
+| Extraction rate | ~278 papers/hour |
 
-**Issue Found:** ~92% of "PDF" files on Talon are actually ArXiv CAPTCHA error pages (HTML). The original download script hit rate limits.
-
-### Pipeline Scripts
+### Scripts
 
 | Script | Purpose |
 |--------|---------|
-| `02_pdf_text_extraction_talon.py` | Extract text from PDFs via SSH to Talon |
-| `arxiv_pdf_downloader.py` | Rate-limited PDF downloader (on Talon) |
-| `identify_invalid_pdfs.sh` | Scan and identify invalid PDFs (on Talon) |
+| `03_local_pdf_extraction.py` | **RECOMMENDED** - Extract from local Giratina PDFs |
+| `02_pdf_text_extraction_talon.py` | Extract from PDFs via SSH to Talon |
+| `arxiv_pdf_downloader.py` | Rate-limited PDF downloader (run on Talon) |
+| `identify_invalid_pdfs.sh` | Scan and identify invalid PDFs (run on Talon) |
 
-### Running Extraction
+### Running Local Extraction (Recommended)
 
 ```bash
-# From Giratina
+# From Giratina - uses local PDFs, much faster
+cd /mnt/raid6/arxiv-full-text-pipeline
+source venv/bin/activate
+
+# Test with small batch
+python 03_local_pdf_extraction.py --limit 50
+
+# Full extraction of all 43K eligible papers
+python 03_local_pdf_extraction.py
+
+# Run in background for long extractions
+nohup python 03_local_pdf_extraction.py > local_extraction_run.log 2>&1 &
+tail -f local_extraction_run.log
+
+# Check progress
+tail /mnt/raid6/arxiv-full-text-pipeline/local_extraction.log
+```
+
+### Running Talon Extraction (Legacy)
+
+```bash
+# From Giratina - uses SSH to access Talon PDFs
 cd /mnt/raid6/arxiv-full-text-pipeline
 source venv/bin/activate
 
 # Extract from valid PDFs (uses /root/valid_pdfs.txt on Talon)
 python 02_pdf_text_extraction_talon.py --limit 100
-
-# Full extraction (no limit)
-python 02_pdf_text_extraction_talon.py
 ```
 
 ### Running the Downloader (on Talon)
@@ -248,20 +272,31 @@ python3 /root/arxiv_pdf_downloader.py --limit 1000
 tail -f /root/arxiv_download.log
 ```
 
-### Identifying Invalid PDFs (on Talon)
+### Local PDF Collection Details
+
+The `/proxmox-zfs/arxiv_consolidated/papers/` collection on Giratina:
+- **arxiv_complete/**: 101,957 PDFs (years: 2007, 2021-2024)
+- **arxiv_archive/pdfs/**: 44,911 PDFs (2024)
+- **Total size**: ~409GB
+- **All PDFs verified valid** (100% have %PDF- header)
+
+### Identifying Invalid PDFs on Talon
 
 ```bash
 # Quick sample (1000 files)
-/root/identify_invalid_pdfs.sh sample
+ssh root@192.168.1.7 '/root/identify_invalid_pdfs.sh sample'
 
 # Full scan (takes many hours)
-/root/identify_invalid_pdfs.sh scan
+ssh root@192.168.1.7 '/root/identify_invalid_pdfs.sh scan'
 
 # Check scan status
-wc -l /root/valid_pdfs.txt /root/invalid_pdfs.txt
+ssh root@192.168.1.7 'wc -l /root/valid_pdfs.txt /root/invalid_pdfs.txt'
 ```
 
+**Issue Found:** ~92% of Talon PDFs are actually ArXiv CAPTCHA error pages (HTML). The original download script hit rate limits.
+
 ---
+*Local PDF collection discovery + extraction script: January 22, 2026*
 *Full-text pipeline documentation: January 21, 2026*
 *SEO implementation + duplicate service fix: January 19, 2026*
 *Redis rate limiting: January 10, 2026*
