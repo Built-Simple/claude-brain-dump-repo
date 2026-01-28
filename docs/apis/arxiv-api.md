@@ -63,6 +63,7 @@ curl -X POST https://arxiv.built-simple.ai/api/contact \
 - OAuth 2.0 (Google) + email/password authentication
 - Rate limiting (Free: 100/month, Pro: 10,000/month)
 - Stripe integration for Pro tier ($29/month)
+- Stripe webhooks: `/webhook/stripe` or `/webhooks/stripe` (both work)
 - Contact form (emails to info@built-simple.ai)
 
 ## Performance
@@ -183,6 +184,10 @@ pct exec 122 -- systemctl restart arxiv-api
 ```
 
 **Only `arxiv-api.service` (running `main:app`) should be active.**
+
+## Recent Changes (January 28, 2026)
+
+- **Stripe webhook alias** - Added `/webhook/stripe` alias route (in addition to `/webhooks/stripe`) to match Stripe Dashboard webhook URL configuration
 
 ## Recent Changes (January 19, 2026)
 
