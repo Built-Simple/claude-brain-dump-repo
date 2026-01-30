@@ -91,7 +91,7 @@ Post to one or more connected social media platforms.
 }
 ```
 
-**Supported Platforms:** `twitter`, `linkedin`
+**Supported Platforms:** `twitter`, `linkedin`, `zapier_facebook`, `zapier_instagram`, `zapier_twitter`
 
 **Examples:**
 
@@ -154,6 +154,115 @@ curl -X POST http://192.168.1.149:3080/api/v1/post \
 **Error Response (400):**
 ```json
 {"error": "Required: text (string), platforms (array)"}
+```
+
+---
+
+## Zapier Integration (for Facebook/Instagram)
+
+For platforms requiring developer accounts (Facebook, Instagram), posts are queued and Zapier polls to fetch and publish them.
+
+### How It Works
+
+1. Post to `zapier_facebook` or `zapier_instagram` platform
+2. Buffer Killer queues the post
+3. Zapier polls every X minutes via Schedule trigger
+4. Zapier fetches pending posts and publishes via Facebook Pages action
+
+### Zapier Queue Endpoints
+
+#### GET /api/v1/zapier/next
+
+Fetch next pending post (Zapier polls this).
+
+```bash
+# Get next post for any platform
+curl http://192.168.1.149:3080/api/v1/zapier/next
+
+# Get next post for specific platform
+curl http://192.168.1.149:3080/api/v1/zapier/next?platform=facebook
+```
+
+**Response (has post):**
+```json
+{
+  "hasPost": true,
+  "id": 1,
+  "text": "Hello Facebook!",
+  "platform": "facebook",
+  "image_url": "https://example.com/image.jpg",
+  "image_base64": null,
+  "created_at": "2026-01-30T20:32:18.650Z"
+}
+```
+
+**Response (no posts):**
+```json
+{"hasPost": false}
+```
+
+#### POST /api/v1/zapier/complete/:id
+
+Mark a post as completed after Zapier publishes it.
+
+```bash
+curl -X POST http://192.168.1.149:3080/api/v1/zapier/complete/1 \
+  -H "Content-Type: application/json" \
+  -d '{"success": true}'
+```
+
+#### GET /api/v1/zapier/status
+
+Check queue status.
+
+```bash
+curl http://192.168.1.149:3080/api/v1/zapier/status
+```
+
+**Response:**
+```json
+{
+  "total": 5,
+  "pending": 2,
+  "processing": 0,
+  "completed": 3,
+  "failed": 0,
+  "recent": [...]
+}
+```
+
+### Zapier Setup
+
+**Step 1:** Create Zap with Schedule trigger (every 5 min)
+
+**Step 2:** Code by Zapier - Fetch Post:
+```javascript
+const response = await fetch('http://192.168.1.149:3080/api/v1/zapier/next?platform=facebook');
+const data = await response.json();
+if (!data.hasPost) return { skip: true };
+return { id: data.id, text: data.text, image_url: data.image_url };
+```
+
+**Step 3:** Filter - Only continue if `skip` does not exist
+
+**Step 4:** Facebook Pages - Create Page Post (use `text` from step 2)
+
+**Step 5:** Code by Zapier - Mark Complete:
+```javascript
+await fetch('http://192.168.1.149:3080/api/v1/zapier/complete/' + inputData.id, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ success: true })
+});
+return { done: true };
+```
+
+### Example: Post to Facebook via Zapier
+
+```bash
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello Facebook!","platforms":["zapier_facebook"]}'
 ```
 
 ---
@@ -253,3 +362,4 @@ Migrated from Victini to Silvally: December 13, 2025
 *Buffer Killer migrated to Silvally: December 13, 2025*
 *Programmatic API added: January 30, 2026*
 *Twitter auto-refresh tokens implemented: January 30, 2026*
+*Zapier queue integration added: January 30, 2026*
