@@ -237,7 +237,7 @@ curl http://192.168.1.149:3080/api/v1/zapier/status
 
 **Step 2:** Code by Zapier - Fetch Post:
 ```javascript
-const response = await fetch('http://192.168.1.149:3080/api/v1/zapier/next?platform=facebook');
+const response = await fetch('https://buffer-killer-admin.built-simple.ai/api/v1/zapier/next?platform=facebook');
 const data = await response.json();
 if (!data.hasPost) return { skip: true };
 return { id: data.id, text: data.text, image_url: data.image_url };
@@ -249,7 +249,7 @@ return { id: data.id, text: data.text, image_url: data.image_url };
 
 **Step 5:** Code by Zapier - Mark Complete:
 ```javascript
-await fetch('http://192.168.1.149:3080/api/v1/zapier/complete/' + inputData.id, {
+await fetch('https://buffer-killer-admin.built-simple.ai/api/v1/zapier/complete/' + inputData.id, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ success: true })
