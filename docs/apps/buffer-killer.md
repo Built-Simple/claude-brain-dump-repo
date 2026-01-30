@@ -1,6 +1,6 @@
 # Buffer Killer - Social Media Scheduler
 
-**Last Updated:** January 9, 2026
+**Last Updated:** January 30, 2026
 **Status:** Development Mode (not production-ready)
 
 ## Overview
@@ -69,6 +69,58 @@ Self-hosted social media scheduling application - an open-source alternative to 
 - Automated encrypted backups
 - Audit logging
 
+## Programmatic API
+
+The app exposes a simple REST API for programmatic posting:
+
+### POST /api/v1/post
+Post to one or more connected platforms.
+
+```bash
+# Post text to Twitter and LinkedIn
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello world!","platforms":["twitter","linkedin"]}'
+
+# Post with image (base64)
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Check this out!","platforms":["twitter"],"imageBase64":"data:image/png;base64,..."}'
+
+# Post with image (URL)
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"From URL","platforms":["twitter"],"imageUrl":"https://example.com/image.jpg"}'
+```
+
+Response:
+```json
+{
+  "success": true,
+  "results": {
+    "twitter": {"success": true, "result": {"id": "123..."}},
+    "linkedin": {"success": true, "result": {"id": "urn:li:share:..."}}
+  }
+}
+```
+
+### GET /api/v1/accounts
+List connected accounts.
+
+```bash
+curl http://192.168.1.149:3080/api/v1/accounts
+```
+
+### Token Auto-Refresh
+Twitter OAuth 2.0 tokens expire every 2 hours. The API automatically refreshes tokens when they expire and saves the new tokens to the database.
+
+## Connected Accounts (as of Jan 30, 2026)
+
+| Platform | Username | Status |
+|----------|----------|--------|
+| Twitter/X | @Talon_Neely | ✅ Connected |
+| LinkedIn | Talon Neely | ✅ Connected |
+
 ## Quick Commands
 
 ```bash
@@ -78,11 +130,11 @@ ssh root@192.168.1.52 "pct enter 311"
 # Check service status
 ssh root@192.168.1.52 "pct exec 311 -- ps aux | grep node"
 
-# View logs
-ssh root@192.168.1.52 "pct exec 311 -- pm2 logs buffer-killer --lines 50"
+# View logs (note: pm2 path required)
+ssh root@192.168.1.52 "pct exec 311 -- /usr/local/lib/node_modules/pm2/bin/pm2 logs buffer-killer --lines 50"
 
 # Restart service
-ssh root@192.168.1.52 "pct exec 311 -- pm2 restart buffer-killer"
+ssh root@192.168.1.52 "pct exec 311 -- /usr/local/lib/node_modules/pm2/bin/pm2 restart buffer-killer"
 
 # Database backup
 ssh root@192.168.1.52 "pct exec 311 -- sqlite3 /root/buffer-killer-deployment/database.db '.backup /root/db-backup-\$(date +%Y%m%d).db'"
@@ -90,6 +142,11 @@ ssh root@192.168.1.52 "pct exec 311 -- sqlite3 /root/buffer-killer-deployment/da
 # Test internal access
 curl -I http://192.168.1.149:3080  # Web UI
 curl http://192.168.1.149:3000     # OAuth status
+
+# Test API posting
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Test post","platforms":["twitter","linkedin"]}'
 ```
 
 ## Monitoring
@@ -112,3 +169,5 @@ Migrated from Victini to Silvally: December 13, 2025
 
 ---
 *Buffer Killer migrated to Silvally: December 13, 2025*
+*Programmatic API added: January 30, 2026*
+*Twitter auto-refresh tokens implemented: January 30, 2026*
