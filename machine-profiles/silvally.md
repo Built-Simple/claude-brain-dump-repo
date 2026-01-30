@@ -1,6 +1,6 @@
 # Machine Profile: Silvally
 
-**Last Updated:** January 9, 2026
+**Last Updated:** January 29, 2026
 **Role:** Application Server
 
 ## System Overview
@@ -31,6 +31,9 @@
 | 311 | buffer-killer | 192.168.1.149 | Social media scheduler | Running |
 | 312 | myfit-pro | 192.168.1.112 | Fitness tracking app | Running |
 | 313 | reviewmaster | 192.168.1.200 | AI review responses | Running |
+| 314 | reddit-games | - | Reddit games | Running |
+| 315 | tastyigniter | 192.168.1.53 | Restaurant ordering | Running |
+| 316 | n8n | 192.168.1.61 | Workflow automation | Running |
 
 ### Container Details
 
@@ -49,6 +52,17 @@
 - **Stack:** FastAPI, PostgreSQL, OpenAI
 - **External:** reviewmaster.built-simple.ai
 - **Revenue:** $29/month Pro tier
+
+#### CT 315: TastyIgniter
+- **Port:** 80
+- **Stack:** PHP, Laravel
+- **External:** tastyigniter.built-simple.ai, orders.built-simple.ai
+
+#### CT 316: N8N
+- **Port:** 5678
+- **Stack:** Node.js, N8N v2.4.8
+- **External:** n8n.built-simple.ai
+- **Docs:** [n8n.md](../docs/apps/n8n.md)
 
 ## SSH Access
 
@@ -90,6 +104,9 @@ Containers migrated from Victini on December 13, 2025:
 - https://buffer-killer-admin.built-simple.ai - Web UI
 - https://myfit.built-simple.ai - MyFit Pro
 - https://reviewmaster.built-simple.ai - ReviewMaster Pro
+- https://tastyigniter.built-simple.ai - TastyIgniter
+- https://orders.built-simple.ai - TastyIgniter (alias)
+- https://n8n.built-simple.ai - N8N Workflow Automation
 
 ---
 *Profile for Silvally - Application server in pallet-town cluster*
