@@ -1,7 +1,7 @@
 # Legal API - Legal Document Search
 
-**Last Updated:** January 10, 2026
-**Status:** Partially Operational (FAISS v4 build in progress)
+**Last Updated:** January 30, 2026
+**Status:** Operational (FAISS v5.8 - 2M+ vectors)
 
 ## Overview
 
@@ -30,12 +30,12 @@
      │  │                                                                  │    │
      │  │  FastAPI (port 5002)                                            │    │
      │  │    ├─ ModernBERT embedding model (GPU)                          │    │
-     │  │    ├─ FAISS IVF-PQ index (8M+ vectors when ready)              │    │
+     │  │    ├─ FAISS Flat index (2M+ vectors)                            │    │
      │  │    └─ Query encoding + similarity search                        │    │
      │  │                                                                  │    │
      │  │  /mnt/indexes (bind mount from /mnt/network_transfer/...)      │    │
-     │  │    ├─ legal_modernbert_v4.index (pending)                       │    │
-     │  │    ├─ legal_modernbert_v4_metadata.jsonl (pending)              │    │
+     │  │    ├─ legal_faiss_v5.8.index (127 MB, 2,034,944 vectors)       │    │
+     │  │    ├─ legal_id_map_v5.8.json (39 MB, opinion ID mapping)       │    │
      │  │    └─ courtlistener_combined.index (fallback, 2,453 vectors)   │    │
      │  └─────────────────────────────────────────────────────────────────┘    │
      │                                                                          │
@@ -104,12 +104,14 @@
 - **Published opinions**: ~8.3M (filtered from clusters)
 - **Source**: CourtListener bulk data export
 
-### FAISS Index (Building)
-- **Type**: IVF-PQ (nlist=4096, m=48, nbits=8)
+### FAISS Index v5.8 (Production)
+- **Type**: IndexFlatL2 (exact search, highest accuracy)
 - **Model**: freelawproject/modernbert-embed-base_finetune_512
 - **Dimensions**: 768
-- **Target vectors**: ~8M
-- **Estimated size**: 15-20 GB
+- **Total vectors**: 2,034,944 (published US opinions)
+- **Index size**: 127 MB
+- **ID map size**: 39 MB
+- **Search time**: ~0.8s (after GPU warmup)
 
 ## API Endpoints
 
@@ -126,22 +128,18 @@
 ## Current Status
 
 ### Working
-- CT 210 API running (v3.0.0)
-- Fallback to small index (2,453 vectors)
-- PostgreSQL connection to Giratina
+- CT 210 API running (v3.0.0) with FAISS v5.8 index
+- 2,034,944 published US legal opinions indexed
+- ModernBERT embeddings via GPU (RTX 3090)
+- Semantic search with ~0.8s response time
 - Health/status endpoints
-
-### In Progress
-- FAISS v4 index build on Hoopa GPU 0
-  - Reading clusters: ~3M / 10M rows
-  - Total published: ~8.3M opinions
-  - Estimated completion: 25-35 hours from restart
 
 ### Not Yet Implemented
 - CT 211 PostgreSQL (container empty)
 - CT 212 Elasticsearch (container empty)
 - Cloudflare tunnel (no external URL)
 - Monitoring integration
+- Full text lookup (DB connection not configured)
 
 ## Tech Debt
 
@@ -200,8 +198,8 @@ The API auto-selects index based on availability:
 ```python
 INDEX_CONFIG = {
     "primary": {
-        "index_file": "legal_modernbert_v4.index",
-        "metadata_file": "legal_modernbert_v4_metadata.jsonl",
+        "index_file": "legal_faiss_v5.8.index",
+        "metadata_file": "legal_id_map_v5.8.json",
         "model_name": "freelawproject/modernbert-embed-base_finetune_512",
     },
     "fallback": {
@@ -212,6 +210,8 @@ INDEX_CONFIG = {
 }
 ```
 
+**Note:** v5.8 uses a different metadata format (`{opinion_id: index_position}`) which the API converts at load time.
+
 ## Rate Limits
 
 | Tier | Monthly Limit | Rate Limit | Price |
@@ -221,5 +221,6 @@ INDEX_CONFIG = {
 | Pro | 10,000/month | 100/minute | $49/month |
 
 ---
-*Documentation updated: January 10, 2026*
-*Previous status: "In Development" -> Now: "Partially Operational"*
+*Documentation updated: January 30, 2026*
+*Status: Operational with FAISS v5.8 (2M+ vectors)*
+*Previous: January 10, 2026 - "Partially Operational (v4 build in progress)"*
