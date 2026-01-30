@@ -14,5 +14,13 @@
   "crawl4ai": {
     "command": "uvx",
     "args": ["crawl4ai-mcp"]
+  },
+  "n8n": {
+    "command": "node",
+    "args": ["/opt/n8n-mcp-server/build/index.js"],
+    "env": {
+      "N8N_HOST": "https://n8n.built-simple.ai",
+      "N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNDlmMDQ1ZS1hNjVkLTRmZmItYjkwOS05YTRjYmQxYWRmYzciLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzY5NzQzMjg3fQ.gEx-Sa7UEGr8-wlWdVzpeMnaGLUci_S7VKB8DXYbxx8"
+    }
   }
 }
