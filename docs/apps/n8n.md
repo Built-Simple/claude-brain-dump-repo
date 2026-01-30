@@ -34,7 +34,7 @@ The N8N MCP server allows Claude Code to manage workflows programmatically.
 ### Configuration
 - **MCP Server Location:** `/opt/n8n-mcp-server/`
 - **Config File:** `~/.claude/plugins/marketplaces/neely-brain-dump-marketplace/plugins/neely-brain-dump/.mcp.json`
-- **Auto-initialization:** Enabled via `N8N_HOST` and `N8N_API_KEY` env vars
+- **Auto-initialization:** Enabled via `N8N_HOST` and `N8N_API_KEY` env vars (added Jan 30, 2026)
 
 ### Available MCP Tools
 
@@ -49,7 +49,7 @@ The N8N MCP server allows Claude Code to manage workflows programmatically.
 | `mcp__n8n__deactivate-workflow` | Deactivate a workflow |
 | `mcp__n8n__list-executions` | List workflow executions |
 | `mcp__n8n__get-execution` | Get execution details |
-| `mcp__n8n__create-credential` | Create credentials |
+| `mcp__n8n__create-credential` | Create credentials (API keys only) |
 | `mcp__n8n__get-credential-schema` | Get schema for credential type |
 | `mcp__n8n__list-tags` | List all tags |
 | `mcp__n8n__create-tag` | Create a tag |
@@ -57,15 +57,52 @@ The N8N MCP server allows Claude Code to manage workflows programmatically.
 
 ### Usage Notes
 
-1. **First session after restart:** Call `mcp__n8n__init-n8n` once (auto-init loads on future sessions)
-2. **clientId parameter:** Optional if env vars are configured - falls back to default client
-3. **Buffer/OAuth credentials:** Must be created via N8N web UI (OAuth flow requires browser)
+1. **Auto-initialization:** MCP server auto-initializes from env vars - no manual `init-n8n` needed
+2. **clientId parameter:** Optional on all tools - falls back to default client
+3. **OAuth credentials:** Must be created via N8N web UI (OAuth flow requires browser)
 
 ### API Key
 The API key is stored in `.mcp.json` as a JWT token. To regenerate:
 1. Go to https://n8n.built-simple.ai
 2. Settings > API > Create new API key
 3. Update `N8N_API_KEY` in `.mcp.json`
+
+## Buffer Integration
+
+Buffer uses OAuth2 for authentication, which requires browser interaction.
+
+### Setup Steps
+1. Go to https://n8n.built-simple.ai
+2. Click **Credentials** in the left sidebar
+3. Click **Add Credential**
+4. Search for "Buffer" and select **Buffer OAuth2 API**
+5. Click **Sign in with Buffer** to authorize
+6. Complete OAuth flow in browser
+7. Save the credential
+
+### Creating a Buffer Workflow
+Once credentials are set up, you can create workflows via MCP:
+
+```
+# Example: Create a Buffer posting workflow
+mcp__n8n__create-workflow with:
+- name: "Buffer Social Post"
+- nodes: Schedule Trigger → Buffer (Post)
+- connections: link trigger to Buffer node
+```
+
+### Buffer Credential Type
+- **Type name:** `bufferOAuth2Api`
+- **Scopes:** publish (post to social accounts)
+- **Required:** OAuth2 browser authorization
+
+## Workflows
+
+### Test Workflow - Created via MCP
+- **ID:** `8La5vZFV5Kg2FsrV`
+- **Status:** Inactive
+- **Created:** January 30, 2026
+- **Nodes:** Manual Trigger → Set Test Data
 
 ## Quick Commands
 
@@ -84,6 +121,9 @@ ssh root@192.168.1.52 "pct enter 316"
 
 # Test MCP server manually
 cd /opt/n8n-mcp-server && N8N_HOST="https://n8n.built-simple.ai" N8N_API_KEY="<key>" node build/index.js
+
+# Rebuild MCP server after changes
+cd /opt/n8n-mcp-server && npm run build
 ```
 
 ## Notes
@@ -91,9 +131,10 @@ cd /opt/n8n-mcp-server && N8N_HOST="https://n8n.built-simple.ai" N8N_API_KEY="<k
 - N8N is a workflow automation tool similar to Zapier
 - Installed: January 29, 2026
 - MCP integration added: January 30, 2026
+- Auto-init feature added: January 30, 2026 (no manual init-n8n required)
 - Accessible via Cloudflare tunnel for external access
 - Internal access only from Silvally host (container networking)
 
 ---
 *Created: January 29, 2026*
-*Updated: January 30, 2026 - Added MCP integration documentation*
+*Updated: January 30, 2026 - Added MCP integration, auto-init, Buffer setup instructions*
