@@ -71,48 +71,130 @@ Self-hosted social media scheduling application - an open-source alternative to 
 
 ## Programmatic API
 
-The app exposes a simple REST API for programmatic posting:
+**Base URL:** `http://192.168.1.149:3080` (internal) or via SSH tunnel
+
+The app exposes a simple REST API for programmatic posting. No authentication required (API is internal-only).
+
+---
 
 ### POST /api/v1/post
-Post to one or more connected platforms.
 
-```bash
-# Post text to Twitter and LinkedIn
-curl -X POST http://192.168.1.149:3080/api/v1/post \
-  -H "Content-Type: application/json" \
-  -d '{"text":"Hello world!","platforms":["twitter","linkedin"]}'
+Post to one or more connected social media platforms.
 
-# Post with image (base64)
-curl -X POST http://192.168.1.149:3080/api/v1/post \
-  -H "Content-Type: application/json" \
-  -d '{"text":"Check this out!","platforms":["twitter"],"imageBase64":"data:image/png;base64,..."}'
-
-# Post with image (URL)
-curl -X POST http://192.168.1.149:3080/api/v1/post \
-  -H "Content-Type: application/json" \
-  -d '{"text":"From URL","platforms":["twitter"],"imageUrl":"https://example.com/image.jpg"}'
+**Request Body:**
+```json
+{
+  "text": "Your post content here",      // Required: string
+  "platforms": ["twitter", "linkedin"],  // Required: array of platform names
+  "imageBase64": "data:image/png;base64,...",  // Optional: base64 image with data URI
+  "imageUrl": "https://example.com/img.jpg"    // Optional: URL to image (alternative to base64)
+}
 ```
 
-Response:
+**Supported Platforms:** `twitter`, `linkedin`
+
+**Examples:**
+
+```bash
+# Simple text post to both platforms
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello from the API!","platforms":["twitter","linkedin"]}'
+
+# Post to Twitter only
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Twitter only post","platforms":["twitter"]}'
+
+# Post with image from URL
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Check out this image!","platforms":["twitter"],"imageUrl":"https://example.com/photo.jpg"}'
+
+# Post with base64 image
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Image post","platforms":["twitter"],"imageBase64":"data:image/png;base64,iVBORw0KGgo..."}'
+```
+
+**Success Response:**
 ```json
 {
   "success": true,
   "results": {
-    "twitter": {"success": true, "result": {"id": "123..."}},
-    "linkedin": {"success": true, "result": {"id": "urn:li:share:..."}}
+    "twitter": {
+      "success": true,
+      "result": {
+        "id": "2017333150024929768",
+        "text": "Hello from the API!"
+      }
+    },
+    "linkedin": {
+      "success": true,
+      "result": {
+        "id": "urn:li:share:7423098842113310720",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7423098842113310720"
+      }
+    }
   }
 }
 ```
 
+**Partial Failure Response:**
+```json
+{
+  "success": false,
+  "results": {
+    "twitter": {"success": true, "result": {"id": "123..."}},
+    "linkedin": {"success": false, "error": "Account not connected"}
+  }
+}
+```
+
+**Error Response (400):**
+```json
+{"error": "Required: text (string), platforms (array)"}
+```
+
+---
+
 ### GET /api/v1/accounts
-List connected accounts.
+
+List all connected social media accounts.
 
 ```bash
 curl http://192.168.1.149:3080/api/v1/accounts
 ```
 
+**Response:**
+```json
+[
+  {
+    "id": 3,
+    "platform": "twitter",
+    "username": "Talon_Neely",
+    "is_active": 1
+  },
+  {
+    "id": 4,
+    "platform": "linkedin",
+    "username": "Talon Neely",
+    "is_active": 1
+  }
+]
+```
+
+---
+
 ### Token Auto-Refresh
-Twitter OAuth 2.0 tokens expire every 2 hours. The API automatically refreshes tokens when they expire and saves the new tokens to the database.
+
+Twitter OAuth 2.0 tokens expire every 2 hours. The API automatically:
+1. Detects 401 Unauthorized errors
+2. Uses the refresh token to get a new access token
+3. Saves the new tokens to the database
+4. Retries the failed request with the new token
+
+This is transparent to API callers - posts will succeed even with expired tokens.
 
 ## Connected Accounts (as of Jan 30, 2026)
 
