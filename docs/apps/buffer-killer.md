@@ -1,6 +1,6 @@
 # Buffer Killer - Social Media Scheduler
 
-**Last Updated:** January 30, 2026
+**Last Updated:** February 1, 2026
 **Status:** Development Mode (not production-ready)
 
 ## Overview
@@ -91,7 +91,10 @@ Post to one or more connected social media platforms.
 }
 ```
 
-**Supported Platforms:** `twitter`, `linkedin`, `zapier_facebook`, `zapier_instagram`, `zapier_twitter`
+**Supported Platforms:**
+- Direct: `twitter`, `linkedin`
+- Via Late API (no dev account needed): `instagram`, `late_instagram`, `late_facebook`, `late_threads`, `late_tiktok`
+- Via Zapier queue: `zapier_facebook`, `zapier_instagram`
 
 **Examples:**
 
@@ -158,7 +161,70 @@ curl -X POST http://192.168.1.149:3080/api/v1/post \
 
 ---
 
-## Zapier Integration (for Facebook/Instagram)
+## Late API Integration (Recommended for Instagram/Facebook)
+
+**No Facebook developer account required!** Late (getlate.dev) handles all Meta API complexity.
+
+### Setup
+
+1. Sign up at https://getlate.dev and get an API key
+2. Connect your Instagram/Facebook accounts via OAuth in Late's dashboard
+3. Add environment variables to Buffer Killer:
+
+```bash
+# In /root/buffer-killer-deployment/.env
+LATE_API_KEY=sk_your_api_key_here
+LATE_INSTAGRAM_ACCOUNT_ID=your_instagram_account_id
+LATE_FACEBOOK_ACCOUNT_ID=your_facebook_account_id  # Optional
+LATE_THREADS_ACCOUNT_ID=your_threads_account_id    # Optional
+LATE_TIKTOK_ACCOUNT_ID=your_tiktok_account_id      # Optional
+```
+
+### Get Account IDs
+
+```bash
+# List your Late connected accounts
+curl -s -H "Authorization: Bearer YOUR_API_KEY" \
+  https://getlate.dev/api/v1/accounts | jq '.accounts[] | {id: ._id, platform, username}'
+```
+
+### Posting via Late API
+
+```bash
+# Post to Instagram (requires image!)
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello Instagram! #buildsimple","platforms":["instagram"],"imageUrl":"https://example.com/image.jpg"}'
+
+# Or use explicit late_ prefix
+curl -X POST http://192.168.1.149:3080/api/v1/post \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello!","platforms":["late_instagram"],"imageUrl":"https://example.com/image.jpg"}'
+```
+
+### Check Late Status
+
+```bash
+curl http://192.168.1.149:3080/api/v1/late/status
+```
+
+### Important Notes
+
+- **Instagram requires images** - text-only posts will fail
+- Image URLs must be publicly accessible (no redirects)
+- Late handles token refresh automatically
+- Free tier: 20 posts/month, 2 profiles
+
+### Connected Late Accounts (as of Feb 1, 2026)
+
+| Platform | Username | Account ID |
+|----------|----------|------------|
+| Instagram | @builtsimple.ai | 697e9fcfbe4471a4ab74bc27 |
+| Threads | @talon_neely | 697ea028be4471a4ab74bc4a |
+
+---
+
+## Zapier Integration (Legacy - for Facebook/Instagram)
 
 For platforms requiring developer accounts (Facebook, Instagram), posts are queued and Zapier polls to fetch and publish them.
 
@@ -311,6 +377,8 @@ This is transparent to API callers - posts will succeed even with expired tokens
 |----------|----------|--------|
 | Twitter/X | @Talon_Neely | ✅ Connected |
 | LinkedIn | Talon Neely | ✅ Connected |
+| Instagram | @builtsimple.ai | ✅ Connected (via Late API) |
+| Threads | @talon_neely | ✅ Connected (via Late API) |
 
 ## Quick Commands
 
@@ -363,3 +431,4 @@ Migrated from Victini to Silvally: December 13, 2025
 *Programmatic API added: January 30, 2026*
 *Twitter auto-refresh tokens implemented: January 30, 2026*
 *Zapier queue integration added: January 30, 2026*
+*Late API integration added: February 1, 2026* - Instagram posting works!
