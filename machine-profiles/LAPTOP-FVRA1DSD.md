@@ -66,7 +66,7 @@ C:\Users\neely\
 ## SSH CONFIG
 - **Key**: `~/.ssh/id_ed25519`
 - **Known hosts**: 20+ configured
-- **Primary target**: 192.168.1.115 (root/BuiltSimple2025!)
+- **Primary target**: 192.168.1.115 (root, use SSH keys)
 
 ## SECURITY
 - Secure Boot: Enabled

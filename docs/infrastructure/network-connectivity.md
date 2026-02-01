@@ -74,7 +74,7 @@ ssh root@192.168.1.52     # Silvally
 ssh root@192.168.1.79     # Hoopa
 ssh root@192.168.1.115    # Victini
 
-# Password for all: BuiltSimple2025!
+# Password: [REDACTED - use SSH keys]
 ```
 
 ## Firewall Notes

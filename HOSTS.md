@@ -12,7 +12,7 @@ All machines on 192.168.1.x subnet with direct Starlink internet access.
 - **Role:** Primary Proxmox node, GPU server
 - **Hardware:** Dell PowerEdge R740xd, dual Tesla T4 GPUs, 314GB RAM
 - **User:** root
-- **Password:** BuiltSimple2025!
+- **Password:** [REDACTED - use SSH keys]
 - **Web UI:** https://192.168.1.100:8006
 - **External:** pallettown.built-simple.ai
 - **Containers:** CT 103, 105, 108, 122, 123, 300, 400, 502, 503, 504
@@ -21,7 +21,7 @@ All machines on 192.168.1.x subnet with direct Starlink internet access.
 - **IP:** 192.168.1.7
 - **Role:** Secondary Proxmox node
 - **User:** root
-- **Password:** BuiltSimple2025!
+- **Password:** [REDACTED - use SSH keys]
 - **External:** talon.built-simple.ai
 - **Containers:** CT 109 (stopped)
 
@@ -29,7 +29,7 @@ All machines on 192.168.1.x subnet with direct Starlink internet access.
 - **IP:** 192.168.1.52
 - **Role:** Application server
 - **User:** root
-- **Password:** BuiltSimple2025!
+- **Password:** [REDACTED - use SSH keys]
 - **External:** silvally.built-simple.ai
 - **Tunnel:** silvally (080e5208-a495-4cfc-98a9-ea90076c0363)
 - **Containers:** CT 311 (Buffer Killer), CT 312 (MyFit Pro), CT 313 (ReviewMaster)
@@ -38,7 +38,7 @@ All machines on 192.168.1.x subnet with direct Starlink internet access.
 - **IP:** 192.168.1.79
 - **Role:** GPU node (4x RTX 3090)
 - **User:** root
-- **Password:** BuiltSimple2025!
+- **Password:** [REDACTED - use SSH keys]
 - **External:** hoopa.built-simple.ai
 - **Containers:** CT 210-212 (Legal), CT 213-215 (Wikipedia)
 
@@ -46,7 +46,7 @@ All machines on 192.168.1.x subnet with direct Starlink internet access.
 - **IP:** 192.168.1.115
 - **Role:** File server, voice assistants
 - **User:** root
-- **Password:** BuiltSimple2025!
+- **Password:** [REDACTED - use SSH keys]
 - **External:** victini.built-simple.ai
 - **Tunnel:** victini (979d5394-daae-457f-8f56-7b256bb0e9eb)
 - **Containers:** CT 110 (PCBox), CT 114, CT 116 (Receptionists)
@@ -61,7 +61,7 @@ ssh root@192.168.1.52     # Silvally
 ssh root@192.168.1.79     # Hoopa
 ssh root@192.168.1.115    # Victini
 
-# All use password: BuiltSimple2025!
+# All use SSH key auth (password redacted)
 ```
 
 ## EXTERNAL ACCESS (Cloudflare Tunnels)

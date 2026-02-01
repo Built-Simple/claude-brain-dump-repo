@@ -16,7 +16,7 @@ ssh root@192.168.1.7    # Talon
 ssh root@192.168.1.52   # Silvally
 ssh root@192.168.1.79   # Hoopa
 ssh root@192.168.1.115  # Victini
-# Password: BuiltSimple2025!
+# Password: [REDACTED - use SSH keys]
 ```
 
 **Note:** HTTPS works directly now. No Cox ISP blocking, no Xray tunnels needed.

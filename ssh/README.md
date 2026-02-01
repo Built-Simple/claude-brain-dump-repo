@@ -25,7 +25,7 @@ cp known_hosts.backup ~/.ssh/known_hosts
 
 ```bash
 ssh root@192.168.1.115
-# Password: BuiltSimple2025!
+# Password: [REDACTED - use SSH keys]
 ```
 
 Or with key (after ssh-copy-id):

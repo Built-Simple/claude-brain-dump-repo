@@ -77,7 +77,7 @@ bash scripts/setup-unix.sh
 ```
 Host: 192.168.1.115
 User: root
-Pass: BuiltSimple2025!
+Pass: [REDACTED - use SSH keys]
 ```
 
 ## CONFIG LOCATIONS
