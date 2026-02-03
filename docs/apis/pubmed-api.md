@@ -1,6 +1,6 @@
 # PubMed API - Medical Research Search
 
-**Last Updated:** January 13, 2026
+**Last Updated:** February 3, 2026
 **Status:** Production Ready
 
 ## Overview
@@ -183,6 +183,32 @@ This occurs when adding `servers=` kwarg to FastAPI() init because it triggers r
 
 **Impact:** Low - API works correctly, only affects GEO optimization (LLMs use servers array to determine production URL)
 
+### /search Endpoint Now Uses Hybrid Backend (February 2026)
+
+**Status:** Resolved
+
+**Problem:** The `/search` endpoint was returning placeholder text like "Article 37903938" and "Loading article details..." instead of real titles and abstracts. The GPU vector search found relevant PMIDs but metadata enrichment wasn't happening.
+
+**Root Cause:** The GPU searcher (`gpu_searcher.py`) was intentionally designed to return placeholder data, expecting the frontend to make a separate `/metadata` call. This broke API consumers (SDKs, direct API calls) that expected complete data from `/search`.
+
+**Solution:** Modified `/search` to use the hybrid search backend instead of GPU-only search. Hybrid search:
+1. Runs GPU vector search + Elasticsearch in parallel
+2. ES returns complete metadata (titles, abstracts, journals, years)
+3. Results are merged with weighted scoring
+
+**Files Modified:**
+- `/opt/pubmed-web/routes/search_routes.py` - Changed `/search` to use `get_hybrid_searcher` dependency
+
+**Performance Impact:**
+- Before: ~70-100ms (GPU only, placeholder data)
+- After: ~80-150ms (hybrid, complete metadata)
+
+**Benefits:**
+- `/search` now returns real titles and abstracts
+- Better search quality (semantic + keyword combined)
+- No breaking changes to API response format
+
 ---
 *PubMed ES full sync completed: December 10, 2025*
 *Performance optimizations: January 7, 2026*
+*/search hybrid backend fix: February 3, 2026*
