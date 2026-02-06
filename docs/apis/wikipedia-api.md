@@ -1,6 +1,6 @@
 # Wikipedia Hybrid Search API
 
-**Last Updated:** January 9, 2026
+**Last Updated:** February 6, 2026
 **Status:** Production Ready
 
 ## Overview
@@ -10,7 +10,7 @@
 | **Container** | CT 213 on Hoopa (192.168.1.79) |
 | **IP Address** | 192.168.1.213:8080 |
 | **Articles** | 4,854,193 Wikipedia articles |
-| **Vector Index** | FAISS GPU IVF (384 dimensions) |
+| **Vector Index** | FAISS GPU Flat (384 dimensions, brute-force search) |
 | **Keyword Search** | Elasticsearch 8.19.8 |
 | **Embedding Model** | all-MiniLM-L6-v2 |
 
@@ -105,14 +105,16 @@ curl -X POST https://wikipedia.built-simple.ai/api/contact \
 - Lazy-loaded article content with prefetch
 - Contact form (server-side email)
 
-## Performance (After SSD Optimization)
+## Performance (After Flat Index Upgrade)
 
 | Operation | Time |
 |-----------|------|
 | SQLite queries | ~0.4-0.5ms |
 | Elasticsearch | ~17-25ms |
-| Vector search | ~40ms warm |
-| Full hybrid | 40-100ms warm, ~500ms cold |
+| Vector search (flat) | ~300ms warm (100% vector coverage) |
+| Full hybrid | ~300-400ms warm, ~1.6s cold |
+
+**Note:** The flat index searches all 4.8M vectors (100% coverage) vs. IVF which only searched ~3% of vectors. Search quality improved significantly at the cost of ~7x latency.
 
 ## Security
 
@@ -163,7 +165,27 @@ iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT
 post-up iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT || true
 ```
 
+### Flat Index Upgrade (Fixed February 6, 2026)
+
+**Symptom:** IVF index only searched 2.9% of vectors (nprobe=64, nlist=2203). Search results were incomplete.
+
+**Root Cause:** IVF approximate nearest neighbor search only searches a subset of clusters. For large datasets with diverse content, this misses many relevant results.
+
+**Fix:** Rebuilt index as IndexFlatIP (brute-force) to search 100% of vectors:
+1. Created `/opt/rebuild_flat_v2.py` to extract vectors from IVF inverted lists
+2. Key fix: Map internal IDs to external article IDs via IndexIDMap2's id_map
+3. Built new IndexFlatIP with correct ID mapping
+4. Index stored at `/opt/wikipedia-index/wikipedia_flat.index` (7GB)
+
+**Script location:** `/opt/rebuild_flat_v2.py` in CT 213
+
+**Impact:**
+- Search quality: Much better (100% vector coverage)
+- Latency: ~300ms vs ~40ms (acceptable tradeoff for quality)
+- GPU memory: ~7GB on GPU 2 (RTX 3090)
+
 ---
 *Wikipedia Hybrid API deployed: December 13, 2025*
 *SSD optimization: January 7, 2026*
 *Network fix: January 19, 2026*
+*Flat index upgrade: February 6, 2026*
