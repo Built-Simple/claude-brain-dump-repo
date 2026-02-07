@@ -22,18 +22,19 @@ Use Gemini CLI to explore codebases and gather information, saving Claude tokens
 
 ```bash
 # Basic exploration (YOLO mode auto-approves file reads)
-cd /path/to/project && gemini -y -m gemini-2.0-flash -p "YOUR PROMPT"
+cd /path/to/project && gemini -y -m gemini-2.5-flash -p "YOUR PROMPT"
 
 # For longer explorations, use timeout
-cd /path/to/project && timeout 120 gemini -y -m gemini-2.0-flash -p "YOUR PROMPT"
+cd /path/to/project && timeout 120 gemini -y -m gemini-2.5-flash -p "YOUR PROMPT"
 ```
 
 ## Model Selection
 
 | Model | Use Case | Notes |
 |-------|----------|-------|
-| `gemini-2.0-flash` | **Default choice** | Fast, reliable, good capacity |
-| `gemini-2.5-pro` | Complex reasoning | Slower, may hit rate limits |
+| `gemini-2.5-flash` | **Default choice** | Smarter than 2.0, reliable capacity |
+| `gemini-2.0-flash` | Fallback | Use if 2.5 has issues |
+| `gemini-2.5-pro` | DON'T USE | Burns through quota fast |
 | `gemini-3-flash-preview` | DON'T USE | Frequently hits capacity limits |
 
 ## Rate Limits
@@ -48,22 +49,22 @@ Gemini CLI handles retries automatically with backoff.
 
 ### Codebase Overview
 ```bash
-gemini -y -m gemini-2.0-flash -p "Give me a high-level overview of this project. What does it do? What's the tech stack?"
+gemini -y -m gemini-2.5-flash -p "Give me a high-level overview of this project. What does it do? What's the tech stack?"
 ```
 
 ### Find Specific Code
 ```bash
-gemini -y -m gemini-2.0-flash -p "Find where user authentication is handled in this codebase"
+gemini -y -m gemini-2.5-flash -p "Find where user authentication is handled in this codebase"
 ```
 
 ### Summarize Structure
 ```bash
-gemini -y -m gemini-2.0-flash -p "List all the API endpoints defined in this project with their HTTP methods"
+gemini -y -m gemini-2.5-flash -p "List all the API endpoints defined in this project with their HTTP methods"
 ```
 
 ### Understand Dependencies
 ```bash
-gemini -y -m gemini-2.0-flash -p "What external dependencies does this project use? Check package.json or requirements.txt"
+gemini -y -m gemini-2.5-flash -p "What external dependencies does this project use? Check package.json or requirements.txt"
 ```
 
 ## Token Economics
