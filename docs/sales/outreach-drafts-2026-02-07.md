@@ -14,7 +14,7 @@ Hi Andreas,
 
 Elicit is doing impressive work making research literature accessible through AI. I noticed you're helping researchers synthesize findings from papers faster than ever.
 
-We built an ArXiv API specifically for AI-powered research tools - fast semantic search across 2.4M+ papers, structured metadata extraction, and citation graph traversal. It's designed for the exact RAG workflows Elicit uses.
+We built an ArXiv API specifically for AI-powered research tools - fast semantic search across 2.7M+ paper abstracts and metadata, with article IDs for easy full-text retrieval. It's designed for the exact RAG workflows Elicit uses.
 
 Would be happy to set up a free trial so your team can evaluate it. No sales pitch - just want to see if it fits your stack.
 
@@ -74,7 +74,7 @@ Harrison,
 
 LangChain is the go-to framework for RAG pipelines - we see it everywhere.
 
-We built specialized APIs for encyclopedic (Wikipedia) and academic (ArXiv) knowledge retrieval. Fast, structured, designed for AI workloads. A LangChain integration could give your 90M+ monthly users reliable external knowledge sources for RAG.
+We built specialized APIs for encyclopedic (Wikipedia) and academic (ArXiv) knowledge retrieval. Fast, structured, designed for AI workloads. A LangChain integration could give your 70M+ monthly downloaders reliable external knowledge sources for RAG.
 
 Happy to collaborate on an official connector - we'd handle the integration work and documentation. Interested?
 
@@ -93,7 +93,7 @@ Built-Simple.ai
 
 Jerry,
 
-LlamaIndex processing 500M+ documents is impressive - you've built the foundation for agentic RAG.
+LlamaIndex powering document AI agents is impressive - you've built the foundation for agentic RAG.
 
 We already have a LlamaIndex connector for our research APIs. Would love to discuss making it an official integration or exploring co-marketing opportunities. Our Wikipedia and ArXiv APIs are seeing good traction with RAG developers.
 
@@ -115,7 +115,7 @@ Eric,
 
 Consensus helping researchers find evidence-backed answers is valuable work. The focus on peer-reviewed sources aligns with what we're building.
 
-Our ArXiv API provides fast semantic search across 2.4M+ research papers. Could expand Consensus's coverage for physics, CS, math, and quantitative biology literature. Structured metadata extraction and citation graphs included.
+Our ArXiv API provides fast semantic search across 2.7M+ paper abstracts and metadata. Could expand Consensus's coverage for physics, CS, math, and quantitative biology literature. Article IDs included for easy full-text retrieval.
 
 Would ArXiv integration be useful for Consensus? Happy to discuss coverage overlap and a potential partnership.
 
@@ -133,7 +133,7 @@ Built-Simple.ai
 
 Luyu,
 
-Congrats on the AWS Partner Award and 120K+ GitHub stars - Dify's visual workflow builder is clearly resonating.
+Congrats on the AWS Partner Award and 129K GitHub stars - Dify's visual workflow builder is clearly resonating.
 
 A Wikipedia knowledge connector could help thousands of Dify developers build more accurate AI agents. One integration, benefits your entire community. Our API is designed for RAG workloads - fast hybrid search, structured content, ready for agentic pipelines.
 
