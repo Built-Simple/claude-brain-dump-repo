@@ -33,6 +33,62 @@
 
 ---
 
+## 🔥🔥🔥 NEW: Research Assistant Startups Added 2026-02-07
+
+### Elicit 🔥🔥🔥
+**Website:** https://elicit.com
+**Segment:** AI Research Assistant
+**HQ:** Oakland, CA
+**Funding:** $33M total ($22M Series A at $100M valuation)
+**Investors:** Spark Capital (lead), Footwork, Fifty Years, Basis Set, Tom Preston-Werner (GitHub), Arash Ferdowsi (Dropbox), Jeff Dean (Google)
+
+| Role | Name | LinkedIn | Email Pattern |
+|------|------|----------|---------------|
+| Co-founder | Andreas Stuhlmüller | linkedin.com/in/stuhlmueller | andreas@elicit.com |
+| Co-founder | Jungwon Byun | linkedin.com/in/jungwonbyun | jungwon@elicit.com |
+| Engineering Lead | James | - | james@elicit.com |
+
+**Why ArXiv API:** Elicit searches, summarizes, and extracts data from 125M+ papers for 2M+ researchers. They've been building this since 2018 (pre-AI hype). ArXiv integration could expand their coverage and provide structured ML/CS paper access.
+
+**Outreach:** "Andreas - Elicit already powers research for 2M users. Our ArXiv API could expand your paper coverage with structured ML/CS metadata. Happy to discuss integration."
+
+---
+
+### Consensus 🔥🔥
+**Website:** https://consensus.app
+**Segment:** AI Scientific Search
+**HQ:** San Francisco, CA (founded Boston)
+**Funding:** $4.25M+ (Series A completed)
+**Investors:** Draper Associates (Tim Draper), Path Ventures
+
+| Role | Name | LinkedIn | Email Pattern |
+|------|------|----------|---------------|
+| CEO | Eric Olson | linkedin.com/in/ericolson | eric@consensus.app |
+| Co-founder | Christian Salem | - | christian@consensus.app |
+
+**Why ArXiv API:** Consensus searches 200M scientific papers with OpenAI partnership. Used by 5M+ researchers, doctors, students. ArXiv coverage would strengthen their ML/CS and physics paper access.
+
+**Outreach:** "Eric - Consensus is democratizing scientific search. Our ArXiv API could add structured access to 2M+ ML papers with better metadata than Semantic Scholar. Worth a quick call?"
+
+---
+
+### SciSpace 🔥🔥
+**Website:** https://scispace.com
+**Segment:** AI Research Platform (formerly Typeset.io)
+**HQ:** Milpitas, CA / Bengaluru, India
+**Funding:** Early stage (funded)
+**Users:** 1M+ researchers, 300K+ active users
+
+| Role | Name | LinkedIn | Email Pattern |
+|------|------|----------|---------------|
+| Founding team | Based in India | - | team@scispace.com |
+
+**Why ArXiv API:** SciSpace covers 280M papers with 150+ research tools. Position as "AI Super Agent" for research. ArXiv integration would enhance their systematic review and paper discovery capabilities.
+
+**Outreach:** Could be competitor OR partnership opportunity. Their India base may mean lower-cost alternative, but structured ArXiv access could be valuable add-on.
+
+---
+
 ## Detailed Leads
 
 ### 1. Together AI

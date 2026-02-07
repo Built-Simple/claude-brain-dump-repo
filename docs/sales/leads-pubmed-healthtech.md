@@ -6,6 +6,32 @@
 
 ---
 
+## 🔥🔥🔥 NEW: Hot Lead Added 2026-02-07
+
+### Sprinter Health 🔥🔥
+**Website:** https://sprinterhealth.com
+**Description:** AI-powered home healthcare platform. Sends nurses to homes for lab draws, vitals, screenings. Expanding from 5 states (2023) to 22 states by summer 2025.
+**Funding:** $125M total ($55M Series B in May 2025)
+**HQ:** Menlo Park, CA
+**Investors:** General Catalyst (lead), a16z Bio + Health, Google Ventures, Accel
+
+| Role | Name | LinkedIn |
+|------|------|----------|
+| Co-founder & CEO | Max Cohen | Ex-VP Mobile at Oculus/Facebook |
+| Co-founder & CTO | Cameron Behar | - |
+| VP of People | Scott Fintzy | - |
+
+**Why PubMed API:** Their AI platform optimizes clinical workflows and nurse schedules. Could integrate literature for clinical protocols, care gap identification, and evidence-based screening recommendations. "Growing the team significantly across clinical, engineering, AI and operations."
+
+**Recent Hook:** $55M Series B closed May 2025. Expanding to 22 states. CEO says they're "doubling down on AI."
+
+**Outreach Angle:** "As Sprinter Health scales to 22 states, PubMed API could power evidence-based clinical protocols for your home health workflows. We help similar healthcare AI platforms integrate literature search."
+
+**Email Pattern:** firstname@sprinterhealth.com
+**Website:** https://sprinterhealth.com
+
+---
+
 ## High-Priority Leads
 
 ### 1. OpenEvidence

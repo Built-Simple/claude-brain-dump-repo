@@ -15,6 +15,59 @@ Companies in AI drug discovery, biotech R&D, and precision medicine need:
 
 ---
 
+## 🔥🔥🔥 NEW: Hot Leads Added 2026-02-07
+
+### Lila Sciences 🔥🔥🔥
+**Focus:** Scientific superintelligence, autonomous AI labs for life sciences
+**Funding:** $550M total ($1.3B valuation, Oct 2025)
+**HQ:** Cambridge, MA
+**Investors:** Flagship Pioneering, General Catalyst, Nvidia, ADIA
+
+| Role | Name | LinkedIn |
+|------|------|----------|
+| CEO | Geoff von Maltzahn | General Partner at Flagship |
+| CTO | Andrew Beam | Ex-Harvard |
+| Chief Scientist | George Church | Harvard/MIT geneticist |
+| (ex-OpenAI) | Kenneth Stanley | - |
+
+**Why PubMed API:** Building "AI Science Factories" that automate experiment design and analysis. Their autonomous labs need real-time literature integration for hypothesis generation and validation. They partner with other biotechs - could be a platform play.
+
+**Recent Hook:** Raised $550M in 2025 alone across 3 rounds. Nvidia invested in Oct 2025 extension.
+
+**Outreach Angle:** "Lila's AI Science Factories could integrate PubMed for automated literature review in experiment design. We power similar autonomous research workflows."
+
+**Email Pattern:** firstname@lila.ai
+**Website:** https://lila.ai
+
+---
+
+### Xaira Therapeutics 🔥🔥🔥
+**Focus:** AI drug discovery using protein design (RFdiffusion, RFantibody)
+**Funding:** $1B (largest ARCH Venture Partners initial commitment ever)
+**HQ:** South San Francisco, CA
+**Investors:** ARCH Venture Partners, Foresite Labs, F-Prime, NEA, Sequoia, Lux, Lightspeed
+
+| Role | Name | LinkedIn |
+|------|------|----------|
+| CEO | Marc Tessier-Lavigne, PhD | Ex-Genentech CSO, Ex-President Stanford & Rockefeller |
+| CTO & Co-founder | Hetu Kamisetty | Ex-Meta, Institute for Protein Design |
+| CSO | Debbie Law | - |
+| Co-founder | David Baker, PhD | Nobel potential, UW Institute for Protein Design |
+| CPO | Julia Tran | - |
+
+**Board:** Scott Gottlieb (ex-FDA Commissioner), Carolyn Bertozzi (Nobel laureate), Alex Gorsky (ex-J&J CEO)
+
+**Why PubMed API:** Using AI for protein and antibody design - needs literature context for target validation, competitive intelligence, and connecting engineered molecules to disease biology.
+
+**Recent Hook:** $1B funding in April 2024, now expanding team and relocating to South SF. Board is stacked with pharma heavyweights.
+
+**Outreach Angle:** "Xaira's protein design platform could benefit from integrated literature search for target validation. PubMed API enables real-time evidence correlation with your RFdiffusion outputs."
+
+**Email Pattern:** firstname@xaira.bio
+**Website:** https://xaira.bio
+
+---
+
 ## 🔥 Tier 1: High-Value Targets (AI Drug Discovery Leaders)
 
 ### 1. insitro

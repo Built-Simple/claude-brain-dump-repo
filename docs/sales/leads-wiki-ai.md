@@ -5,6 +5,54 @@
 
 ---
 
+## 🔥🔥🔥 NEW: RAG Infrastructure Leads Added 2026-02-07
+
+### Vectara 🔥🔥🔥
+**Website:** https://vectara.com
+**Segment:** RAG-as-a-Service, Hallucination Detection
+**HQ:** Palo Alto, CA
+**Funding:** $73.5M total ($25M Series A, Jul 2024)
+**Investors:** FPV Ventures (lead), Race Capital
+
+| Role | Name | LinkedIn | Email Pattern |
+|------|------|----------|---------------|
+| CEO & Founder | Amr Awadallah | linkedin.com/in/awadallah | amr@vectara.com |
+| CTO | Amin Ahmad | - | amin@vectara.com |
+
+**Background:** Amr was VP Developer Relations at Google Cloud, co-founded Cloudera (2017 IPO, $5.3B acquisition in 2021).
+
+**Why Wikipedia API:** Vectara is THE company for RAG hallucination detection. Their HHEM model has 4M+ Hugging Face downloads. Wikipedia API would give their customers a trusted, factual knowledge source for grounding - perfect complement to their hallucination detection.
+
+**Recent Hook:** Launched Hallucination Corrector in May 2025 - first of its kind. Reduces hallucination to <1% for smaller LLMs.
+
+**Outreach Angle:** "Amr - Vectara's hallucination detection is industry-leading. Our Wikipedia API could be the ideal grounded knowledge source for your RAG customers - factual, structured, verified content to reduce hallucinations at the source."
+
+**Email Pattern:** firstname@vectara.com
+
+---
+
+### Dify 🔥🔥
+**Website:** https://dify.ai
+**Segment:** Agentic Workflow Builder, Open-Source LLM Platform
+**HQ:** Middletown, USA (founded 2023)
+**Funding:** Seed (FutureX Capital)
+**GitHub:** 120K+ stars (one of most popular open-source GenAI projects)
+
+| Role | Name | LinkedIn | Email Pattern |
+|------|------|----------|---------------|
+| CEO & Co-founder | Luyu Zhang | linkedin.com/in/luyu-zhang | luyu@dify.ai |
+| Co-founder | John Wang | - | john@dify.ai |
+
+**Why Wikipedia API:** Dify's visual workflow builder lets users create AI agents with RAG pipelines. A Wikipedia connector would be a natural addition - one integration benefits their entire 120K+ star community. They just won 2025 AWS Partner Award for social impact.
+
+**Recent Hook:** TechCrunch Startup Battlefield 200 selection. AWS Partner Award 2025. 120K GitHub stars.
+
+**Outreach Angle:** "Luyu - congrats on the AWS Partner Award. A Wikipedia knowledge connector for Dify could help thousands of developers build more accurate AI agents. We'd love to collaborate on an integration."
+
+**Email Pattern:** firstname@dify.ai, enterprise@dify.ai
+
+---
+
 ## Tier 1: RAG Frameworks & Agent Platforms (High Priority)
 
 ### 1. LangChain
