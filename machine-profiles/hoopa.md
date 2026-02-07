@@ -112,3 +112,36 @@ curl -X POST http://192.168.1.79:8090/search \
 
 ---
 *Profile for Hoopa - GPU node (3x RTX 3090 + 1x RTX 5090) in pallet-town cluster*
+
+## Ollama API (LAN Accessible)
+
+**Endpoint:** `http://192.168.1.79:11434`
+
+### Available Models
+| Model | Size | Use Case |
+|-------|------|----------|
+| `qwen2.5-coder:14b` | 9GB | Code generation, debugging |
+| `llama3.2:1b` | 1.3GB | Fast simple tasks |
+| `medllama2:7b` | 3.8GB | Medical/health queries |
+
+### Quick Usage
+```bash
+# List models
+curl http://192.168.1.79:11434/api/tags | jq '.models[].name'
+
+# Generate (non-streaming)
+curl -s http://192.168.1.79:11434/api/generate \
+  -d '{"model": "qwen2.5-coder:14b", "prompt": "Write a hello world", "stream": false}' \
+  | jq -r '.response'
+
+# Helper script on Giratina
+/root/ollama-query.sh "your prompt" [model]
+```
+
+### Performance
+- First call: ~5-10s (model load to GPU)
+- Subsequent calls: <1s generation
+- Running on RTX 5090 (32GB) + 3x RTX 3090 (24GB each)
+
+### Firewall
+Port 11434 opened via iptables (persisted to `/etc/iptables/rules.v4`)
