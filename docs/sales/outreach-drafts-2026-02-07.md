@@ -54,7 +54,7 @@ Max,
 
 Congrats on the $55M Series B and expansion to 22 states. Scaling home healthcare while maintaining clinical quality is a real challenge.
 
-Our PubMed API could help Sprinter Health integrate evidence-based protocols into your clinical workflows. Fast access to 36M+ medical literature abstracts for care gap identification, screening recommendations, and protocol updates - all via a simple REST API.
+Our PubMed API could help Sprinter Health integrate evidence-based protocols into your clinical workflows. Fast access to 4.5M+ medical literature abstracts for care gap identification, screening recommendations, and protocol updates - all via a simple REST API.
 
 We work with similar healthcare AI platforms. Would a 15-minute call make sense to explore if this fits your AI roadmap?
 
@@ -87,16 +87,17 @@ Built-Simple.ai
 ## 5. Jerry Liu - LlamaIndex (Wikipedia + ArXiv APIs)
 **Email:** jerry@llamaindex.ai ✅ (score: 100)
 **Product:** Wikipedia API + ArXiv API
+**Note:** Already have a LlamaIndex plugin built - use this as expansion conversation
 
-**Subject:** World knowledge connectors for LlamaIndex
+**Subject:** Expanding our LlamaIndex integration
 
 Jerry,
 
 LlamaIndex processing 500M+ documents is impressive - you've built the foundation for agentic RAG.
 
-We offer specialized knowledge APIs (Wikipedia, ArXiv) that could complement your document pipelines. Pre-indexed, structured, optimized for retrieval. A LlamaIndex connector would add world knowledge to your users' RAG workflows.
+We already have a LlamaIndex connector for our research APIs. Would love to discuss making it an official integration or exploring co-marketing opportunities. Our Wikipedia and ArXiv APIs are seeing good traction with RAG developers.
 
-Would love to explore an integration partnership. Happy to build the connector and contribute it upstream.
+Open to a quick chat about expanding the partnership?
 
 Best,
 [Name]
@@ -154,7 +155,7 @@ Daphne,
 
 insitro's approach to causal biology and ML-driven drug discovery is pioneering work. Integrating biological data with AI models is the future of therapeutics.
 
-We built a PubMed API for exactly this use case - fast access to 36M+ medical literature abstracts for target validation, competitive intelligence, and literature-backed hypothesis generation. It's designed for ML pipeline integration.
+We built a PubMed API for exactly this use case - fast access to 4.5M+ medical literature abstracts for target validation, competitive intelligence, and literature-backed hypothesis generation. It's designed for ML pipeline integration.
 
 Would your team benefit from automated literature retrieval in insitro's workflows? Happy to set up a trial.
 
@@ -194,7 +195,7 @@ Debbie,
 
 Xaira's AI-driven protein design with RFdiffusion and RFantibody is pushing the boundaries of computational biology. The $1B funding and team you've assembled is impressive.
 
-Our PubMed API could support Xaira's target validation workflows - fast access to 36M+ medical literature abstracts for connecting engineered molecules to disease biology and competitive intelligence. Designed for integration with ML pipelines.
+Our PubMed API could support Xaira's target validation workflows - fast access to 4.5M+ medical literature abstracts for connecting engineered molecules to disease biology and competitive intelligence. Designed for integration with ML pipelines.
 
 Would literature-backed evidence retrieval be valuable for Xaira's research workflows?
 
