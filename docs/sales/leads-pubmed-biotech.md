@@ -75,13 +75,13 @@ Companies in AI drug discovery, biotech R&D, and precision medicine need:
 **Funding:** $400M+ Series C  
 **HQ:** South San Francisco, CA  
 
-| Role | Name | Contact |
-|------|------|---------|
-| CEO & Founder | Daphne Koller | [LinkedIn](https://linkedin.com/in/daphne-koller-4053a820) |
-| Head of Drug Discovery | Philip Tagari | [LinkedIn](https://linkedin.com/in/philip-tagari-793719b) |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Founder | Daphne Koller | daphne@insitro.com ✅ (score: 100) | linkedin.com/in/daphne-koller-4053a820 |
+| Head of Drug Discovery | Philip Tagari | philip@insitro.com | linkedin.com/in/philip-tagari-793719b |
 
-**Why PubMed API:** Integrates ML models with biological literature for target discovery  
-**Email Pattern:** firstname@insitro.com  
+**Why PubMed API:** Integrates ML models with biological literature for target discovery
+**Email Pattern:** firstname@insitro.com ✅ (Hunter.io verified)  
 **Website:** https://insitro.com
 
 ---

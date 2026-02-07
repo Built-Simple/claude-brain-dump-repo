@@ -63,10 +63,10 @@
 **Funding:** $4.25M+ (Series A completed)
 **Investors:** Draper Associates (Tim Draper), Path Ventures
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO | Eric Olson | linkedin.com/in/ericolson | eric@consensus.app |
-| Co-founder | Christian Salem | - | christian@consensus.app |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO | Eric Olson | eric@consensus.app ✅ (score: 100) | linkedin.com/in/ericolson |
+| Co-founder | Christian Salem | christian@consensus.app | - |
 
 **Why ArXiv API:** Consensus searches 200M scientific papers with OpenAI partnership. Used by 5M+ researchers, doctors, students. ArXiv coverage would strengthen their ML/CS and physics paper access.
 
@@ -178,10 +178,10 @@
 
 **Why ArXiv API:** Building LLM application framework; developers using LangChain often need research paper access for RAG applications.
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO & Co-Founder | Harrison Chase | linkedin.com/in/harrisonchase | harrison@langchain.dev |
-| CTO | Ankush Gola | linkedin.com/in/ankushgola | ankush@langchain.dev |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Co-Founder | Harrison Chase | harrison@langchain.dev ✅ (score: 100) | linkedin.com/in/harrisonchase |
+| CTO | Ankush Gola | ankush@langchain.dev | linkedin.com/in/ankushgola |
 
 **Outreach:** ArXiv API integration could be a LangChain document loader/tool - mutual benefit.
 
@@ -195,10 +195,10 @@
 
 **Why ArXiv API:** RAG-focused company - ArXiv integration is a natural fit for their document ingestion pipelines.
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO & Co-Founder | Jerry Liu | linkedin.com/in/jerry-liu-ai | jerry@llamaindex.ai |
-| Co-Founder | Simon Suo | linkedin.com/in/simonsuo | simon@llamaindex.ai |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Co-Founder | Jerry Liu | jerry@llamaindex.ai ✅ (score: 100) | linkedin.com/in/jerry-liu-ai |
+| Co-Founder | Simon Suo | simon@llamaindex.ai | linkedin.com/in/simonsuo |
 
 **Outreach:** Direct integration opportunity - LlamaIndex already supports various document sources.
 
@@ -232,9 +232,9 @@
 
 **Why ArXiv API:** Vector search company - ArXiv papers are frequently embedded and searched by their customers.
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| Founder & CEO | Edo Liberty | linkedin.com/in/edoliberty | edo@pinecone.io |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| Founder & CEO | Edo Liberty | edo@pinecone.io ✅ (score: 100) | linkedin.com/in/edoliberty |
 
 **Outreach:** Research background (ex-AWS, Yahoo Labs) - understands value of research access.
 
@@ -266,12 +266,14 @@
 
 **Why ArXiv API:** Haystack is the leading open-source RAG framework. ArXiv integration would benefit entire ecosystem.
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO & Co-Founder | Milos Rusic | linkedin.com/in/milosrusic | milos@deepset.ai |
-| CTO & Co-Founder | Malte Pietsch | linkedin.com/in/maltepietsch | malte@deepset.ai |
-| VP Engineering & Product | Ole Dallerup | linkedin.com/in/oledallerup | ole@deepset.ai |
-| VP Marketing & DevRel | Jay Wilder | linkedin.com/in/jaywilder | jay@deepset.ai |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Co-Founder | Milos Rusic | milos.rusic@deepset.ai ✅ (verified via domain search) | linkedin.com/in/milosrusic |
+| CTO & Co-Founder | Malte Pietsch | malte.pietsch@deepset.ai | linkedin.com/in/maltepietsch |
+| VP Engineering & Product | Ole Dallerup | ole.dallerup@deepset.ai | linkedin.com/in/oledallerup |
+| VP Marketing & DevRel | Jay Wilder | jay.wilder@deepset.ai | linkedin.com/in/jaywilder |
+
+**Email Pattern:** {first}.{last}@deepset.ai (verified via Hunter.io domain search)
 
 **Outreach:** DevRel (Jay) or CTO (Malte) - they've been building NLP/search since 2018.
 

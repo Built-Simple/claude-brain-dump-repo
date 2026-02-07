@@ -38,10 +38,10 @@
 **Funding:** Seed (FutureX Capital)
 **GitHub:** 120K+ stars (one of most popular open-source GenAI projects)
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO & Co-founder | Luyu Zhang | linkedin.com/in/luyu-zhang | luyu@dify.ai |
-| Co-founder | John Wang | - | john@dify.ai |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Co-founder | Luyu Zhang | luyu@dify.ai ✅ (score: 100) | linkedin.com/in/luyu-zhang |
+| Co-founder | John Wang | john@dify.ai | - |
 
 **Why Wikipedia API:** Dify's visual workflow builder lets users create AI agents with RAG pipelines. A Wikipedia connector would be a natural addition - one integration benefits their entire 120K+ star community. They just won 2025 AWS Partner Award for social impact.
 
