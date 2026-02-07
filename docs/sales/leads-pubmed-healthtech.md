@@ -15,11 +15,11 @@
 **HQ:** Menlo Park, CA
 **Investors:** General Catalyst (lead), a16z Bio + Health, Google Ventures, Accel
 
-| Role | Name | LinkedIn |
-|------|------|----------|
-| Co-founder & CEO | Max Cohen | Ex-VP Mobile at Oculus/Facebook |
-| Co-founder & CTO | Cameron Behar | - |
-| VP of People | Scott Fintzy | - |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| Co-founder & CEO | Max Cohen | max@sprinterhealth.com ✅ (score: 61) | Ex-VP Mobile at Oculus/Facebook |
+| Co-founder & CTO | Cameron Behar | cameron@sprinterhealth.com | - |
+| VP of People | Scott Fintzy | scott@sprinterhealth.com | - |
 
 **Why PubMed API:** Their AI platform optimizes clinical workflows and nurse schedules. Could integrate literature for clinical protocols, care gap identification, and evidence-based screening recommendations. "Growing the team significantly across clinical, engineering, AI and operations."
 
@@ -27,7 +27,7 @@
 
 **Outreach Angle:** "As Sprinter Health scales to 22 states, PubMed API could power evidence-based clinical protocols for your home health workflows. We help similar healthcare AI platforms integrate literature search."
 
-**Email Pattern:** firstname@sprinterhealth.com
+**Email Pattern:** firstname@sprinterhealth.com ✅ (Hunter.io verified)
 **Website:** https://sprinterhealth.com
 
 ---

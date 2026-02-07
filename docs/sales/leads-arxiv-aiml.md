@@ -42,15 +42,17 @@
 **Funding:** $33M total ($22M Series A at $100M valuation)
 **Investors:** Spark Capital (lead), Footwork, Fifty Years, Basis Set, Tom Preston-Werner (GitHub), Arash Ferdowsi (Dropbox), Jeff Dean (Google)
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| Co-founder | Andreas Stuhlmüller | linkedin.com/in/stuhlmueller | andreas@elicit.com |
-| Co-founder | Jungwon Byun | linkedin.com/in/jungwonbyun | jungwon@elicit.com |
-| Engineering Lead | James | - | james@elicit.com |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| Co-founder | Andreas Stuhlmüller | andreas@elicit.com ✅ (score: 100) | linkedin.com/in/stuhlmueller |
+| Co-founder | Jungwon Byun | jungwon@elicit.com | linkedin.com/in/jungwonbyun |
+| Engineering Lead | James | james@elicit.com | - |
 
 **Why ArXiv API:** Elicit searches, summarizes, and extracts data from 125M+ papers for 2M+ researchers. They've been building this since 2018 (pre-AI hype). ArXiv integration could expand their coverage and provide structured ML/CS paper access.
 
 **Outreach:** "Andreas - Elicit already powers research for 2M users. Our ArXiv API could expand your paper coverage with structured ML/CS metadata. Happy to discuss integration."
+
+**Email Pattern:** firstname@elicit.com ✅ (Hunter.io verified)
 
 ---
 

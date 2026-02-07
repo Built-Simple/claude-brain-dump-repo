@@ -36,7 +36,7 @@ Companies in AI drug discovery, biotech R&D, and precision medicine need:
 
 **Outreach Angle:** "Lila's AI Science Factories could integrate PubMed for automated literature review in experiment design. We power similar autonomous research workflows."
 
-**Email Pattern:** firstname@lila.ai
+**Email Pattern:** {f}{last}@lila.ai (e.g., gvonmaltzahn@lila.ai) ⚠️ CEO email not verified - use info@lila.ai
 **Website:** https://lila.ai
 
 ---
@@ -47,13 +47,13 @@ Companies in AI drug discovery, biotech R&D, and precision medicine need:
 **HQ:** South San Francisco, CA
 **Investors:** ARCH Venture Partners, Foresite Labs, F-Prime, NEA, Sequoia, Lux, Lightspeed
 
-| Role | Name | LinkedIn |
-|------|------|----------|
-| CEO | Marc Tessier-Lavigne, PhD | Ex-Genentech CSO, Ex-President Stanford & Rockefeller |
-| CTO & Co-founder | Hetu Kamisetty | Ex-Meta, Institute for Protein Design |
-| CSO | Debbie Law | - |
-| Co-founder | David Baker, PhD | Nobel potential, UW Institute for Protein Design |
-| CPO | Julia Tran | - |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO | Marc Tessier-Lavigne, PhD | ⚠️ Not verified | Ex-Genentech CSO, Ex-President Stanford & Rockefeller |
+| CTO & Co-founder | Hetu Kamisetty | hetu.kamisetty@xaira.com | Ex-Meta, Institute for Protein Design |
+| CSO | Debbie Law | debbie.law@xaira.com ✅ | - |
+| Co-founder | David Baker, PhD | - | Nobel potential, UW Institute for Protein Design |
+| CPO | Julia Tran | julia.tran@xaira.com | - |
 
 **Board:** Scott Gottlieb (ex-FDA Commissioner), Carolyn Bertozzi (Nobel laureate), Alex Gorsky (ex-J&J CEO)
 
@@ -63,8 +63,8 @@ Companies in AI drug discovery, biotech R&D, and precision medicine need:
 
 **Outreach Angle:** "Xaira's protein design platform could benefit from integrated literature search for target validation. PubMed API enables real-time evidence correlation with your RFdiffusion outputs."
 
-**Email Pattern:** firstname@xaira.bio
-**Website:** https://xaira.bio
+**Email Pattern:** {first}.{last}@xaira.com ✅ (Hunter.io verified)
+**Website:** https://xaira.com (note: xaira.bio redirects)
 
 ---
 

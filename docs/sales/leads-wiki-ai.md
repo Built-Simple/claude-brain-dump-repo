@@ -14,10 +14,10 @@
 **Funding:** $73.5M total ($25M Series A, Jul 2024)
 **Investors:** FPV Ventures (lead), Race Capital
 
-| Role | Name | LinkedIn | Email Pattern |
-|------|------|----------|---------------|
-| CEO & Founder | Amr Awadallah | linkedin.com/in/awadallah | amr@vectara.com |
-| CTO | Amin Ahmad | - | amin@vectara.com |
+| Role | Name | Email (Verified) | LinkedIn |
+|------|------|------------------|----------|
+| CEO & Founder | Amr Awadallah | amr@vectara.com ✅ (score: 88) | linkedin.com/in/awadallah |
+| CTO | Amin Ahmad | amin@vectara.com | - |
 
 **Background:** Amr was VP Developer Relations at Google Cloud, co-founded Cloudera (2017 IPO, $5.3B acquisition in 2021).
 
@@ -27,7 +27,7 @@
 
 **Outreach Angle:** "Amr - Vectara's hallucination detection is industry-leading. Our Wikipedia API could be the ideal grounded knowledge source for your RAG customers - factual, structured, verified content to reduce hallucinations at the source."
 
-**Email Pattern:** firstname@vectara.com
+**Email Pattern:** firstname@vectara.com ✅ (Hunter.io verified)
 
 ---
 
