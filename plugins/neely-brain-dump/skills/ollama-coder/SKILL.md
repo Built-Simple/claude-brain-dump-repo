@@ -1,92 +1,86 @@
 ---
 name: ollama-coder
-description: Use local Ollama models on Hoopa for simple coding tasks to save Claude tokens. Invoke for boilerplate code, simple functions, regex, one-liners, or basic debugging. Do NOT use for complex architecture or multi-file changes.
+description: Use local Ollama models on Hoopa for coding tasks. Only use when the expected output is LONGER than your prompt - writing the prompt costs tokens too.
 ---
 
-# Ollama Coder - Local Model for Simple Tasks
+# Ollama Coder - When to Use It
 
-Use the local `qwen2.5-coder:14b` model on Hoopa (192.168.1.79) for simple coding tasks to reduce Claude API costs.
+**The rule is simple:** Only use Ollama when the OUTPUT will be significantly longer than your prompt.
 
-## When to Use This Skill
+Writing a prompt to Ollama costs Claude tokens. If you can just write the code yourself in fewer tokens than the prompt would take, do it yourself.
 
-**GOOD use cases (simple, self-contained):**
-- Write a single function
-- Generate boilerplate code
-- Create a regex pattern
-- Write a one-liner
-- Simple bash/Python scripts
-- Explain what code does
-- Fix obvious syntax errors
+## Token Economics
 
-**DO NOT use for:**
-- Multi-file changes
-- Complex architecture decisions
-- Code that needs full project context
-- Security-sensitive code
-- Anything requiring reasoning about trade-offs
+| Task | Prompt Length | Output Length | Use Ollama? |
+|------|---------------|---------------|-------------|
+| "Write isPrime function" | ~5 tokens | ~50 tokens | ✅ Yes |
+| "Write a Dockerfile with multi-stage build" | ~10 tokens | ~200 tokens | ✅ Yes |
+| "Write rate limiter class with semaphore" | ~15 tokens | ~300 tokens | ✅ Yes |
+| "Reverse a string" | ~5 tokens | ~10 tokens | ❌ No, just write `s[::-1]` |
+| "Add 1 to x" | ~5 tokens | ~5 tokens | ❌ No, just write `x + 1` |
+| "Fix this typo in line 5" | ~20 tokens | ~10 tokens | ❌ No, just fix it |
 
-## API Endpoint
+## Use Ollama For
+
+**Boilerplate-heavy tasks (high output:input ratio):**
+- Dockerfiles, CI configs, package.json
+- TypeScript interfaces/types from descriptions
+- SQL queries from natural language
+- Test file scaffolding
+- API endpoint handlers
+- Class implementations from specs
+
+**Tasks where model knows patterns you'd have to look up:**
+- Regex patterns
+- Bash find/xargs/awk combinations
+- Framework-specific boilerplate
+- Algorithm implementations
+
+## Do NOT Use Ollama For
+
+**Quick fixes (low output:input ratio):**
+- One-line changes
+- Variable renames
+- Import additions
+- Simple math/logic
+
+**Context-dependent tasks:**
+- Anything requiring knowledge of your codebase
+- Multi-file refactors
+- Bug fixes that need to understand surrounding code
+
+**High-stakes code:**
+- Security-sensitive logic
+- Complex async/concurrency
+- Anything you can't quickly verify
+
+## Quick Reference
 
 ```
 http://192.168.1.79:11434/api/generate
 ```
 
-## Available Models
-
-| Model | Best For |
-|-------|----------|
-| `qwen2.5-coder:14b` | Code generation (default) |
-| `llama3.2:1b` | Very fast, simple tasks |
-| `medllama2:7b` | Medical/health content |
-
-## How to Call
-
 ```bash
 curl -s http://192.168.1.79:11434/api/generate \
-  -d '{"model": "qwen2.5-coder:14b", "prompt": "YOUR_PROMPT", "stream": false}' \
+  -d '{"model": "qwen2.5-coder:14b", "prompt": "YOUR_PROMPT. Code only.", "stream": false}' \
   | jq -r '.response'
 ```
 
-## Example Prompts
+**Tip:** Add "Code only." to prompts to reduce verbose explanations.
 
-For best results, be specific and ask for code only:
+## What It's Good At (tested)
 
-```
-"Write a Python function to check if a string is a palindrome. Only output code."
-
-"Write a bash one-liner to find files larger than 100MB"
-
-"Create a regex to match email addresses"
-
-"Write a TypeScript interface for a User with id, name, and email fields"
-```
-
-## Workflow
-
-1. Identify if the task is simple enough for local model
-2. Call the Ollama API with a clear, specific prompt
-3. Review the output (local models can make mistakes)
-4. Use the code if good, or fall back to Claude for complex cases
-
-## Helper Script
-
-Located at `/root/ollama-query.sh`:
-
-```bash
-/root/ollama-query.sh "Write a function to reverse a string"
-/root/ollama-query.sh "Explain this regex: ^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-```
-
-## Performance
-
-- First call: 5-10s (model loads to GPU)
-- Subsequent calls: <1s
-- Model runs on RTX 5090 + 3x RTX 3090
-
-## Token Savings
-
-Use this for ~30-50% of simple coding tasks to reduce Claude API usage. Reserve Claude for:
-- Complex reasoning
-- Multi-step tasks
-- Full codebase context
-- Security reviews
+| Task Type | Quality |
+|-----------|---------|
+| Single functions | ✅ Excellent |
+| Algorithms | ✅ Excellent |
+| Regex | ✅ Excellent |
+| SQL queries | ✅ Excellent |
+| TypeScript types | ✅ Excellent |
+| Dockerfiles | ✅ Good |
+| Bash one-liners | ✅ Good |
+| Code explanation | ✅ Good |
+| API design | ✅ Good |
+| Bug fixes (simple) | ✅ Good |
+| Complex async | ⚠️ Can have bugs |
+| Multi-step reasoning | ⚠️ Inconsistent |
