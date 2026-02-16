@@ -88,6 +88,7 @@
 | Domain | Target | Purpose |
 |--------|--------|---------|
 | wikipedia.built-simple.ai | 192.168.1.213:8080 | Wikipedia Hybrid API |
+| legal.built-simple.ai | 192.168.1.79:5002 | Legal Search API (needs dashboard config) |
 
 ## SSH Port Forwards (Giratina)
 
