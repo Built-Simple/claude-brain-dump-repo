@@ -11,7 +11,7 @@
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
-| **API Version** | 6.0.0-consolidated |
+| **API Version** | 6.1.0-enriched |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
 
 ## Architecture
@@ -121,12 +121,24 @@ POST /search
 }
 ```
 
-### Search Response
+### Search Response (v6.1 - Enriched)
 ```json
 {
   "query": "first amendment free speech",
   "results": [
-    {"rank": 1, "score": 0.64, "opinion_id": "4127189", "cluster_id": "4349929"},
+    {
+      "rank": 1,
+      "score": 0.64,
+      "opinion_id": "4127189",
+      "cluster_id": "4349929",
+      "case_name": "Dr. Bernd Wollschlaeger v. Governor of the State of Florida",
+      "case_name_short": "Wollschlaeger",
+      "date_filed": "2017-02-16",
+      "summary": "",
+      "judges": "Reed",
+      "citation_count": "0",
+      "precedential_status": "Published"
+    },
     ...
   ],
   "search_time_ms": 15.43,
@@ -136,6 +148,15 @@ POST /search
   "vectors_searched": 2034973
 }
 ```
+
+**New fields in v6.1:**
+- `case_name`: Full case name (e.g., "Smith v. Jones")
+- `case_name_short`: Short case name (e.g., "Smith")
+- `date_filed`: Filing date (YYYY-MM-DD)
+- `summary`: Case summary (HTML, may be empty)
+- `judges`: Presiding judge(s)
+- `citation_count`: Number of citations
+- `precedential_status`: "Published", "Unpublished", etc.
 
 ## Configuration Files
 
@@ -208,6 +229,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 16, 2026**: **v6.1 - Enriched Results** - Search results now include case_name, date_filed, summary, judges, citation_count, precedential_status. Enriched metadata from CourtListener opinion-clusters CSV (99.99% match rate).
 - **Feb 16, 2026**: Added branded landing page matching built-simple.ai style
 - **Feb 16, 2026**: Fixed Cloudflare tunnel DNS (was pointing to wrong tunnel ID)
 - **Feb 16, 2026**: Consolidated to single RTX 3090 #2, freed 5090+3090#1 for video generation
