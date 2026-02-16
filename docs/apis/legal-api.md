@@ -33,7 +33,7 @@
 │  │                                                                  │    │
 │  │  /mnt/network_transfer/legal-indexes/                          │    │
 │  │    ├─ legal_flat_v5.9.index (2,034,973 vectors)               │    │
-│  │    └─ legal_id_map_v5.9.json (metadata mapping)               │    │
+│  │    └─ legal_id_map_enriched.json (enriched metadata w/ slugs) │    │
 │  └─────────────────────────────────────────────────────────────────┘    │
 │                                                                          │
 │  Also on Hoopa (sharing 3090 #2):                                       │
@@ -133,6 +133,7 @@ POST /search
       "cluster_id": "4349929",
       "case_name": "Dr. Bernd Wollschlaeger v. Governor of the State of Florida",
       "case_name_short": "Wollschlaeger",
+      "slug": "dr-bernd-wollschlaeger-v-governor-of-the-state-of-florida",
       "date_filed": "2017-02-16",
       "summary": "",
       "judges": "Reed",
@@ -152,11 +153,14 @@ POST /search
 **New fields in v6.1:**
 - `case_name`: Full case name (e.g., "Smith v. Jones")
 - `case_name_short`: Short case name (e.g., "Smith")
+- `slug`: URL slug for CourtListener links (e.g., "smith-v-jones")
 - `date_filed`: Filing date (YYYY-MM-DD)
 - `summary`: Case summary (HTML, may be empty)
 - `judges`: Presiding judge(s)
 - `citation_count`: Number of citations
 - `precedential_status`: "Published", "Unpublished", etc.
+
+**CourtListener URL format:** `https://www.courtlistener.com/opinion/{cluster_id}/{slug}/`
 
 ## Configuration Files
 
@@ -229,7 +233,8 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
-- **Feb 16, 2026**: **v6.1 - Enriched Results** - Search results now include case_name, date_filed, summary, judges, citation_count, precedential_status. Enriched metadata from CourtListener opinion-clusters CSV (99.99% match rate).
+- **Feb 16, 2026**: **v6.1.1 - Fixed CourtListener URLs** - Added `slug` field to search results. API code was missing `slug` extraction from metadata. CourtListener URLs now use correct format: `/opinion/{cluster_id}/{slug}/`
+- **Feb 16, 2026**: **v6.1 - Enriched Results** - Search results now include case_name, date_filed, summary, judges, citation_count, precedential_status, slug. Enriched metadata from CourtListener opinion-clusters CSV (99.99% match rate).
 - **Feb 16, 2026**: Added branded landing page matching built-simple.ai style
 - **Feb 16, 2026**: Fixed Cloudflare tunnel DNS (was pointing to wrong tunnel ID)
 - **Feb 16, 2026**: Consolidated to single RTX 3090 #2, freed 5090+3090#1 for video generation
