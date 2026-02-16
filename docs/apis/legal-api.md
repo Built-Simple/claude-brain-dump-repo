@@ -93,10 +93,21 @@ Previously, the Legal API used multiple GPUs:
 - **Documents**: 9,206,663 total
 - **User**: `readonly` / `LegalReadOnly2025`
 
+## Landing Page
+
+A branded landing page is served at the root URL (`/`), matching the built-simple.ai design aesthetic:
+- Dark theme with neon accents (red, cyan, yellow)
+- Live search demo
+- API documentation and examples
+- Real-time stats display
+
+**Location**: Hoopa: `/opt/legal-search-api/static/index.html`
+
 ## API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
+| `/` | GET | Landing page (HTML) |
 | `/health` | GET | Service health + index info |
 | `/search` | POST | Vector similarity search |
 | `/stats` | GET | GPU and query statistics |
@@ -131,6 +142,7 @@ POST /search
 | File | Location | Purpose |
 |------|----------|---------|
 | API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.0 |
+| Landing Page | Hoopa: `/opt/legal-search-api/static/index.html` | Branded landing page |
 | Service Unit | Hoopa: `/etc/systemd/system/legal-search-consolidated.service` | Systemd service |
 | Logs | Hoopa: `/tmp/legal_api_consolidated.log` | Runtime logs |
 
@@ -160,21 +172,13 @@ ssh root@192.168.1.79 "systemctl status legal-search-consolidated"
 
 ## Cloudflare Tunnel Setup
 
-**STATUS: Needs Dashboard Configuration**
+**STATUS: ✅ Operational**
 
-The Giratina tunnel uses remote configuration from Cloudflare Zero Trust dashboard. To enable public access:
+Public hostname configured via Cloudflare Zero Trust dashboard (giratina tunnel):
+- **Hostname**: legal.built-simple.ai
+- **Service**: http://192.168.1.79:5002
 
-1. Go to Cloudflare Zero Trust Dashboard
-2. Navigate to: Access → Tunnels → giratina → Configure → Public Hostname
-3. Add new public hostname:
-   - **Subdomain**: legal
-   - **Domain**: built-simple.ai
-   - **Service**: http://192.168.1.79:5002
-   - **Origin Settings**:
-     - Connect Timeout: 60s
-     - Keep Alive Connections: 50
-
-**Note**: The local config file at `/etc/cloudflared/config.yml` has the entry, but remote config from dashboard takes precedence.
+**Note**: The giratina tunnel uses remote configuration from Zero Trust dashboard, not local config.yml.
 
 **Firewall**: Port 5002 is open on Hoopa (iptables rule added).
 
@@ -204,6 +208,8 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 16, 2026**: Added branded landing page matching built-simple.ai style
+- **Feb 16, 2026**: Fixed Cloudflare tunnel DNS (was pointing to wrong tunnel ID)
 - **Feb 16, 2026**: Consolidated to single RTX 3090 #2, freed 5090+3090#1 for video generation
 - **Feb 13, 2026**: Running v5.9 with 2M+ vectors
 - **Jan 30, 2026**: FAISS v5.8 index operational
@@ -211,4 +217,4 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ---
 *Documentation updated: February 16, 2026*
-*GPU consolidation completed - 5090 and 3090 #1 now free*
+*Landing page deployed - https://legal.built-simple.ai*
