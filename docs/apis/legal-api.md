@@ -9,7 +9,7 @@
 |----------|-------|
 | **Host** | Hoopa (192.168.1.79) - bare metal, not container |
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
-| **External URL** | https://legal.built-simple.ai (needs dashboard config) |
+| **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
 | **API Version** | 6.0.0-consolidated |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
