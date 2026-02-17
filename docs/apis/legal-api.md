@@ -11,7 +11,7 @@
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
-| **API Version** | 6.4.0 |
+| **API Version** | 6.5.0 |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
 | **Auth Database** | SQLite: `/var/lib/legal-api/auth.db` |
 
@@ -29,7 +29,7 @@
 | Phase 1 | ✅ Complete | IP-based rate limiting (100/month) |
 | Phase 2 | ✅ Complete | API key registration (`/api/register`) |
 | Phase 3 | ✅ Complete | Stripe integration for Pro upgrades |
-| Phase 4 | 🔄 Pending | Google OAuth login |
+| Phase 4 | ✅ Complete | Google OAuth login (requires credentials) |
 
 ### Rate Limit Headers
 
@@ -102,6 +102,24 @@ curl https://legal.built-simple.ai/api/subscription \
 ```
 
 **Stripe Webhook:** `POST /webhook/stripe` receives subscription lifecycle events
+
+### Google OAuth Login (v6.5 - Optional)
+```bash
+# Check if OAuth is enabled
+curl https://legal.built-simple.ai/auth/status
+# Response: {"oauth_enabled":false,"provider":null,"login_url":null}
+
+# When enabled:
+# 1. Redirect user to /auth/google
+# 2. User authenticates with Google
+# 3. Callback creates/retrieves API key
+# 4. User redirected back with API key in URL params
+```
+
+**To enable OAuth:** Add Google OAuth credentials to `/opt/legal-search-api/.env`:
+- `GOOGLE_CLIENT_ID`: OAuth client ID from Google Cloud Console
+- `GOOGLE_CLIENT_SECRET`: OAuth client secret
+- `GOOGLE_REDIRECT_URI`: Already set to https://legal.built-simple.ai/auth/google/callback
 
 ## Architecture
 
@@ -205,6 +223,9 @@ A branded landing page is served at the root URL (`/`), matching the built-simpl
 | `/api/checkout` | POST | API Key | Create Stripe checkout for Pro upgrade |
 | `/api/subscription` | GET | API Key | Check subscription status |
 | `/webhook/stripe` | POST | Stripe Sig | Stripe webhook for subscription events |
+| `/auth/google` | GET | No | Initiate Google OAuth login |
+| `/auth/google/callback` | GET | No | Google OAuth callback |
+| `/auth/status` | GET | No | Check if OAuth is enabled |
 
 ### Authentication
 
@@ -266,7 +287,7 @@ POST /search
 
 | File | Location | Purpose |
 |------|----------|---------|
-| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.4 |
+| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.5 |
 | Environment | Hoopa: `/opt/legal-search-api/.env` | Stripe keys, URLs |
 | Landing Page | Hoopa: `/opt/legal-search-api/static/index.html` | Branded landing page |
 | Auth Database | Hoopa: `/var/lib/legal-api/auth.db` | SQLite for rate limiting |
@@ -335,6 +356,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 17, 2026**: **v6.5.0 - Google OAuth (Phase 4)** - Added `/auth/google` for OAuth login. `/auth/google/callback` handles OAuth flow. `/auth/status` shows OAuth availability. OAuth creates/retrieves API key automatically. Disabled by default until Google credentials configured in .env.
 - **Feb 17, 2026**: **v6.4.0 - Stripe Integration (Phase 3)** - Added `/api/checkout` for Pro upgrades ($29/month, 10k searches). `/api/subscription` to check status. `/webhook/stripe` for subscription lifecycle events. Uses SDK StripeWebhookHandler for secure signature verification.
 - **Feb 17, 2026**: **v6.3.0 - API Key Auth (Phase 2)** - Added `/api/register` endpoint for email-based API key registration. Keys use format `legal_{random}` with SHA-256 hashing. One active key per email per month (free tier). Search responses include `rate_limit` object with usage stats. `/usage` endpoint shows key-specific stats when API key provided.
 - **Feb 17, 2026**: **v6.2.0 - Rate Limiting (Phase 1)** - Added IP-based rate limiting (100 searches/month free tier). SQLite auth database at `/var/lib/legal-api/auth.db`. Rate limit headers on all responses. `/usage` endpoint for checking limits. Landing page updated to show "100 searches/month" (was incorrectly "100/day").
@@ -349,4 +371,4 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ---
 *Documentation updated: February 17, 2026*
-*Stripe integration deployed - Phase 3 complete*
+*All 4 phases complete - OAuth requires Google credentials to enable*
