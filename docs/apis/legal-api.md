@@ -356,6 +356,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 17, 2026**: **Enhanced Landing Page** - Added Google Analytics tracking (G-0MWDDN867X). Usage stats display shows remaining searches and tier. Help panel with search tips and example queries. Schema.org JSON-LD for SEO. Upgrade to Pro flow integrated with Stripe checkout.
 - **Feb 17, 2026**: **v6.5.0 - Google OAuth (Phase 4)** - Added `/auth/google` for OAuth login. `/auth/google/callback` handles OAuth flow. `/auth/status` shows OAuth availability. OAuth creates/retrieves API key automatically. Disabled by default until Google credentials configured in .env.
 - **Feb 17, 2026**: **v6.4.0 - Stripe Integration (Phase 3)** - Added `/api/checkout` for Pro upgrades ($29/month, 10k searches). `/api/subscription` to check status. `/webhook/stripe` for subscription lifecycle events. Uses SDK StripeWebhookHandler for secure signature verification.
 - **Feb 17, 2026**: **v6.3.0 - API Key Auth (Phase 2)** - Added `/api/register` endpoint for email-based API key registration. Keys use format `legal_{random}` with SHA-256 hashing. One active key per email per month (free tier). Search responses include `rate_limit` object with usage stats. `/usage` endpoint shows key-specific stats when API key provided.
@@ -372,3 +373,4 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 ---
 *Documentation updated: February 17, 2026*
 *All 4 phases complete - OAuth requires Google credentials to enable*
+*Landing page enhanced with usage stats, help panel, and SEO markup*
