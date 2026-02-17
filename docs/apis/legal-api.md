@@ -1,6 +1,6 @@
 # Legal API - Legal Document Search
 
-**Last Updated:** February 16, 2026
+**Last Updated:** February 17, 2026
 **Status:** Operational (FAISS v5.9 - 2M+ vectors, consolidated on RTX 3090 #2)
 
 ## Overview
@@ -11,8 +11,40 @@
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
-| **API Version** | 6.1.0-enriched |
+| **API Version** | 6.2.0 |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
+| **Auth Database** | SQLite: `/var/lib/legal-api/auth.db` |
+
+## Rate Limiting (Added v6.2)
+
+| Tier | Monthly Limit | Rate Limit | Price |
+|------|---------------|------------|-------|
+| **Free (IP-based)** | 100 searches/month | 10 req/min | $0 |
+| **Pro (API key)** | 10,000 searches/month | 60 req/min | $29/month |
+
+### Implementation Status
+
+| Phase | Status | Description |
+|-------|--------|-------------|
+| Phase 1 | ✅ Complete | IP-based rate limiting (100/month) |
+| Phase 2 | 🔄 Pending | API key registration (`/api/register`) |
+| Phase 3 | 🔄 Pending | Stripe integration for Pro upgrades |
+| Phase 4 | 🔄 Pending | Google OAuth login |
+
+### Rate Limit Headers
+
+All responses include rate limit headers:
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 98
+X-RateLimit-Reset: monthly
+```
+
+### Usage Endpoint
+```bash
+curl https://legal.built-simple.ai/usage
+# Returns: {"tier":"free","monthly_requests":2,"monthly_limit":100,"remaining":98}
+```
 
 ## Architecture
 
@@ -105,12 +137,13 @@ A branded landing page is served at the root URL (`/`), matching the built-simpl
 
 ## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | Landing page (HTML) |
-| `/health` | GET | Service health + index info |
-| `/search` | POST | Vector similarity search |
-| `/stats` | GET | GPU and query statistics |
+| Endpoint | Method | Auth | Description |
+|----------|--------|------|-------------|
+| `/` | GET | No | Landing page (HTML) |
+| `/health` | GET | No | Service health + index info |
+| `/usage` | GET | No | Get your current usage and limits |
+| `/search` | POST | Rate Limited | Vector similarity search |
+| `/stats` | GET | No | GPU and query statistics |
 
 ### Search Request
 ```json
@@ -166,10 +199,11 @@ POST /search
 
 | File | Location | Purpose |
 |------|----------|---------|
-| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.0 |
+| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.2 |
 | Landing Page | Hoopa: `/opt/legal-search-api/static/index.html` | Branded landing page |
+| Auth Database | Hoopa: `/var/lib/legal-api/auth.db` | SQLite for rate limiting |
 | Service Unit | Hoopa: `/etc/systemd/system/legal-search-consolidated.service` | Systemd service |
-| Logs | Hoopa: `/tmp/legal_api_consolidated.log` | Runtime logs |
+| Logs | `journalctl -u legal-search-consolidated` | Systemd journal |
 
 ## Quick Commands
 
@@ -233,6 +267,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 17, 2026**: **v6.2.0 - Rate Limiting (Phase 1)** - Added IP-based rate limiting (100 searches/month free tier). SQLite auth database at `/var/lib/legal-api/auth.db`. Rate limit headers on all responses. `/usage` endpoint for checking limits. Landing page updated to show "100 searches/month" (was incorrectly "100/day").
 - **Feb 16, 2026**: **v6.1.1 - Fixed CourtListener URLs** - Added `slug` field to search results. API code was missing `slug` extraction from metadata. CourtListener URLs now use correct format: `/opinion/{cluster_id}/{slug}/`
 - **Feb 16, 2026**: **v6.1 - Enriched Results** - Search results now include case_name, date_filed, summary, judges, citation_count, precedential_status, slug. Enriched metadata from CourtListener opinion-clusters CSV (99.99% match rate).
 - **Feb 16, 2026**: Added branded landing page matching built-simple.ai style
@@ -243,5 +278,5 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 - **Jan 10, 2026**: Initial v4 build in progress
 
 ---
-*Documentation updated: February 16, 2026*
-*Landing page deployed - https://legal.built-simple.ai*
+*Documentation updated: February 17, 2026*
+*Rate limiting deployed - Phase 1 complete*
