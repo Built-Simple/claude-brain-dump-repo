@@ -11,7 +11,7 @@
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
-| **API Version** | 6.2.0 |
+| **API Version** | 6.3.0 |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
 | **Auth Database** | SQLite: `/var/lib/legal-api/auth.db` |
 
@@ -27,7 +27,7 @@
 | Phase | Status | Description |
 |-------|--------|-------------|
 | Phase 1 | ✅ Complete | IP-based rate limiting (100/month) |
-| Phase 2 | 🔄 Pending | API key registration (`/api/register`) |
+| Phase 2 | ✅ Complete | API key registration (`/api/register`) |
 | Phase 3 | 🔄 Pending | Stripe integration for Pro upgrades |
 | Phase 4 | 🔄 Pending | Google OAuth login |
 
@@ -42,9 +42,34 @@ X-RateLimit-Reset: monthly
 
 ### Usage Endpoint
 ```bash
+# Without API key (IP-based)
 curl https://legal.built-simple.ai/usage
 # Returns: {"tier":"free","monthly_requests":2,"monthly_limit":100,"remaining":98}
+
+# With API key
+curl https://legal.built-simple.ai/usage -H "X-API-Key: legal_your_key_here"
+# Returns: {"tier":"free","monthly_requests":1,"monthly_limit":100,"remaining":99,"email":"user@example.com","key_prefix":"legal_abc123..."}
 ```
+
+### API Key Registration (v6.3)
+```bash
+# Register for an API key (one key per email per month)
+curl -X POST https://legal.built-simple.ai/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com"}'
+
+# Response:
+{
+  "success": true,
+  "api_key": "legal_abc123...(full key)",
+  "key_prefix": "legal_abc123...",
+  "message": "API key created successfully! Store it securely - you won't be able to see it again.",
+  "tier": "free",
+  "monthly_limit": 100
+}
+```
+
+**Note:** The full API key is only shown once at creation. Store it securely!
 
 ## Architecture
 
@@ -141,9 +166,16 @@ A branded landing page is served at the root URL (`/`), matching the built-simpl
 |----------|--------|------|-------------|
 | `/` | GET | No | Landing page (HTML) |
 | `/health` | GET | No | Service health + index info |
-| `/usage` | GET | No | Get your current usage and limits |
-| `/search` | POST | Rate Limited | Vector similarity search |
+| `/usage` | GET | Optional API Key | Get your current usage and limits |
+| `/api/register` | POST | No | Register for an API key (email required) |
+| `/search` | POST | Rate Limited | Vector similarity search (IP or API key) |
 | `/stats` | GET | No | GPU and query statistics |
+
+### Authentication
+
+Searches can be made two ways:
+1. **Without API key**: Uses IP-based tracking (100/month limit)
+2. **With API key**: Pass `X-API-Key: legal_xxx` header (100/month free, 10k/month pro)
 
 ### Search Request
 ```json
@@ -199,7 +231,7 @@ POST /search
 
 | File | Location | Purpose |
 |------|----------|---------|
-| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.2 |
+| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.3 |
 | Landing Page | Hoopa: `/opt/legal-search-api/static/index.html` | Branded landing page |
 | Auth Database | Hoopa: `/var/lib/legal-api/auth.db` | SQLite for rate limiting |
 | Service Unit | Hoopa: `/etc/systemd/system/legal-search-consolidated.service` | Systemd service |
@@ -267,6 +299,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 17, 2026**: **v6.3.0 - API Key Auth (Phase 2)** - Added `/api/register` endpoint for email-based API key registration. Keys use format `legal_{random}` with SHA-256 hashing. One active key per email per month (free tier). Search responses include `rate_limit` object with usage stats. `/usage` endpoint shows key-specific stats when API key provided.
 - **Feb 17, 2026**: **v6.2.0 - Rate Limiting (Phase 1)** - Added IP-based rate limiting (100 searches/month free tier). SQLite auth database at `/var/lib/legal-api/auth.db`. Rate limit headers on all responses. `/usage` endpoint for checking limits. Landing page updated to show "100 searches/month" (was incorrectly "100/day").
 - **Feb 16, 2026**: **v6.1.1 - Fixed CourtListener URLs** - Added `slug` field to search results. API code was missing `slug` extraction from metadata. CourtListener URLs now use correct format: `/opinion/{cluster_id}/{slug}/`
 - **Feb 16, 2026**: **v6.1 - Enriched Results** - Search results now include case_name, date_filed, summary, judges, citation_count, precedential_status, slug. Enriched metadata from CourtListener opinion-clusters CSV (99.99% match rate).
@@ -279,4 +312,4 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ---
 *Documentation updated: February 17, 2026*
-*Rate limiting deployed - Phase 1 complete*
+*API key registration deployed - Phase 2 complete*
