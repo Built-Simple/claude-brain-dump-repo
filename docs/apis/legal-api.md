@@ -11,7 +11,7 @@
 | **Database** | PostgreSQL on Giratina (192.168.1.100:5432) |
 | **External URL** | https://legal.built-simple.ai |
 | **Internal URL** | http://192.168.1.79:5002 |
-| **API Version** | 6.3.0 |
+| **API Version** | 6.4.0 |
 | **GPU** | RTX 3090 #2 (GPU index 2) |
 | **Auth Database** | SQLite: `/var/lib/legal-api/auth.db` |
 
@@ -28,7 +28,7 @@
 |-------|--------|-------------|
 | Phase 1 | ✅ Complete | IP-based rate limiting (100/month) |
 | Phase 2 | ✅ Complete | API key registration (`/api/register`) |
-| Phase 3 | 🔄 Pending | Stripe integration for Pro upgrades |
+| Phase 3 | ✅ Complete | Stripe integration for Pro upgrades |
 | Phase 4 | 🔄 Pending | Google OAuth login |
 
 ### Rate Limit Headers
@@ -70,6 +70,38 @@ curl -X POST https://legal.built-simple.ai/api/register \
 ```
 
 **Note:** The full API key is only shown once at creation. Store it securely!
+
+### Upgrade to Pro (v6.4 - Stripe)
+```bash
+# Create checkout session to upgrade API key to Pro tier
+curl -X POST https://legal.built-simple.ai/api/checkout \
+  -H "Content-Type: application/json" \
+  -d '{"api_key":"legal_your_key_here","email":"user@example.com"}'
+
+# Response:
+{
+  "success": true,
+  "checkout_url": "https://checkout.stripe.com/c/pay/...",
+  "message": "Redirect to checkout URL"
+}
+
+# Check subscription status
+curl https://legal.built-simple.ai/api/subscription \
+  -H "X-API-Key: legal_your_key_here"
+
+# Response:
+{
+  "tier": "free",
+  "subscription_status": null,
+  "has_subscription": false,
+  "monthly_usage": 5,
+  "monthly_limit": 100,
+  "remaining": 95,
+  "upgrade_url": "https://legal.built-simple.ai/api/checkout"
+}
+```
+
+**Stripe Webhook:** `POST /webhook/stripe` receives subscription lifecycle events
 
 ## Architecture
 
@@ -170,6 +202,9 @@ A branded landing page is served at the root URL (`/`), matching the built-simpl
 | `/api/register` | POST | No | Register for an API key (email required) |
 | `/search` | POST | Rate Limited | Vector similarity search (IP or API key) |
 | `/stats` | GET | No | GPU and query statistics |
+| `/api/checkout` | POST | API Key | Create Stripe checkout for Pro upgrade |
+| `/api/subscription` | GET | API Key | Check subscription status |
+| `/webhook/stripe` | POST | Stripe Sig | Stripe webhook for subscription events |
 
 ### Authentication
 
@@ -231,7 +266,8 @@ POST /search
 
 | File | Location | Purpose |
 |------|----------|---------|
-| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.3 |
+| API Code | Hoopa: `/opt/legal-search-api/legal_search_consolidated.py` | Main API v6.4 |
+| Environment | Hoopa: `/opt/legal-search-api/.env` | Stripe keys, URLs |
 | Landing Page | Hoopa: `/opt/legal-search-api/static/index.html` | Branded landing page |
 | Auth Database | Hoopa: `/var/lib/legal-api/auth.db` | SQLite for rate limiting |
 | Service Unit | Hoopa: `/etc/systemd/system/legal-search-consolidated.service` | Systemd service |
@@ -299,6 +335,7 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ## Changelog
 
+- **Feb 17, 2026**: **v6.4.0 - Stripe Integration (Phase 3)** - Added `/api/checkout` for Pro upgrades ($29/month, 10k searches). `/api/subscription` to check status. `/webhook/stripe` for subscription lifecycle events. Uses SDK StripeWebhookHandler for secure signature verification.
 - **Feb 17, 2026**: **v6.3.0 - API Key Auth (Phase 2)** - Added `/api/register` endpoint for email-based API key registration. Keys use format `legal_{random}` with SHA-256 hashing. One active key per email per month (free tier). Search responses include `rate_limit` object with usage stats. `/usage` endpoint shows key-specific stats when API key provided.
 - **Feb 17, 2026**: **v6.2.0 - Rate Limiting (Phase 1)** - Added IP-based rate limiting (100 searches/month free tier). SQLite auth database at `/var/lib/legal-api/auth.db`. Rate limit headers on all responses. `/usage` endpoint for checking limits. Landing page updated to show "100 searches/month" (was incorrectly "100/day").
 - **Feb 16, 2026**: **v6.1.1 - Fixed CourtListener URLs** - Added `slug` field to search results. API code was missing `slug` extraction from metadata. CourtListener URLs now use correct format: `/opinion/{cluster_id}/{slug}/`
@@ -312,4 +349,4 @@ ssh root@192.168.1.79 "systemctl restart legal-search-consolidated"
 
 ---
 *Documentation updated: February 17, 2026*
-*API key registration deployed - Phase 2 complete*
+*Stripe integration deployed - Phase 3 complete*
