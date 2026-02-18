@@ -1,7 +1,7 @@
 # Buffer Killer - Social Media Scheduler
 
-**Last Updated:** February 1, 2026
-**Status:** Development Mode (not production-ready)
+**Last Updated:** February 18, 2026
+**Status:** Production (Late API) / Blocked (Native Meta API)
 
 ## Overview
 
@@ -371,14 +371,110 @@ Twitter OAuth 2.0 tokens expire every 2 hours. The API automatically:
 
 This is transparent to API callers - posts will succeed even with expired tokens.
 
-## Connected Accounts (as of Jan 30, 2026)
+## Connected Accounts (as of Feb 18, 2026)
 
-| Platform | Username | Status |
-|----------|----------|--------|
-| Twitter/X | @Talon_Neely | ✅ Connected |
-| LinkedIn | Talon Neely | ✅ Connected |
-| Instagram | @builtsimple.ai | ✅ Connected (via Late API) |
-| Threads | @talon_neely | ✅ Connected (via Late API) |
+| Platform | Username | Status | Method |
+|----------|----------|--------|--------|
+| Twitter/X | @Talon_Neely | ✅ Working | Native API |
+| LinkedIn | Talon Neely | ✅ Working | Native API |
+| Instagram | @builtsimple.ai | ✅ Working | Late API |
+| Threads | @talon_neely | ✅ Working | Late API |
+| Facebook | - | ⏸️ Blocked | Native API (pending verification) |
+| Instagram | - | ⏸️ Blocked | Native API (pending verification) |
+| Threads | - | ⏸️ Blocked | Native API (pending verification) |
+
+---
+
+## Native Meta API Integration (BLOCKED)
+
+**Status:** Code complete, blocked on Meta Business Verification
+
+### What's Ready
+
+Native Meta API integration has been fully implemented but cannot be used publicly until Meta App Review is approved.
+
+**Files Created/Modified:**
+- `/root/buffer-killer-deployment/lib/platforms/threads.js` - Full Threads API client
+- `/root/buffer-killer-deployment/server.js` - Added Threads routes, unified Meta OAuth callback
+- `/root/buffer-killer-deployment/privacy.html` - Updated for Meta compliance
+- `/root/buffer-killer-deployment/terms.html` - New Terms of Service page
+
+**Environment Variables Configured:**
+```bash
+# All use the same Meta App credentials (one app, multiple products)
+FACEBOOK_CLIENT_ID=4243298785983165
+FACEBOOK_CLIENT_SECRET=41c9e4be7aa7c20c932bbb5c46c3b1a8
+THREADS_APP_ID=4243298785983165
+THREADS_APP_SECRET=41c9e4be7aa7c20c932bbb5c46c3b1a8
+INSTAGRAM_APP_ID=4243298785983165
+INSTAGRAM_APP_SECRET=41c9e4be7aa7c20c932bbb5c46c3b1a8
+```
+
+**OAuth Endpoints Added:**
+- `GET /auth/threads/start` - Initiate Threads OAuth
+- `GET /auth/facebook/start` - Initiate Facebook OAuth
+- `GET /auth/meta/callback` - Unified callback for all Meta platforms
+
+**Redirect URI (configured in Meta Dashboard):**
+```
+https://buffer-killer.built-simple.ai/auth/meta/callback
+```
+
+### Why It's Blocked
+
+Meta requires **Business Verification** before App Review can be submitted. Business Verification requires:
+- Government-issued business registration documents
+- EIN (Employer Identification Number)
+- Official business formation documents
+
+**Current situation:** Operating without formal business registration. Cannot complete Business Verification until LLC is formed.
+
+### Development Mode Limitation
+
+In Development Mode (before App Review):
+- Posts are **only visible to app admins/testers**
+- Posts are NOT public
+- Test users cannot be added (Meta disabled this feature)
+
+### To Unblock (Future Steps)
+
+1. **Register an LLC** (~$50-200, few days)
+   - Northwest Registered Agent, LegalZoom, or state filing
+   - Get EIN from IRS (free, 10 minutes online)
+
+2. **Complete Business Verification**
+   - Upload business documents to Meta
+   - Wait for verification (1-5 business days)
+
+3. **Submit App Review**
+   - Request `threads_basic` and `threads_content_publish` permissions
+   - Provide test credentials and demo video
+   - Wait for approval (1-2 weeks typically)
+
+4. **Switch to Native API**
+   - Update platform preference from `late_instagram` to `instagram`
+   - Native API provides: no third-party dependency, no API limits, full feature access
+
+### Meta App Details
+
+| Property | Value |
+|----------|-------|
+| App ID | 4243298785983165 |
+| App Name | Buffer Killer |
+| Category | Business and Pages |
+| Namespace | bufferkiller |
+| Privacy Policy | https://buffer-killer-admin.built-simple.ai/privacy |
+| Terms of Service | https://buffer-killer-admin.built-simple.ai/terms |
+| App Domains | buffer-killer.built-simple.ai, buffer-killer-admin.built-simple.ai, built-simple.ai |
+
+### Recommendation
+
+**Keep using Late API** for Instagram/Threads until business is registered. Late API:
+- ✅ Works now with no verification
+- ✅ Handles token refresh automatically
+- ✅ No Meta approval needed
+- ⚠️ Has usage limits on free tier
+- ⚠️ Third-party dependency
 
 ## Quick Commands
 
@@ -432,3 +528,4 @@ Migrated from Victini to Silvally: December 13, 2025
 *Twitter auto-refresh tokens implemented: January 30, 2026*
 *Zapier queue integration added: January 30, 2026*
 *Late API integration added: February 1, 2026* - Instagram posting works!
+*Native Meta API integration coded: February 18, 2026* - Blocked on Business Verification
