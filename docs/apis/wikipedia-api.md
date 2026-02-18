@@ -1,6 +1,6 @@
 # Wikipedia Hybrid Search API
 
-**Last Updated:** February 6, 2026
+**Last Updated:** February 18, 2026
 **Status:** Production Ready
 
 ## Overview
@@ -11,6 +11,7 @@
 | **IP Address** | 192.168.1.213:8080 |
 | **Articles** | 4,854,193 Wikipedia articles |
 | **Vector Index** | FAISS GPU Flat (384 dimensions, brute-force search) |
+| **Metadata Cache** | In-memory (~9GB RAM, loaded at startup) |
 | **Keyword Search** | Elasticsearch 8.19.8 |
 | **Embedding Model** | all-MiniLM-L6-v2 |
 
@@ -105,16 +106,23 @@ curl -X POST https://wikipedia.built-simple.ai/api/contact \
 - Lazy-loaded article content with prefetch
 - Contact form (server-side email)
 
-## Performance (After Flat Index Upgrade)
+## Performance (After In-Memory Metadata Cache)
 
 | Operation | Time |
 |-----------|------|
-| SQLite queries | ~0.4-0.5ms |
-| Elasticsearch | ~17-25ms |
-| Vector search (flat) | ~300ms warm (100% vector coverage) |
-| Full hybrid | ~300-400ms warm, ~1.6s cold |
+| Vector search (with RAM cache) | ~175-250ms warm |
+| Elasticsearch BM25 | ~500-2500ms (varies by query) |
+| Full hybrid | ~765ms - 2.5s warm |
+| Startup time | ~42 minutes (loading 4.85M articles from HDD) |
 
-**Note:** The flat index searches all 4.8M vectors (100% coverage) vs. IVF which only searched ~3% of vectors. Search quality improved significantly at the cost of ~7x latency.
+**Note:** The in-memory metadata cache eliminates SQLite disk I/O during searches. Previously, metadata lookups from the HDD-backed SQLite database took ~30 seconds. Now metadata lookup is instant from RAM (~9GB cache).
+
+### Performance History
+
+| Date | Improvement | Result |
+|------|-------------|--------|
+| Feb 6, 2026 | Flat index upgrade | 100% vector coverage (vs 3% with IVF) |
+| Feb 18, 2026 | In-memory metadata cache | Vector search: 30s → 200ms (150x faster) |
 
 ## Security
 
@@ -184,8 +192,28 @@ post-up iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT || true
 - Latency: ~300ms vs ~40ms (acceptable tradeoff for quality)
 - GPU memory: ~7GB on GPU 2 (RTX 3090)
 
+### In-Memory Metadata Cache (Fixed February 18, 2026)
+
+**Symptom:** Search queries taking ~40 seconds due to slow SQLite metadata lookups from HDD-backed LVM thin pool.
+
+**Root Cause:** The 31GB SQLite database was stored on LVM thin pool that spans HDDs. Each search required ~100 metadata lookups, taking 30+ seconds from HDD.
+
+**Fix:** Added in-memory metadata cache that loads all 4,854,193 article metadata (title, category, summary) into RAM at startup:
+1. Added `metadata_cache` global dict in `/opt/wikipedia_api_production.py`
+2. Added `load_metadata_cache()` function that loads all metadata at startup
+3. Modified `get_articles_by_ids()` to use RAM cache with SQLite fallback
+
+**Impact:**
+- Vector search: 30,000ms → 175ms (150x faster)
+- Hybrid search: 40,000ms → 765ms warm
+- RAM usage: +9GB (CT 213 has 48GB allocated)
+- Startup time: +38 minutes (loading from HDD)
+
+**Code location:** `/opt/wikipedia_api_production.py` in CT 213
+
 ---
 *Wikipedia Hybrid API deployed: December 13, 2025*
 *SSD optimization: January 7, 2026*
 *Network fix: January 19, 2026*
 *Flat index upgrade: February 6, 2026*
+*In-memory metadata cache: February 18, 2026*
