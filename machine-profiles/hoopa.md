@@ -1,7 +1,38 @@
 # Machine Profile: Hoopa
 
-**Last Updated:** January 15, 2026
+**Last Updated:** February 22, 2026
 **Role:** GPU Node (3x RTX 3090 + 1x RTX 5090)
+
+## Known Issues
+
+### GPU0 PCIe Failure - MAINTENANCE REQUIRED
+
+**Discovered:** February 22, 2026
+**Status:** Scheduled for physical maintenance
+**Severity:** Medium (GPU functional but degraded)
+
+**Symptoms:**
+- PCIe link running at 2.5 GT/s x8 instead of 8 GT/s x16 (6% of normal bandwidth)
+- Lane 5 physical error detected
+- Correctable errors: RxErr, BadTLP, Rollover, Timeout
+- GPU occasionally falls off bus entirely (recovers after ~1 hour)
+- 30,000+ PCIe replay errors since boot
+
+**Impact:**
+- GPU0 (RTX 3090 in slot 1) has ~2 GB/s bandwidth instead of ~16 GB/s
+- Model loading 6-8x slower than normal
+- Currently idle/unusable for production workloads
+
+**Maintenance Checklist:**
+- [ ] Power off Hoopa completely
+- [ ] Reseat GPU0 in PCIe slot 1
+- [ ] Clean PCIe contacts with isopropyl alcohol
+- [ ] Check 8-pin PCIe power cables fully seated
+- [ ] Inspect slot for physical damage
+- [ ] If issue persists, try GPU0 in different slot
+- [ ] If still failing, RMA GPU0 (Serial: 1653921001226)
+
+**Workaround:** Use GPU1-3 for workloads until fixed. GPU0 is currently idle.
 
 ## System Overview
 
@@ -23,7 +54,7 @@
 - **Total RAM:** 126GB
 
 ### GPUs
-- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM)
+- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM) - ⚠️ PCIe DEGRADED - see Known Issues
 - **GPU 1:** NVIDIA RTX 5090 (32GB VRAM)
 - **GPU 2:** NVIDIA RTX 3090 (24GB VRAM)
 - **GPU 3:** NVIDIA RTX 3090 (24GB VRAM)
