@@ -1,38 +1,35 @@
 # Machine Profile: Hoopa
 
-**Last Updated:** February 22, 2026
+**Last Updated:** February 23, 2026
 **Role:** GPU Node (3x RTX 3090 + 1x RTX 5090)
 
 ## Known Issues
 
-### GPU0 PCIe Failure - MAINTENANCE REQUIRED
+### GPU0 Intermittent PCIe Issues - RESOLVED via FLR
 
 **Discovered:** February 22, 2026
-**Status:** Scheduled for physical maintenance
-**Severity:** Medium (GPU functional but degraded)
+**Status:** Recovered - GPU0 functional at 8.0 GT/s x8
+**Severity:** Low (monitoring)
 
-**Symptoms:**
-- PCIe link running at 2.5 GT/s x8 instead of 8 GT/s x16 (6% of normal bandwidth)
-- Lane 5 physical error detected
-- Correctable errors: RxErr, BadTLP, Rollover, Timeout
-- GPU occasionally falls off bus entirely (recovers after ~1 hour)
-- 30,000+ PCIe replay errors since boot
+**Background:**
+- GPU0 occasionally falls off the PCIe bus after reboot or driver issues
+- x8 width is expected (motherboard has 3x x16 + 3x x8 slots, GPU0 is in x8 slot)
+- 8.0 GT/s x8 = ~8 GB/s bandwidth - normal for this slot
 
-**Impact:**
-- GPU0 (RTX 3090 in slot 1) has ~2 GB/s bandwidth instead of ~16 GB/s
-- Model loading 6-8x slower than normal
-- Currently idle/unusable for production workloads
+**Recovery Command (if GPU0 disappears from nvidia-smi):**
+```bash
+# FLR (Function Level Reset) - recovers GPU0 without reboot
+echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
+```
 
-**Maintenance Checklist:**
-- [ ] Power off Hoopa completely
-- [ ] Reseat GPU0 in PCIe slot 1
-- [ ] Clean PCIe contacts with isopropyl alcohol
-- [ ] Check 8-pin PCIe power cables fully seated
-- [ ] Inspect slot for physical damage
-- [ ] If issue persists, try GPU0 in different slot
-- [ ] If still failing, RMA GPU0 (Serial: 1653921001226)
+**Symptoms that indicate GPU0 needs reset:**
+- Only 3 GPUs visible in `nvidia-smi` (GPU0 missing)
+- dmesg shows: `NVRM: GPU 0000:01:00.0: RmInitAdapter failed!`
+- dmesg shows: `Cannot attach gpu` or `bad register read`
 
-**Workaround:** Use GPU1-3 for workloads until fixed. GPU0 is currently idle.
+**History:**
+- Feb 22: GPU0 fell off bus, showed PCIe errors, driver couldn't initialize
+- Feb 23: FLR reset restored GPU0 to full functionality
 
 ## System Overview
 
@@ -54,7 +51,7 @@
 - **Total RAM:** 126GB
 
 ### GPUs
-- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM) - ⚠️ PCIe DEGRADED - see Known Issues
+- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM) - x8 slot (normal)
 - **GPU 1:** NVIDIA RTX 5090 (32GB VRAM)
 - **GPU 2:** NVIDIA RTX 3090 (24GB VRAM)
 - **GPU 3:** NVIDIA RTX 3090 (24GB VRAM)
@@ -103,6 +100,9 @@ ssh root@localhost -p 2024
 ```bash
 # Check GPU status
 nvidia-smi
+
+# Reset GPU0 if it falls off the bus (FLR recovery)
+echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
 
 # Check containers
 pct list
