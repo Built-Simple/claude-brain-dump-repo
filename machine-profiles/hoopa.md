@@ -31,6 +31,26 @@ echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
 - Feb 22: GPU0 fell off bus, showed PCIe errors, driver couldn't initialize
 - Feb 23: FLR reset restored GPU0 to full functionality
 
+### PCIe ASPM Performance Issue - FIXED Permanently
+
+**Discovered:** February 23, 2026
+**Status:** Fixed - takes effect on next reboot
+**Root Cause:** `pcie_aspm=force` kernel parameter was limiting all GPUs to Gen 1 (2.5 GT/s)
+
+**Fix Applied:**
+1. Changed `/etc/default/grub`: `GRUB_CMDLINE_LINUX_DEFAULT="quiet pcie_aspm=off"`
+2. Updated `/boot/grub/grub.cfg` with `pcie_aspm=off`
+
+**Impact:**
+- Without fix: All GPUs forced to PCIe Gen 1 (2.5 GT/s) = ~0.5 GB/s bandwidth
+- With fix: GPUs run at Gen 3 (8.0 GT/s) = ~12 GB/s bandwidth
+
+**Verification after reboot:**
+```bash
+nvidia-smi --query-gpu=index,name,pcie.link.gen.current --format=csv
+# Should show Gen 3 for all GPUs
+```
+
 ## System Overview
 
 | Property | Value |
