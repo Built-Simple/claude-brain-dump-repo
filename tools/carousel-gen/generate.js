@@ -3,6 +3,7 @@ import Handlebars from 'handlebars';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { exec } from 'child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -152,14 +153,87 @@ async function generateCarousel(carousel, outputDir = './output') {
   return paths;
 }
 
+// ─────────────────────────────────────────────
+// EMAIL DELIVERY
+// ─────────────────────────────────────────────
+const EMAIL_TO = process.env.CAROUSEL_EMAIL || 'info@built-simple.ai';
+
+async function emailCarousel(paths, carousel) {
+  const boundary = `----=_Part_${Date.now()}`;
+  const subject = carousel.name || `Carousel: ${carousel.slides[0]?.tag || 'New Carousel'}`;
+
+  // Build slide summary
+  const slideList = carousel.slides.map((s, i) =>
+    `  ${i + 1}. ${s.tag || 'Slide'}: ${s.headline?.replace(/<[^>]*>/g, '') || s.stat || 'Content'}`
+  ).join('\n');
+
+  let email = `To: ${EMAIL_TO}
+From: carousel-gen@giratina
+Subject: ${subject}
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="${boundary}"
+
+--${boundary}
+Content-Type: text/plain; charset=utf-8
+
+Carousel Generated: ${paths.length} slides
+
+Theme:
+  Brand: ${carousel.theme.brand}
+  Accent: ${carousel.theme.accent}
+  Background: ${carousel.theme.background}
+
+Slides:
+${slideList}
+
+Generated on Giratina at ${new Date().toISOString()}
+`;
+
+  // Attach each PNG
+  for (const filepath of paths) {
+    const filename = path.basename(filepath);
+    const data = await fs.readFile(filepath);
+    const base64 = data.toString('base64');
+
+    email += `
+--${boundary}
+Content-Type: image/png; name="${filename}"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="${filename}"
+
+${base64.match(/.{1,76}/g).join('\n')}
+`;
+  }
+
+  email += `\n--${boundary}--\n`;
+
+  return new Promise((resolve, reject) => {
+    const proc = exec('msmtp -t', (error, stdout, stderr) => {
+      if (error) reject(new Error(`Email failed: ${stderr || error.message}`));
+      else resolve();
+    });
+    proc.stdin.write(email);
+    proc.stdin.end();
+  });
+}
+
 // ─── RUN ───
 console.log('\n🎠 Generating carousel...\n');
 const start = Date.now();
 
 generateCarousel(CAROUSEL)
-  .then(paths => {
+  .then(async (paths) => {
     console.log(`\n✅ Done — ${paths.length} slides in ${Date.now() - start}ms`);
     console.log(`   Output: ${path.resolve('./output')}\n`);
+
+    // Email the slides
+    console.log(`📧 Emailing to ${EMAIL_TO}...`);
+    try {
+      await emailCarousel(paths, CAROUSEL);
+      console.log(`   ✓ Sent!\n`);
+    } catch (err) {
+      console.error(`   ✗ Email failed: ${err.message}\n`);
+    }
   })
   .catch(err => {
     console.error('\n❌', err.message);

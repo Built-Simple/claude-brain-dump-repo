@@ -31,6 +31,7 @@ npm run generate
 - **Dimensions:** 1080x1350px (Instagram/LinkedIn carousel optimal)
 - **Resolution:** 2x device scale (retina quality)
 - **Format:** PNG
+- **Email:** Automatically sent to `info@built-simple.ai` after generation
 
 ## Content Structure
 
@@ -173,8 +174,14 @@ Requires:
 
 1. **Edit content** in `generate.js` → `CAROUSEL` object
 2. **Run** `npm run generate`
-3. **Check** `./output/` for PNG files
+3. **Receive email** at info@built-simple.ai with all slides attached
 4. **Upload** to LinkedIn/Instagram as carousel
+
+### Override Email Recipient
+
+```bash
+CAROUSEL_EMAIL="other@example.com" npm run generate
+```
 
 ## Copying Output
 
