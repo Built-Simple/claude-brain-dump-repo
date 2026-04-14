@@ -78,7 +78,7 @@ body{width:1080px;height:1350px;overflow:hidden;font-family:'DM',sans-serif;back
 .dot-grid{position:absolute;bottom:120px;right:80px;width:130px;height:130px;background-image:radial-gradient(circle,{{accent}}55 1.5px,transparent 1.5px);background-size:18px 18px;opacity:.45;}
 .slide-num{position:absolute;top:66px;right:80px;font-family:'Syne';font-size:18px;font-weight:700;color:{{accent}};letter-spacing:3px;text-transform:uppercase;}
 .tag{display:inline-block;background:{{accent}}20;color:{{accent}};font-size:15px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:4px;border:1px solid {{accent}}44;margin-bottom:32px;width:fit-content;}
-.headline{font-family:'Syne';font-size:{{headlineSize}}px;font-weight:800;line-height:1.08;color:{{textColor}};letter-spacing:-1px;margin-bottom:40px;}
+.headline{font-family:'Syne';font-size:{{headlineSize}}px;font-weight:700;line-height:1.18;color:{{textColor}};letter-spacing:0px;margin-bottom:40px;}
 .headline em{font-style:normal;color:{{accent}};}
 .body{font-size:28px;font-weight:300;line-height:1.65;color:{{textColor}}cc;max-width:820px;}
 .bullets{list-style:none;display:flex;flex-direction:column;gap:24px;}
