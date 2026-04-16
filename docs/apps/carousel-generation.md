@@ -216,6 +216,8 @@ node schedule-remaining-simple.cjs
 - Free tier: 20 posts/month
 - Multiple platforms in one call = 1 post
 - API rebranded from getlate.dev to zernio.com
+- **API endpoint**: `https://api.zernio.com/v1/posts`
+- **Media field**: Use `media` array (not `mediaItems`) for images
 
 ## Troubleshooting
 
@@ -230,6 +232,15 @@ Verify images are accessible:
 ```bash
 curl -I https://buffer-killer-admin.built-simple.ai/carousels/AR-1-missed-calls/slide-01.png
 ```
+
+### Images Not Posting (Text-Only Posts)
+If posts appear as text-only without images:
+1. Verify `metadata` in database contains `imageUrls` array
+2. Check Buffer Killer logs for "Adding X images to post"
+3. Ensure Zernio API uses `media` field (not `mediaItems`) - fixed April 2026
+
+### LinkedIn Carousel Limitations
+LinkedIn API doesn't support carousel images via Buffer Killer. Posts will be text-only on LinkedIn.
 
 ## Research Sources for New Carousels
 
@@ -246,5 +257,17 @@ When adding research-backed carousels, cite sources on slides:
 | PwC | 15,000 consumers | 2018 | Customer experience |
 | Vonage | 7,000 participants | 2024 | Customer engagement |
 
+## Scheduling Workflow
+
+The current scheduling approach schedules posts separately for different caption lengths:
+
+```
+Instagram + LinkedIn → Full captions (hashtags, longer text)
+Threads → Short captions (<500 chars from captions-threads.cjs)
+```
+
+Posts publish at **10:00 AM EDT** (7:00 AM Pacific) on weekdays.
+
 ---
 *Created: April 13, 2026*
+*Updated: April 15, 2026 - Added Zernio API fix, scheduling workflow*
