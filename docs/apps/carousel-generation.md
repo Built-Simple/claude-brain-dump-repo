@@ -239,8 +239,12 @@ If posts appear as text-only without images:
 2. Check Buffer Killer logs for "Adding X images to post"
 3. Ensure Zernio API uses `media` field (not `mediaItems`) - fixed April 2026
 
-### LinkedIn Carousel Limitations
-LinkedIn API doesn't support carousel images via Buffer Killer. Posts will be text-only on LinkedIn.
+### LinkedIn Carousel Support
+LinkedIn carousel posts are now fully supported (up to 9 images):
+- Automatically uses Document API for multi-image posts
+- Downloads images from public URLs and uploads to LinkedIn
+- Single image posts use simpler UGC API with `originalUrl`
+- Fixed April 15, 2026
 
 ## Research Sources for New Carousels
 
