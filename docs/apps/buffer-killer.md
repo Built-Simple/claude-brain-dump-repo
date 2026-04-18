@@ -215,6 +215,10 @@ curl http://192.168.1.149:3080/api/v1/late/status
 - Late handles token refresh automatically
 - Free tier: 20 posts/month, 2 profiles
 
+### ⚠️ AI Assistants: Ask Before Posting
+
+**Always ask the user before posting to production social media accounts.** Test posts consume API quota (Zernio free tier: 20 posts/month) and appear on live accounts. If testing is needed, confirm with the user first - they may prefer to wait until they're available to verify results.
+
 ### Connected Late Accounts (as of Feb 1, 2026)
 
 | Platform | Username | Account ID |
