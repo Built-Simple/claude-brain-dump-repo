@@ -217,7 +217,8 @@ node schedule-remaining-simple.cjs
 - Multiple platforms in one call = 1 post
 - API rebranded from getlate.dev to zernio.com
 - **API endpoint**: `https://api.zernio.com/v1/posts`
-- **Media field**: Use `media` array (not `mediaItems`) for images
+- **Media field**: Use `mediaItems` array with `{type: 'image', url: '...'}` objects
+- **Note**: The field name is `mediaItems` (NOT `media`) - corrected April 18, 2026
 
 ## Troubleshooting
 
@@ -237,7 +238,8 @@ curl -I https://buffer-killer-admin.built-simple.ai/carousels/AR-1-missed-calls/
 If posts appear as text-only without images:
 1. Verify `metadata` in database contains `imageUrls` array
 2. Check Buffer Killer logs for "Adding X images to post"
-3. Ensure Zernio API uses `media` field (not `mediaItems`) - fixed April 2026
+3. Ensure Zernio API uses `mediaItems` field with `{type: 'image', url: '...'}` objects
+4. Instagram requires proper `mediaItems` array format per docs.zernio.com/platforms/instagram
 
 ### LinkedIn Carousel Support
 LinkedIn carousel posts are now fully supported (up to 9 images):
@@ -275,3 +277,4 @@ Posts publish at **10:00 AM EDT** (7:00 AM Pacific) on weekdays.
 ---
 *Created: April 13, 2026*
 *Updated: April 15, 2026 - Added Zernio API fix, scheduling workflow*
+*Updated: April 18, 2026 - Corrected Zernio API to use `mediaItems` array (not `media`), LinkedIn carousel support confirmed working*
