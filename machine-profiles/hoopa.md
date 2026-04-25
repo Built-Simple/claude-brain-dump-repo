@@ -1,7 +1,41 @@
 # Machine Profile: Hoopa
 
-**Last Updated:** February 23, 2026
+**Last Updated:** April 25, 2026
 **Role:** GPU Node (3x RTX 3090 + 1x RTX 5090)
+
+## Current Status
+
+### ⚠️ OFFLINE - Requires Physical Access (April 25, 2026)
+
+**Status:** Unreachable from network
+**Discovery:** April 25, 2026 during cluster audit
+**Severity:** HIGH - Wikipedia API (wikipedia.built-simple.ai) is DOWN
+
+**Symptoms:**
+- No ping response to 192.168.1.79
+- ARP shows "incomplete" for the IP address
+- `ssh root@192.168.1.79` returns "No route to host"
+- Not visible in `pvecm status` cluster membership
+
+**Probable Causes:**
+1. Machine powered off
+2. Network cable disconnected
+3. Network interface down
+4. Kernel panic / frozen
+
+**Required Actions:**
+- Physical access needed to diagnose
+- Check power LED, network link lights
+- Console access via iLO/IPMI or local keyboard/monitor
+- If frozen, may need hardware reset
+
+**Services Affected:**
+- Wikipedia Hybrid Search API (CT 213, 214, 215)
+- Legal API development (CT 210, 211)
+- Ollama LLM API (port 11434)
+- FixIt embedding server (port 8090)
+
+---
 
 ## Known Issues
 
