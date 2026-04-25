@@ -31,6 +31,9 @@
 | 114 | sarcastic-receptionist | DHCP | Voice assistant (generic) | Running |
 | 116 | thai-receptionist | DHCP | Voice assistant (Peinto Thai) | Running |
 | 117 | solidinvoice | 192.168.1.117 | Invoicing application | Running |
+| 118 | media-cdn | - | **DO NOT TOUCH** - Managed separately | Running |
+
+> **WARNING: CT 118 (media-cdn) is off-limits.** Do not stop, modify, or interact with this container. It is managed by a separate process/Claude instance.
 
 ### Container Details
 
