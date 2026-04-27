@@ -1,12 +1,12 @@
 # Admin Dashboard
 
-**Last Updated:** January 17, 2026
+**Last Updated:** April 27, 2026
 **Status:** Running
 **Location:** CT 400 on Giratina (192.168.1.50)
 
 ## Overview
 
-Central admin dashboard for Built Simple infrastructure. Shows real-time health status of all APIs, applications, and infrastructure with live ping checks.
+Central admin dashboard for Built Simple infrastructure. Shows real-time health status of all APIs, applications, and infrastructure with live ping checks. Also provides signup counts aggregated from all API databases.
 
 ## Access
 
@@ -28,6 +28,7 @@ Central admin dashboard for Built Simple infrastructure. Shows real-time health 
 - **Response times** - Shows latency for each service
 - **Summary stats** - Total online/offline count at a glance
 - **Manual refresh** - Click to re-check all services immediately
+- **Signup aggregation** - Counts users from all 5 API databases (updated every 5 min)
 
 ## Services Monitored
 
@@ -73,6 +74,8 @@ Central admin dashboard for Built Simple infrastructure. Shows real-time health 
 | `/var/www/health-proxy/server.js` | Health check proxy server |
 | `/etc/nginx/sites-available/admin.built-simple.ai` | nginx config |
 | `/etc/nginx/.htpasswd` | Password file |
+| `/root/signup_aggregator.py` (Giratina host) | Signup count aggregator script |
+| `/tmp/signup_counts.json` | Cached signup data (both host and CT 400) |
 
 ## nginx Configuration
 
@@ -167,6 +170,39 @@ Check the health proxy logs for connection errors:
 pct exec 400 -- /usr/local/lib/node_modules/pm2/bin/pm2 logs health-proxy --lines 50
 ```
 
+## Signup Aggregator
+
+The signup aggregator runs on the Giratina host every 5 minutes via cron and queries user counts from all 5 API databases:
+
+| Service | Container | Database | Table |
+|---------|-----------|----------|-------|
+| FixIt | CT 103 | `/var/lib/fixit-api/auth.db` | `api_keys` |
+| PubMed | CT 108 | `/opt/pubmed-web/pubmed_users.db` | `users` |
+| ArXiv | CT 122 | `/opt/arxiv/databases/api_keys.db` | `users` |
+| Wikipedia | CT 213 (Hoopa) | `/var/lib/wikipedia-api/auth.db` | `api_keys` |
+| ReviewMaster | CT 313 (Silvally) | PostgreSQL `reviewmaster` | `users` |
+
+### API Endpoint
+
+```bash
+# Returns aggregated signup counts (requires auth)
+curl -s -u admin:BuiltSimple2025 http://192.168.1.50/api/signups
+# Response: {"fixit": 7, "pubmed": 1, "arxiv": 5, "wikipedia": 29, "reviewmaster": 16, "timestamp": "..."}
+```
+
+### Cron Job (Giratina host)
+
+```bash
+*/5 * * * * /usr/bin/python3 /root/signup_aggregator.py >> /var/log/signup_aggregator.log 2>&1
+```
+
+### Manual Run
+
+```bash
+python3 /root/signup_aggregator.py
+```
+
 ---
 *Created: January 17, 2026*
 *Updated: January 17, 2026 - Added backend health check proxy*
+*Updated: April 27, 2026 - Added signup aggregator endpoint*
