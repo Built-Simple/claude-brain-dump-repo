@@ -191,19 +191,18 @@ CT 115 (obsolete "configurable" version) deleted: December 13, 2025
 - Additional tables: `license_codes`
 - Additional columns on `users`: `openai_api_key_encrypted`, `openai_key_status`, `license_code_id`
 
-### Initial License Codes (10 generated April 28, 2026)
+### License Code Generation
+Generate new codes with:
+```bash
+ssh root@192.168.1.52 "pct exec 318 -- bash -c 'source /opt/reviewmaster/venv/bin/activate && cd /opt/reviewmaster && PYTHONPATH=/opt/reviewmaster python3 scripts/generate_licenses.py --count 10 --source appsumo --notes \"Description\"'"
 ```
-RMPRO-Q69GP-AFMWQ-R5ZHW
-RMPRO-EFF9Q-H5SUD-DQSEU
-RMPRO-ZQ65Q-VN6EQ-VTQ48
-RMPRO-2GXQU-DHBH9-WPTK7
-RMPRO-HECFS-2NDCX-FMY4J
-RMPRO-HK6HR-P5DVD-9K7WR
-RMPRO-VCFYP-6WXX6-QAHSX
-RMPRO-QWW5J-ADHME-AFBSA
-RMPRO-J4ZCF-6VS6E-RHKR3
-RMPRO-AQ2NN-PAUSE-G7USF
+
+List available codes:
+```bash
+ssh root@192.168.1.52 "pct exec 318 -- bash -c 'PGPASSWORD=byok2026 psql -U reviewmaster -h localhost -d reviewmaster_byok -c \"SELECT code, source FROM license_codes WHERE redeemed_at IS NULL;\"'"
 ```
+
+**Note:** Never commit license codes to documentation - query the database for current codes.
 
 ## Related Documentation
 
