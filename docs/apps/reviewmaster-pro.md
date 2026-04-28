@@ -226,6 +226,17 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 **Stripe code:** Properly commented out in `app_pro.py`, stripe router disabled.
 **Upgrade functions:** `upgradeToPro()` redirects to Settings for license redemption.
 
+**Legal pages:**
+- `privacy.html` - Updated payment section to describe BYOK model (license codes, encrypted API keys)
+- `terms.html` - Updated "Subscription and Payment" → "License and Access", removed $29/month references
+
+**Static assets:**
+- `sitemap.xml` - Fixed URLs to byok-reviewmaster.built-simple.ai
+
+**Dead code (not removed, just unused):**
+- Email templates for trial warnings and win-back - won't trigger because BYOK users never have "trial" tier
+- Autopilot worker subscription checks - service not running in BYOK
+
 ## Related Documentation
 
 - REVIEWMASTER_PRODUCTION_STATUS.md (in /root/)
