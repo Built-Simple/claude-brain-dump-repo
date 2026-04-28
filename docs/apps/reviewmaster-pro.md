@@ -216,12 +216,15 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 
 **Frontend changes:**
 - Removed cancel subscription modal (was causing nested HTML comment bug)
-- Updated schema.org pricing to "one-time license purchase"
+- Updated schema.org pricing from "$29" to "0" (one-time license purchase)
+- Fixed all URLs from reviewmaster.built-simple.ai → byok-reviewmaster.built-simple.ai
 - Changed FAQ from "$29/month" to BYOK license code model
 - Updated CTAs from trial messaging to license code redemption
 - Changed usage display from trial count to license status
+- Updated error fallback message to reference license codes
 
 **Stripe code:** Properly commented out in `app_pro.py`, stripe router disabled.
+**Upgrade functions:** `upgradeToPro()` redirects to Settings for license redemption.
 
 ## Related Documentation
 
