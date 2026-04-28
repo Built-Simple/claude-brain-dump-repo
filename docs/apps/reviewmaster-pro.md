@@ -235,8 +235,30 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 
 **Dead code (not removed, just unused):**
 - Email templates for trial warnings and win-back - won't trigger because BYOK users never have "trial" tier
-- Autopilot worker subscription checks - service not running in BYOK
 - Frontend trial JavaScript variables (isInTrial, trialResponsesUsed, etc.) - API returns is_trial:false, so code paths never execute
+
+### Autopilot Worker (Added April 28, 2026)
+The autopilot worker runs as a systemd service (`reviewmaster-autopilot`) and checks every 5 minutes for:
+1. Users with autopilot enabled on Google Business connections
+2. New reviews that haven't been responded to
+3. Generates AI responses using the user's own OpenAI API key
+
+**BYOK-specific checks:**
+- User must have redeemed a license code
+- User must have a valid OpenAI API key configured
+- API key status must be "valid" or "checking"
+
+**Service management:**
+```bash
+# Check status
+ssh root@192.168.1.52 "pct exec 318 -- systemctl status reviewmaster-autopilot"
+
+# View logs
+ssh root@192.168.1.52 "pct exec 318 -- journalctl -u reviewmaster-autopilot -n 50"
+
+# Restart
+ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
+```
 
 **Security verified (April 28, 2026):**
 - Logging: No sensitive data (API keys, passwords) logged
@@ -258,3 +280,4 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 *BYOK version deployed: April 28, 2026*
 *BYOK code cleanup: April 28, 2026 - Removed trial/subscription remnants*
 *BYOK security audit: April 28, 2026 - Verified logging, API responses, endpoints, database*
+*BYOK autopilot worker: April 28, 2026 - Added systemd service, adapted for license-based access*
