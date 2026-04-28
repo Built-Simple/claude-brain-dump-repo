@@ -236,6 +236,15 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 **Dead code (not removed, just unused):**
 - Email templates for trial warnings and win-back - won't trigger because BYOK users never have "trial" tier
 - Autopilot worker subscription checks - service not running in BYOK
+- Frontend trial JavaScript variables (isInTrial, trialResponsesUsed, etc.) - API returns is_trial:false, so code paths never execute
+
+**Security verified (April 28, 2026):**
+- Logging: No sensitive data (API keys, passwords) logged
+- API responses: /user/me only returns safe fields (email, is_pro, created_at)
+- Debug endpoints: /admin/overview has bug but NOT exposed (analytics router not included)
+- Database: No sensitive data leakage via API
+- License endpoints: Properly authenticated, no data exposure
+- Settings endpoints: API key masking works correctly (sk-****)
 
 ## Related Documentation
 
@@ -248,3 +257,4 @@ Removed subscription/trial-related code that didn't belong in BYOK version:
 *TastyIgniter integration: January 19, 2026*
 *BYOK version deployed: April 28, 2026*
 *BYOK code cleanup: April 28, 2026 - Removed trial/subscription remnants*
+*BYOK security audit: April 28, 2026 - Verified logging, API responses, endpoints, database*
