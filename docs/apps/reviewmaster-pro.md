@@ -204,6 +204,25 @@ ssh root@192.168.1.52 "pct exec 318 -- bash -c 'PGPASSWORD=byok2026 psql -U revi
 
 **Note:** Never commit license codes to documentation - query the database for current codes.
 
+### Code Cleanup (April 28, 2026)
+Removed subscription/trial-related code that didn't belong in BYOK version:
+
+**Backend changes:**
+- Removed `/upgrade-to-pro` endpoint from `auth.py` (was Stripe placeholder)
+- Fixed `/trial-status` endpoint to return BYOK-appropriate data (no trials)
+- Added `/license-status` endpoint alias with proper license/API key status
+- Removed `trial_response_limit` config from `config.py`
+- Cleaned up `check_tier_limits()` in `reviews.py` - now only checks license codes
+
+**Frontend changes:**
+- Removed cancel subscription modal (was causing nested HTML comment bug)
+- Updated schema.org pricing to "one-time license purchase"
+- Changed FAQ from "$29/month" to BYOK license code model
+- Updated CTAs from trial messaging to license code redemption
+- Changed usage display from trial count to license status
+
+**Stripe code:** Properly commented out in `app_pro.py`, stripe router disabled.
+
 ## Related Documentation
 
 - REVIEWMASTER_PRODUCTION_STATUS.md (in /root/)
@@ -214,3 +233,4 @@ ssh root@192.168.1.52 "pct exec 318 -- bash -c 'PGPASSWORD=byok2026 psql -U revi
 *Migrated to Silvally: December 13, 2025*
 *TastyIgniter integration: January 19, 2026*
 *BYOK version deployed: April 28, 2026*
+*BYOK code cleanup: April 28, 2026 - Removed trial/subscription remnants*
