@@ -1,19 +1,34 @@
 # ReviewMaster Pro - AI Review Response Generator
 
-**Last Updated:** January 19, 2026
+**Last Updated:** April 28, 2026
 **Status:** Production Ready (100%)
 
 ## Overview
+
+### Main Instance (Subscription Model)
 
 | Property | Value |
 |----------|-------|
 | **Container** | CT 313 on Silvally (192.168.1.52) |
 | **IP Address** | 192.168.1.200:8001 |
 | **Status** | Production Ready |
+| **Model** | Stripe subscription ($29/month) |
 
-## External URL
+### BYOK Instance (AppSumo / Lifetime License)
 
-- **App:** https://reviewmaster.built-simple.ai
+| Property | Value |
+|----------|-------|
+| **Container** | CT 318 on Silvally (192.168.1.52) |
+| **IP Address** | 192.168.1.201:8001 |
+| **Status** | Production Ready |
+| **Model** | BYOK (Bring Your Own Key) |
+| **GitHub Repo** | `reviewmaster-byok` |
+| **Created** | April 28, 2026 |
+
+## External URLs
+
+- **Main App:** https://reviewmaster.built-simple.ai (Stripe subscriptions)
+- **BYOK App:** https://byok-reviewmaster.built-simple.ai (License codes + user's own API key)
 
 ## What is ReviewMaster Pro?
 
@@ -85,6 +100,8 @@ ReviewMaster Pro is integrated with the TastyIgniter restaurant platform via the
 
 ## Quick Commands
 
+### Main Instance (CT 313)
+
 ```bash
 # Access container
 ssh root@192.168.1.52 "pct enter 313"
@@ -105,6 +122,31 @@ curl https://reviewmaster.built-simple.ai/health
 ssh root@192.168.1.52 "pct exec 315 -- bash -c 'cd /var/www/tastyigniter && php artisan tinker --execute=\"print_r(app(\\\"reviewmaster.client\\\")->testConnection());\"'"
 ```
 
+### BYOK Instance (CT 318)
+
+```bash
+# Access container
+ssh root@192.168.1.52 "pct enter 318"
+
+# Check service status
+ssh root@192.168.1.52 "pct exec 318 -- systemctl status reviewmaster"
+
+# View logs
+ssh root@192.168.1.52 "pct exec 318 -- journalctl -u reviewmaster -n 50"
+
+# Restart service
+ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster"
+
+# Test health
+curl https://byok-reviewmaster.built-simple.ai/api/health
+
+# Generate license codes
+ssh root@192.168.1.52 "pct exec 318 -- bash -c 'source /opt/reviewmaster/venv/bin/activate && cd /opt/reviewmaster && PYTHONPATH=/opt/reviewmaster python3 scripts/generate_licenses.py --count 10 --source appsumo --notes \"Batch description\"'"
+
+# List available license codes
+ssh root@192.168.1.52 "pct exec 318 -- bash -c 'PGPASSWORD=byok2026 psql -U reviewmaster -h localhost -d reviewmaster_byok -c \"SELECT code, source, notes FROM license_codes WHERE redeemed_at IS NULL;\"'"
+```
+
 ## Revenue Model
 
 - $29/month for unlimited reviews
@@ -122,11 +164,54 @@ Migrated from Victini to Silvally: December 13, 2025
 
 CT 115 (obsolete "configurable" version) deleted: December 13, 2025
 
+## BYOK Version Details
+
+### Business Model
+- One-time license code redemption (no recurring subscription)
+- Users bring their own OpenAI API key
+- Target audience: AppSumo marketplace, lifetime deal seekers
+
+### Technical Implementation
+- **Encryption:** Fernet symmetric encryption for API key storage
+- **License Format:** `RMPRO-XXXXX-XXXXX-XXXXX`
+- **API Key Storage:** Encrypted in PostgreSQL, decrypted on-demand
+- **Key Validation:** Daily cron job validates all stored API keys
+- **Config:** Environment variable `BYOK_ENCRYPTION_KEY` for Fernet
+
+### API Endpoints (BYOK-specific)
+- `POST /api/license/redeem` - Redeem a license code
+- `POST /api/settings/api-key` - Save OpenAI API key
+- `POST /api/settings/api-key/validate` - Validate API key
+- `DELETE /api/settings/api-key` - Remove API key
+- `GET /api/settings/api-key/status` - Check key status
+
+### Database (reviewmaster_byok)
+- PostgreSQL user: `reviewmaster` / password: `byok2026`
+- Database: `reviewmaster_byok`
+- Additional tables: `license_codes`
+- Additional columns on `users`: `openai_api_key_encrypted`, `openai_key_status`, `license_code_id`
+
+### Initial License Codes (10 generated April 28, 2026)
+```
+RMPRO-Q69GP-AFMWQ-R5ZHW
+RMPRO-EFF9Q-H5SUD-DQSEU
+RMPRO-ZQ65Q-VN6EQ-VTQ48
+RMPRO-2GXQU-DHBH9-WPTK7
+RMPRO-HECFS-2NDCX-FMY4J
+RMPRO-HK6HR-P5DVD-9K7WR
+RMPRO-VCFYP-6WXX6-QAHSX
+RMPRO-QWW5J-ADHME-AFBSA
+RMPRO-J4ZCF-6VS6E-RHKR3
+RMPRO-AQ2NN-PAUSE-G7USF
+```
+
 ## Related Documentation
 
 - REVIEWMASTER_PRODUCTION_STATUS.md (in /root/)
+- GitHub: `reviewmaster-byok` repo (BYOK version source)
 
 ---
 *ReviewMaster Pro: Live Stripe keys configured: December 9, 2025*
 *Migrated to Silvally: December 13, 2025*
 *TastyIgniter integration: January 19, 2026*
+*BYOK version deployed: April 28, 2026*

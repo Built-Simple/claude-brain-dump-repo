@@ -75,6 +75,7 @@
 | buffer-killer-admin.built-simple.ai | 192.168.1.149:3080 | Web UI |
 | myfit.built-simple.ai | 192.168.1.112:3000 | MyFit Pro |
 | reviewmaster.built-simple.ai | 192.168.1.200:8001 | ReviewMaster Pro |
+| byok-reviewmaster.built-simple.ai | 192.168.1.201:8001 | ReviewMaster Pro BYOK (CT 318) |
 
 ### Via Victini Tunnel
 | Domain | Target | Purpose |

@@ -1,6 +1,6 @@
 # Machine Profile: Silvally
 
-**Last Updated:** January 29, 2026
+**Last Updated:** April 28, 2026
 **Role:** Application Server
 
 ## System Overview
@@ -34,6 +34,7 @@
 | 314 | reddit-games | - | Reddit games | Running |
 | 315 | tastyigniter | 192.168.1.53 | Restaurant ordering | Running |
 | 316 | n8n | 192.168.1.61 | Workflow automation | Running |
+| 318 | reviewmaster-byok | 192.168.1.201 | AI reviews BYOK (AppSumo) | Running |
 
 ### Container Details
 
@@ -52,6 +53,14 @@
 - **Stack:** FastAPI, PostgreSQL, OpenAI
 - **External:** reviewmaster.built-simple.ai
 - **Revenue:** $29/month Pro tier
+
+#### CT 318: ReviewMaster Pro BYOK
+- **Port:** 8001
+- **IP:** 192.168.1.201
+- **Stack:** FastAPI, PostgreSQL, BYOK (user's own OpenAI key)
+- **External:** byok-reviewmaster.built-simple.ai
+- **Model:** One-time license codes (AppSumo lifetime deal)
+- **Created:** April 28, 2026
 
 #### CT 315: TastyIgniter
 - **Port:** 80
@@ -104,6 +113,7 @@ Containers migrated from Victini on December 13, 2025:
 - https://buffer-killer-admin.built-simple.ai - Web UI
 - https://myfit.built-simple.ai - MyFit Pro
 - https://reviewmaster.built-simple.ai - ReviewMaster Pro
+- https://byok-reviewmaster.built-simple.ai - ReviewMaster Pro BYOK
 - https://tastyigniter.built-simple.ai - TastyIgniter
 - https://orders.built-simple.ai - TastyIgniter (alias)
 - https://n8n.built-simple.ai - N8N Workflow Automation
