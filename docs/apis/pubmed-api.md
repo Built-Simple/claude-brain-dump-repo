@@ -209,6 +209,51 @@ This occurs when adding `servers=` kwarg to FastAPI() init because it triggers r
 - No breaking changes to API response format
 
 ---
+
+## Citation Graph API (April 2026)
+
+New endpoints provide access to the 11B edge author citation network. See [pubmed-citation-graph.md](../databases/pubmed-citation-graph.md) for data documentation.
+
+### Endpoints
+
+| Endpoint | Description | Performance |
+|----------|-------------|-------------|
+| `GET /citations/stats` | Graph overview statistics | ~3s |
+| `GET /citations/author/{id}/stats` | Author's citation stats | ~0.6s |
+| `GET /citations/author/{id}/cited-by-stats` | Who cites this author | ~0.6s |
+| `GET /citations/author/{id}/cites` | Authors cited by this author | **~60ms** |
+| `GET /citations/author/{id}/cited-by` | Authors who cite this author | ~60ms |
+| `GET /citations/paper/{pmid}/cites` | Citations from a paper | ~60ms |
+| `GET /citations/paper/{pmid}/cited-by` | Citations to a paper | ~60ms |
+| `GET /citations/top-cited` | Most-cited authors | ~0.8s |
+| `GET /citations/search/author` | Search authors by name | ~1s |
+
+### Example Usage
+
+```bash
+# Get citation stats for an author
+curl "https://pubmed.built-simple.ai/citations/author/A5056980740/stats" \
+  -H "X-API-Key: YOUR_KEY"
+
+# Get who an author cites (paginated)
+curl "https://pubmed.built-simple.ai/citations/author/A5056980740/cites?limit=20&offset=0" \
+  -H "X-API-Key: YOUR_KEY"
+
+# Get top-cited authors
+curl "https://pubmed.built-simple.ai/citations/top-cited?limit=10&min_citations=100000" \
+  -H "X-API-Key: YOUR_KEY"
+```
+
+### Performance Notes
+
+- **Summary table queries** (stats, top-cited): ~0.6-3s (6-13M rows)
+- **Edge queries** (cites, cited-by): **~60ms** (11B rows, indexed)
+- No ORDER BY on edge queries for maximum speed
+- OFFSET/LIMIT pagination (max 100 per request)
+- All queries use indexed columns only
+
+---
 *PubMed ES full sync completed: December 10, 2025*
 *Performance optimizations: January 7, 2026*
 */search hybrid backend fix: February 3, 2026*
+*Citation graph API added: April 29, 2026*
