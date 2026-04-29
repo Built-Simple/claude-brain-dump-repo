@@ -1,6 +1,6 @@
 # ReviewMaster Pro - AI Review Response Generator
 
-**Last Updated:** April 28, 2026
+**Last Updated:** April 29, 2026
 **Status:** Production Ready (100%)
 
 ## Overview
@@ -81,6 +81,7 @@ ReviewMaster Pro is integrated with the TastyIgniter restaurant platform via the
   - Registered: 10/day
   - Pro: Unlimited @ $29/month
 - **Full Auth:** bcrypt (12 rounds), access + refresh tokens, PostgreSQL
+- **Google OAuth Sign-In:** Users can sign in with Google account
 - **Stripe Integration:** LIVE keys configured (Dec 9, 2025)
 
 ## Technology Stack
@@ -157,12 +158,36 @@ ssh root@192.168.1.52 "pct exec 318 -- bash -c 'PGPASSWORD=byok2026 psql -U revi
 - Health checks every 5 minutes on port 8001
 - Email alerts on failure
 
+## Authentication
+
+### Email/Password Authentication
+- Standard signup/login with email and password
+- bcrypt password hashing (12 rounds)
+- JWT access tokens (15 min) + refresh tokens (30 days)
+
+### Google OAuth Sign-In (Added April 29, 2026)
+- Users can sign in with their Google account
+- Creates account automatically if email doesn't exist
+- Links Google ID to existing account if email matches
+- **Separate from Google Business Profile OAuth** - signing in with Google does NOT grant access to business reviews
+- Endpoints:
+  - `GET /api/auth/google/login` - Initiates OAuth flow
+  - `GET /api/auth/google/callback` - Handles OAuth callback
+- Database: `google_id` column added to `users` table
+
+### Google Business Profile OAuth
+- **Requires separate authorization** even if user signed in with Google
+- Requests `business.manage` scope for accessing reviews
+- Users must explicitly connect their Business Profile in the Google tab
+
 ## Migration History
 
 Migrated from Victini to Silvally: December 13, 2025
 - CT 113 → CT 313
 
 CT 115 (obsolete "configurable" version) deleted: December 13, 2025
+
+**IMPORTANT (April 29, 2026):** CT 113 on Victini was discovered still running with IP 192.168.1.200 (same as CT 313 on Silvally). This caused routing conflicts where Victini's cloudflared tunnel was hitting the old container. CT 113 has been stopped. If issues recur, verify CT 113 remains stopped on Victini.
 
 ## BYOK Version Details
 
@@ -281,3 +306,5 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 *BYOK code cleanup: April 28, 2026 - Removed trial/subscription remnants*
 *BYOK security audit: April 28, 2026 - Verified logging, API responses, endpoints, database*
 *BYOK autopilot worker: April 28, 2026 - Added systemd service, adapted for license-based access*
+*Google OAuth Sign-In: April 29, 2026 - Added "Sign in with Google" option for user authentication*
+*CT 113 cleanup: April 29, 2026 - Stopped orphaned CT 113 on Victini (was conflicting with CT 313 on Silvally, same IP 192.168.1.200)*
