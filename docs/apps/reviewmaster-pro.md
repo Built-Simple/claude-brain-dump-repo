@@ -293,6 +293,11 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 - License endpoints: Properly authenticated, no data exposure
 - Settings endpoints: API key masking works correctly (sk-****)
 
+**Security hardening (May 2, 2026):**
+- License validation rate limiting: 10 requests per 5 minutes per IP
+- Enhanced prompt injection detection: leetspeak, word-splitting, typos, synonyms
+- Penetration test passed: JWT attacks, SQLi, IDOR, OAuth manipulation all blocked
+
 ## Related Documentation
 
 - REVIEWMASTER_PRODUCTION_STATUS.md (in /root/)
@@ -308,3 +313,4 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 *BYOK autopilot worker: April 28, 2026 - Added systemd service, adapted for license-based access*
 *Google OAuth Sign-In: April 29, 2026 - Added "Sign in with Google" option for user authentication*
 *CT 113 cleanup: April 29, 2026 - Stopped orphaned CT 113 on Victini (was conflicting with CT 313 on Silvally, same IP 192.168.1.200)*
+*BYOK pentest & hardening: May 2, 2026 - Added license rate limiting (10/5min), enhanced prompt injection detection (leetspeak, typos, synonyms)*
