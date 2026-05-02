@@ -218,7 +218,8 @@ New endpoints provide access to the 11B edge author citation network. See [pubme
 
 | Endpoint | Description | Performance |
 |----------|-------------|-------------|
-| `GET /citations/stats` | Graph overview statistics | ~3s |
+| `GET /citations/stats` | Graph overview statistics | ~0.5s (cached) |
+| `GET /citations/metrics` | API monitoring metrics | ~10ms |
 | `GET /citations/author/{id}/stats` | Author's citation stats | ~0.6s |
 | `GET /citations/author/{id}/cited-by-stats` | Who cites this author | ~0.6s |
 | `GET /citations/author/{id}/cites` | Authors cited by this author | **~60ms** |
@@ -226,7 +227,7 @@ New endpoints provide access to the 11B edge author citation network. See [pubme
 | `GET /citations/paper/{pmid}/cites` | Citations from a paper | ~60ms |
 | `GET /citations/paper/{pmid}/cited-by` | Citations to a paper | ~60ms |
 | `GET /citations/top-cited` | Most-cited authors | ~0.8s |
-| `GET /citations/search/author` | Search authors by name | ~1s |
+| `GET /citations/search/author` | Search authors by name | ~0.6s |
 
 ### Example Usage
 
@@ -248,12 +249,35 @@ curl "https://pubmed.built-simple.ai/citations/top-cited?limit=10&min_citations=
 
 - **Summary table queries** (stats, top-cited): ~0.6-3s (6-13M rows)
 - **Edge queries** (cites, cited-by): **~60ms** (11B rows, indexed)
+- **Caching**: `/citations/stats` cached for 5 minutes (reduces load)
 - No ORDER BY on edge queries for maximum speed
 - OFFSET/LIMIT pagination (max 100 per request)
 - All queries use indexed columns only
+- GIN trigram index on `author_name` for fast search (~0.6s)
+
+### Monitoring
+
+The `/citations/metrics` endpoint provides API monitoring data:
+
+```bash
+curl "https://pubmed.built-simple.ai/citations/metrics"
+```
+
+Returns:
+- Request counts per endpoint
+- Error counts and error rates
+- Average latency per endpoint
+- Cache status
+- Uptime since last restart
+
+### Rate Limits
+
+- **Author search**: 10 requests per minute per API key (expensive ILIKE query)
+- **All other endpoints**: Standard rate limits apply
 
 ---
 *PubMed ES full sync completed: December 10, 2025*
 *Performance optimizations: January 7, 2026*
 */search hybrid backend fix: February 3, 2026*
 *Citation graph API added: April 29, 2026*
+*Caching + monitoring added: May 2, 2026*
