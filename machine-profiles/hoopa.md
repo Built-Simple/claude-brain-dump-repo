@@ -1,69 +1,57 @@
 # Machine Profile: Hoopa
 
-**Last Updated:** April 25, 2026
+**Last Updated:** May 2, 2026
 **Role:** GPU Node (3x RTX 3090 + 1x RTX 5090)
 
 ## Current Status
 
-### ⚠️ OFFLINE - Requires Physical Access (April 25, 2026)
+### ✅ ONLINE - All Systems Operational (May 2, 2026)
 
-**Status:** Unreachable from network
-**Discovery:** April 25, 2026 during cluster audit
-**Severity:** HIGH - Wikipedia API (wikipedia.built-simple.ai) is DOWN
-
-**Symptoms:**
-- No ping response to 192.168.1.79
-- ARP shows "incomplete" for the IP address
-- `ssh root@192.168.1.79` returns "No route to host"
-- Not visible in `pvecm status` cluster membership
-
-**Probable Causes:**
-1. Machine powered off
-2. Network cable disconnected
-3. Network interface down
-4. Kernel panic / frozen
-
-**Required Actions:**
-- Physical access needed to diagnose
-- Check power LED, network link lights
-- Console access via iLO/IPMI or local keyboard/monitor
-- If frozen, may need hardware reset
-
-**Services Affected:**
-- Wikipedia Hybrid Search API (CT 213, 214, 215)
-- Legal API development (CT 210, 211)
-- Ollama LLM API (port 11434)
-- FixIt embedding server (port 8090)
+**Status:** Healthy
+- 4 GPUs working (5090 + 3x 3090)
+- RTX 5090 power limited to 475W (persists via rc.local)
+- Wikipedia API healthy (4.85M vectors, GPU enabled)
+- FixIt Embedding Server running
+- CPU temps healthy (42-68°C with box fan cooling)
 
 ---
 
 ## Known Issues
 
-### GPU0 Intermittent PCIe Issues - RESOLVED via FLR
+### PCIe Riser Cable Issues - ONGOING
 
-**Discovered:** February 22, 2026
-**Status:** Recovered - GPU0 functional at 8.0 GT/s x8
-**Severity:** Low (monitoring)
+**Discovered:** April-May 2026
+**Status:** Riser cable is flaky - requires firm seating
+**Severity:** Medium
 
 **Background:**
-- GPU0 occasionally falls off the PCIe bus after reboot or driver issues
-- x8 width is expected (motherboard has 3x x16 + 3x x8 slots, GPU0 is in x8 slot)
-- 8.0 GT/s x8 = ~8 GB/s bandwidth - normal for this slot
+- PCIe riser cables connecting GPUs can cause boot failures if not firmly seated
+- Symptoms: System freezes at BIOS POST, nvidia driver hangs, "GPU fallen off bus" errors
+- The riser must be squeezed firmly onto the GPU connector
 
-**Recovery Command (if GPU0 disappears from nvidia-smi):**
-```bash
-# FLR (Function Level Reset) - recovers GPU0 without reboot
-echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
-```
+**Troubleshooting:**
+1. If system freezes at POST or driver hangs on `kgspExtractVbiosFromRom`:
+   - Reseat the riser cable firmly on the GPU
+   - Ensure power cables are connected
+2. If a GPU shows "Unclassified device" in lspci instead of "VGA compatible controller":
+   - The card isn't initializing properly - reseat it
+3. To blacklist a problematic GPU temporarily:
+   ```bash
+   echo 'options nvidia NVreg_ExcludedGpus=0000:XX:00.0' > /etc/modprobe.d/nvidia-blacklist.conf
+   update-initramfs -u && reboot
+   ```
 
-**Symptoms that indicate GPU0 needs reset:**
-- Only 3 GPUs visible in `nvidia-smi` (GPU0 missing)
-- dmesg shows: `NVRM: GPU 0000:01:00.0: RmInitAdapter failed!`
-- dmesg shows: `Cannot attach gpu` or `bad register read`
+### CPU Cooling - REQUIRES BOX FAN
 
-**History:**
-- Feb 22: GPU0 fell off bus, showed PCIe errors, driver couldn't initialize
-- Feb 23: FLR reset restored GPU0 to full functionality
+**Discovered:** April 2026
+**Status:** Active workaround in place
+
+**Background:**
+- Server CPUs have no active cooling fans
+- Without external cooling, CPUs reach 85°C (critical)
+- Box fan pointed at motherboard keeps temps at 42-68°C
+
+**Important:** Always ensure box fan is running when system is powered on.
 
 ### PCIe ASPM Performance Issue - FIXED Permanently
 
@@ -105,11 +93,15 @@ nvidia-smi --query-gpu=index,name,pcie.link.gen.current --format=csv
 - **Total RAM:** 126GB
 
 ### GPUs
-- **GPU 0:** NVIDIA RTX 3090 (24GB VRAM) - x8 slot (normal)
-- **GPU 1:** NVIDIA RTX 5090 (32GB VRAM)
-- **GPU 2:** NVIDIA RTX 3090 (24GB VRAM)
-- **GPU 3:** NVIDIA RTX 3090 (24GB VRAM)
+| Index | GPU | VRAM | PCIe Bus | Notes |
+|-------|-----|------|----------|-------|
+| 0 | RTX 3090 | 24GB | 02:00.0 | Slot 2 |
+| 1 | RTX 5090 | 32GB | 03:00.0 | Slot 4 (with adapter), **475W power limit** |
+| 2 | RTX 3090 | 24GB | 81:00.0 | Slot 3 |
+| 3 | RTX 3090 | 24GB | 82:00.0 | Slot 6 (closest to CPU) |
+
 - **Total GPU Memory:** 104GB
+- **5090 Power Limit:** 475W (set via `/etc/rc.local` on boot)
 
 ## Network Configuration
 
@@ -134,9 +126,10 @@ nvidia-smi --query-gpu=index,name,pcie.link.gen.current --format=csv
 | 212 | LegalSearch-ES | Elasticsearch | Stopped |
 
 ### GPU Services (Host)
-- **FixIt Embedding Server:** Port 8090 (GPU 3)
-  - Location: /mnt/network_transfer/fixit-vectors/
-  - Index: fixit_ivfpq.index (1.12GB IVF-PQ)
+- **FixIt Embedding Server:** Port 8090 (GPU 1 - RTX 3090)
+  - Systemd service: `fixit-embedding.service`
+  - Vectors: 18.5M
+  - Note: Cannot run on RTX 5090 due to FAISS CUDA compatibility (Blackwell architecture)
 
 ## SSH Access
 
@@ -154,24 +147,33 @@ ssh root@localhost -p 2024
 ```bash
 # Check GPU status
 nvidia-smi
+nvidia-smi --query-gpu=index,name,pci.bus_id,power.limit --format=csv
 
-# Reset GPU0 if it falls off the bus (FLR recovery)
-echo 1 > /sys/bus/pci/devices/0000:01:00.0/reset
+# Set 5090 power limit manually (GPU index 1)
+nvidia-smi -i 1 -pl 475
 
 # Check containers
 pct list
 
-# Check embedding server
-ps aux | grep embedding
+# Check/restart embedding server
+systemctl status fixit-embedding
+systemctl restart fixit-embedding
 
-# Start embedding server (GPU 3)
-cd /mnt/network_transfer/fixit-vectors && CUDA_VISIBLE_DEVICES=3 nohup python3 -u embedding_server_gpu.py > embedding_server_gpu.log 2>&1 &
+# Check Wikipedia API health
+curl http://192.168.1.213:8080/health
 
-# Test embedding server
-curl -X POST http://192.168.1.79:8090/search \
-  -H "Content-Type: application/json" \
-  -d '{"query":"python async await","limit":5}'
+# Check CPU temps
+for hwmon in /sys/class/hwmon/hwmon*/temp1_input; do
+  echo -n "$hwmon: "; cat "$hwmon" | awk '{printf "%.0f°C\n", $1/1000}'
+done
 ```
+
+## IPMI/BMC Access
+
+- **IPMI IP:** 192.168.1.80
+- **Access:** https://192.168.1.80 (Supermicro web interface)
+- **Use for:** Remote console, hard power cycle, hardware monitoring
+- **Credentials:** Need to be reset (defaults didn't work)
 
 ## External URLs
 
