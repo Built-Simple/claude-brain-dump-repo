@@ -214,6 +214,18 @@ This occurs when adding `servers=` kwarg to FastAPI() init because it triggers r
 
 New endpoints provide access to the 11B edge author citation network. See [pubmed-citation-graph.md](../databases/pubmed-citation-graph.md) for data documentation.
 
+### Web UI
+
+**URL:** https://pubmed.built-simple.ai/citations
+
+The Citation Explorer UI provides:
+- **Author Search** - Find authors by name with real-time results
+- **Top Cited Leaderboard** - View the 50 most-cited authors (100K+ citations)
+- **Author Profiles** - Click any author to see:
+  - Citation statistics (times cited, unique citers, references made)
+  - Who cites this author (clickable list)
+  - Who this author cites (clickable list)
+
 ### Endpoints
 
 | Endpoint | Description | Performance |
@@ -280,4 +292,6 @@ Returns:
 *Performance optimizations: January 7, 2026*
 */search hybrid backend fix: February 3, 2026*
 *Citation graph API added: April 29, 2026*
+*Caching + monitoring added: May 2, 2026*
+*Citation Explorer UI launched: May 3, 2026*
 *Caching + monitoring added: May 2, 2026*
