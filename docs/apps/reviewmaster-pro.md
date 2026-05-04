@@ -1,6 +1,6 @@
 # ReviewMaster Pro - AI Review Response Generator
 
-**Last Updated:** April 29, 2026
+**Last Updated:** May 4, 2026
 **Status:** Production Ready (100%)
 
 ## Overview
@@ -338,3 +338,9 @@ Users with multiple Google Business locations can now have separate business pro
 - `selectBusiness()` function now loads and displays the associated profile when switching locations
 - Added `updateProfileForm()` helper function
 - Added `currentProfileId` tracking variable
+
+**Bug fix (May 4, 2026): Error toast when switching businesses**
+- **Issue:** Users saw "Failed to switch business" error toast even though the switch succeeded
+- **Root cause:** `key_phrases_to_use` and `phrases_to_avoid` were returned as JSON strings from `select-location` endpoint, but frontend expected arrays. Calling `.join()` on strings threw an error.
+- **Fix:** Added `parse_json_field()` helper in `google_oauth.py` to parse JSON fields before returning profile data
+- **Files modified:** `/opt/reviewmaster/backend/routes/google_oauth.py`
