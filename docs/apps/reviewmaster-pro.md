@@ -314,3 +314,27 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 *Google OAuth Sign-In: April 29, 2026 - Added "Sign in with Google" option for user authentication*
 *CT 113 cleanup: April 29, 2026 - Stopped orphaned CT 113 on Victini (was conflicting with CT 313 on Silvally, same IP 192.168.1.200)*
 *BYOK pentest & hardening: May 2, 2026 - Added license rate limiting (10/5min), enhanced prompt injection detection (leetspeak, typos, synonyms)*
+*Multi-location profiles: May 4, 2026 - Added support for multiple business profiles per user, auto-switching profiles when changing Google Business locations*
+
+## Multi-Location Profile Support (Added May 4, 2026)
+
+Users with multiple Google Business locations can now have separate business profiles for each location. When switching between locations in the Google Reviews UI, the associated profile automatically loads.
+
+**Database changes:**
+- Removed `UNIQUE` constraint on `business_profiles.user_id` (allows multiple profiles per user)
+- Added `business_profile_id` column to `google_business_connections` table
+
+**New API endpoints:**
+- `GET /api/pro/business-profiles` - List all profiles for current user
+- `GET /api/pro/business-profile/{id}` - Get specific profile by ID
+- `POST /api/pro/business-profile/create` - Create new profile (allows multiple)
+- `PUT /api/pro/business-profile/{id}` - Update specific profile
+- `DELETE /api/pro/business-profile/{id}` - Delete specific profile
+
+**Updated endpoints:**
+- `POST /api/google-business/select-location` - Now accepts optional `business_profile_id` and returns linked profile data
+
+**Frontend changes:**
+- `selectBusiness()` function now loads and displays the associated profile when switching locations
+- Added `updateProfileForm()` helper function
+- Added `currentProfileId` tracking variable
