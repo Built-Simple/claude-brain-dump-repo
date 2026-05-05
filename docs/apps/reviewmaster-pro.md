@@ -315,6 +315,8 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 *CT 113 cleanup: April 29, 2026 - Stopped orphaned CT 113 on Victini (was conflicting with CT 313 on Silvally, same IP 192.168.1.200)*
 *BYOK pentest & hardening: May 2, 2026 - Added license rate limiting (10/5min), enhanced prompt injection detection (leetspeak, typos, synonyms)*
 *Multi-location profiles: May 4, 2026 - Added support for multiple business profiles per user, auto-switching profiles when changing Google Business locations*
+*Multi-location prompt fix: May 5, 2026 - Fixed prompt_matcher.py to filter by business_profile_id, preventing wrong business contact info in AI responses*
+*Anti-repetition enhancement: May 5, 2026 - Added closing phrase tracking and variety requirements to reduce repetitive endings*
 
 ## Multi-Location Profile Support (Added May 4, 2026)
 
@@ -344,3 +346,16 @@ Users with multiple Google Business locations can now have separate business pro
 - **Root cause:** `key_phrases_to_use` and `phrases_to_avoid` were returned as JSON strings from `select-location` endpoint, but frontend expected arrays. Calling `.join()` on strings threw an error.
 - **Fix:** Added `parse_json_field()` helper in `google_oauth.py` to parse JSON fields before returning profile data
 - **Files modified:** `/opt/reviewmaster/backend/routes/google_oauth.py`
+
+**Bug fix (May 5, 2026): Wrong contact info in AI responses for multi-location users**
+- **Issue:** AI responses for John's Grill reviews included Trails End contact info instead of John's Grill contact info
+- **Root cause:** `get_matching_prompt_config()` in `prompt_matcher.py` wasn't filtering by `business_profile_id`, causing it to match prompts from the wrong business profile
+- **Fix:** Updated `prompt_matcher.py` to accept `business_profile_id` parameter and filter prompts by linked profile. Updated `reviews.py` to pass `active_profile_id` from the user's Google Business connection.
+- **Files modified:**
+  - `/opt/reviewmaster/backend/services/prompt_matcher.py` - Added `business_profile_id` filtering
+  - `/opt/reviewmaster/backend/routes/reviews.py` - Pass `active_profile_id` to `get_matching_prompt_config()`
+
+**Enhancement (May 5, 2026): Improved anti-repetition for response endings**
+- **Issue:** AI responses had repetitive ending patterns
+- **Fix:** Enhanced `response_history.py` to track and avoid both opening and closing phrases. Added `extract_closing_phrase()` function and explicit ending variety requirements in anti-repetition context.
+- **Files modified:** `/opt/reviewmaster/backend/services/response_history.py`
