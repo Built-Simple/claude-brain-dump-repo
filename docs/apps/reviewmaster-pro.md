@@ -347,6 +347,13 @@ Users with multiple Google Business locations can now have separate business pro
 - **Fix:** Added `parse_json_field()` helper in `google_oauth.py` to parse JSON fields before returning profile data
 - **Files modified:** `/opt/reviewmaster/backend/routes/google_oauth.py`
 
+**Bug fix (May 5, 2026): Duplicate business locations in switch modal**
+- **Issue:** Users with duplicate Google Business Profile entries (e.g., "Trails End Catering" appearing 3 times with different location IDs but same name) saw all duplicates in the location switcher
+- **Root cause:** Google's API returns duplicate entries for the same business when there are multiple listings with different addresses
+- **Fix:** Added deduplication logic in `/api/google-business/accounts` endpoint that keeps only the first occurrence of each business name (case-insensitive)
+- **Files modified:** `/opt/reviewmaster/backend/routes/google_oauth.py`
+- **Note:** The underlying duplicates still exist in Google - this is a cosmetic fix. User should clean up duplicates in Google Business Profile Manager.
+
 **Bug fix (May 5, 2026): Wrong contact info in AI responses for multi-location users**
 - **Issue:** AI responses for John's Grill reviews included Trails End contact info instead of John's Grill contact info
 - **Root cause:** `get_matching_prompt_config()` in `prompt_matcher.py` wasn't filtering by `business_profile_id`, causing it to match prompts from the wrong business profile
