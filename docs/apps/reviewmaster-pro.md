@@ -1,6 +1,6 @@
 # ReviewMaster Pro - AI Review Response Generator
 
-**Last Updated:** May 4, 2026
+**Last Updated:** May 8, 2026
 **Status:** Production Ready (100%)
 
 ## Overview
@@ -28,6 +28,7 @@
 ## External URLs
 
 - **Main App:** https://reviewmaster.built-simple.ai (Stripe subscriptions)
+- **SEO Landing Page:** https://reviewmaster.built-simple.ai/free-ai-review-response-generator (Free tool for organic search traffic)
 - **BYOK App:** https://byok-reviewmaster.built-simple.ai (License codes + user's own API key)
 
 ## What is ReviewMaster Pro?
@@ -317,6 +318,31 @@ ssh root@192.168.1.52 "pct exec 318 -- systemctl restart reviewmaster-autopilot"
 *Multi-location profiles: May 4, 2026 - Added support for multiple business profiles per user, auto-switching profiles when changing Google Business locations*
 *Multi-location prompt fix: May 5, 2026 - Fixed prompt_matcher.py to filter by business_profile_id, preventing wrong business contact info in AI responses*
 *Anti-repetition enhancement: May 5, 2026 - Added closing phrase tracking and variety requirements to reduce repetitive endings*
+*SEO landing page: May 8, 2026 - Added /free-ai-review-response-generator page for organic search traffic (targeting "AI review response generator" keyword)*
+
+## SEO Landing Page (Added May 8, 2026)
+
+Created a dedicated SEO-optimized landing page at `/free-ai-review-response-generator` to improve organic search rankings for "AI review response generator" and related keywords.
+
+**Features:**
+- H1 targeting exact keyword: "Free AI Review Response Generator"
+- 2,000+ words of crawlable content
+- Embedded working demo tool (uses same API as main app)
+- Schema.org structured data (WebApplication, HowTo, FAQPage)
+- Visible FAQ section with 8 questions
+- "How it Works" 4-step guide
+- Feature comparison (Free vs Pro)
+- Strong CTAs linking to main app
+
+**Files added:**
+- `/opt/reviewmaster/backend/templates/free-ai-review-response-generator.html`
+- Route added in `app_pro.py`
+- Sitemap updated with new page (priority 0.9)
+
+**SEO targeting:**
+- Primary: "AI review response generator", "free review response generator"
+- Secondary: "Google review reply generator", "Yelp response generator"
+- Informational: "how to respond to reviews"
 
 ## Multi-Location Profile Support (Added May 4, 2026)
 
