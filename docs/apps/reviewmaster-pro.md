@@ -31,6 +31,21 @@
 - **SEO Landing Page:** https://reviewmaster.built-simple.ai/free-ai-review-response-generator (Free tool for organic search traffic)
 - **BYOK App:** https://byok-reviewmaster.built-simple.ai (License codes + user's own API key)
 
+## Contact
+
+- **Email:** info@built-simple.ai
+
+## Marketing Assets (Product Hunt)
+
+Product Hunt marketing images hosted at:
+- https://reviewmaster.built-simple.ai/assets/01-before-after.png (Before/After AI response comparison)
+- https://reviewmaster.built-simple.ai/assets/02-autopilot.png (Autopilot mode feature)
+- https://reviewmaster.built-simple.ai/assets/03-negative-reviews.png (Handling negative reviews)
+- https://reviewmaster.built-simple.ai/assets/04-pricing.png (Pricing tiers)
+
+**Dimensions:** 1200x630 (Product Hunt recommended)
+**Created:** May 8, 2026
+
 ## What is ReviewMaster Pro?
 
 AI-powered review response generator that helps businesses respond to customer reviews across multiple platforms with brand-appropriate, contextually relevant responses.
