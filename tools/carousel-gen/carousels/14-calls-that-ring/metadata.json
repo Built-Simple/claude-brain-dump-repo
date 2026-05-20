@@ -1,0 +1,39 @@
+{
+  "id": "14-calls-that-ring",
+  "name": "Calls That Just Ring",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:08.911Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "The Gap",
+      "headline": "24.3% of calls to small businesses don't get answered."
+    },
+    {
+      "number": 2,
+      "tag": "The Breakdown",
+      "headline": "Of inbound business calls:"
+    },
+    {
+      "number": 3,
+      "tag": "Caller ID Problem",
+      "headline": "46% of unidentified calls now go unanswered."
+    },
+    {
+      "number": 4,
+      "tag": "Voicemail Reality",
+      "headline": "85% of people who get voicemail don't call back."
+    },
+    {
+      "number": 5,
+      "tag": "The Conversion Gap",
+      "headline": "Phone leads convert ~10× web forms."
+    },
+    {
+      "number": 6,
+      "tag": "The Cost",
+      "headline": "A phone that rings without answering"
+    }
+  ]
+}

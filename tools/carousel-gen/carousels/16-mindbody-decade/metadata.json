@@ -1,0 +1,49 @@
+{
+  "id": "16-mindbody-decade",
+  "name": "The Mindbody Decade",
+  "slideCount": 8,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:15.949Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Lock-In",
+      "headline": "In 10 years, one yoga studio's Mindbody bill went from $80/mo to $469/mo."
+    },
+    {
+      "number": 2,
+      "tag": "The Pattern",
+      "headline": "Lock-in is the silent operating cost of every SMB stack."
+    },
+    {
+      "number": 3,
+      "tag": "Mindbody",
+      "headline": "Mindbody's marketplace takes 23.5% all-in on referred customers."
+    },
+    {
+      "number": 4,
+      "tag": "ServiceTitan",
+      "headline": "ServiceTitan early-termination fees in BBB complaints:"
+    },
+    {
+      "number": 5,
+      "tag": "Square",
+      "headline": "Square account-deactivation freezes routinely hold $40K+ for 90+ days."
+    },
+    {
+      "number": 6,
+      "tag": "Toast",
+      "headline": "Toast hardware: $494–$1,300 per device."
+    },
+    {
+      "number": 7,
+      "tag": "Before You Sign",
+      "headline": "Read three things:"
+    },
+    {
+      "number": 8,
+      "tag": "The Rule",
+      "headline": "The cheapest tool is the one you can actually leave."
+    }
+  ]
+}

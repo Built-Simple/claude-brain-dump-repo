@@ -1,0 +1,44 @@
+{
+  "id": "04-plus-plan-trap",
+  "name": "The Plus Plan Trap",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:29.872Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Pricing Games",
+      "headline": "You don't have an AI strategy."
+    },
+    {
+      "number": 2,
+      "tag": "Jobber Pricing",
+      "headline": "The tier ladder:"
+    },
+    {
+      "number": 3,
+      "tag": "What's in Plus",
+      "headline": "AI Receptionist is in Plus."
+    },
+    {
+      "number": 4,
+      "tag": "The Math",
+      "headline": "Grow ($349) + add-ons = $527"
+    },
+    {
+      "number": 5,
+      "tag": "Same Pattern",
+      "headline": "Mindbody Ultimate Plus: $599/mo"
+    },
+    {
+      "number": 6,
+      "tag": "ServiceTitan",
+      "headline": "AI add-ons: $250–$500 per tech per month."
+    },
+    {
+      "number": 7,
+      "tag": "The Reality",
+      "headline": "You bought a tier. You use three features."
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "08-skool-funnel-agency",
+  "name": "The Skool Funnel Agency",
+  "slideCount": 8,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:46.607Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Agency Reality",
+      "headline": "The AI agency selling you \"transformation\""
+    },
+    {
+      "number": 2,
+      "tag": "The Economics",
+      "headline": "The pitch: $5,000 setup + $2,000/mo"
+    },
+    {
+      "number": 3,
+      "tag": "The Stack",
+      "headline": "The whole thing:"
+    },
+    {
+      "number": 4,
+      "tag": "The Pattern",
+      "headline": "They're not building. They're reselling."
+    },
+    {
+      "number": 5,
+      "tag": "The Test",
+      "headline": "Ask what they'd change if you switched verticals tomorrow."
+    },
+    {
+      "number": 6,
+      "tag": "Real Implementation",
+      "headline": "Real implementation is custom:"
+    },
+    {
+      "number": 7,
+      "tag": "The COGS Tell",
+      "headline": "Real implementation costs more than $200/mo in COGS"
+    },
+    {
+      "number": 8,
+      "tag": "The Bottom Line",
+      "headline": "Resold templates are a scam."
+    }
+  ]
+}

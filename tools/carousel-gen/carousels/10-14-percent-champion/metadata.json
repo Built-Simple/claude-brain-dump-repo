@@ -1,0 +1,39 @@
+{
+  "id": "10-14-percent-champion",
+  "name": "The 14% Champion Problem",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:54.024Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "The Gap",
+      "headline": "76% of small businesses use AI."
+    },
+    {
+      "number": 2,
+      "tag": "The Variable",
+      "headline": "The variable isn't software."
+    },
+    {
+      "number": 3,
+      "tag": "The Barrier",
+      "headline": "49% of SMB owners say lack of technical expertise is the #1 barrier."
+    },
+    {
+      "number": 4,
+      "tag": "Why Projects Die",
+      "headline": "AI projects don't die from bad tools."
+    },
+    {
+      "number": 5,
+      "tag": "The Formula",
+      "headline": "Pick one person. Give them one workflow."
+    },
+    {
+      "number": 6,
+      "tag": "The Unlock",
+      "headline": "The champion is the unlock."
+    }
+  ]
+}

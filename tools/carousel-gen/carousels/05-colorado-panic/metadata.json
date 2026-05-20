@@ -1,0 +1,39 @@
+{
+  "id": "05-colorado-panic",
+  "name": "The Colorado Panic That Died",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:33.173Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Compliance Update",
+      "headline": "The Colorado AI deadline your consultant is selling you doesn't exist anymore."
+    },
+    {
+      "number": 2,
+      "tag": "April 27, 2026",
+      "headline": "A federal court blocked the original Colorado AI Act with a TRO."
+    },
+    {
+      "number": 3,
+      "tag": "May 9, 2026",
+      "headline": "Colorado House passed SB 26-189 (57-6) to replace it."
+    },
+    {
+      "number": 4,
+      "tag": "What Got Dropped",
+      "headline": "The new law dropped:"
+    },
+    {
+      "number": 5,
+      "tag": "What's Actually Live",
+      "headline": "Meanwhile, these are already in effect:"
+    },
+    {
+      "number": 6,
+      "tag": "The Reality",
+      "headline": "The federal panic died. The state patchwork won."
+    }
+  ]
+}

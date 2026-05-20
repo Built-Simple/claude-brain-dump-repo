@@ -1,0 +1,54 @@
+{
+  "id": "18-vertical-unnamed-problems",
+  "name": "Every Vertical's Unnamed Problem",
+  "slideCount": 9,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:24.403Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "The Pattern",
+      "headline": "Every vertical has a problem its operators feel daily but can't name."
+    },
+    {
+      "number": 2,
+      "tag": "Restaurants",
+      "headline": "MENU DRIFT"
+    },
+    {
+      "number": 3,
+      "tag": "Dental",
+      "headline": "BENEFIT BLINDNESS"
+    },
+    {
+      "number": 4,
+      "tag": "Med Spa",
+      "headline": "CONSULT CANNIBALISM"
+    },
+    {
+      "number": 5,
+      "tag": "HVAC/Plumbing",
+      "headline": "THE QUOTE STACK"
+    },
+    {
+      "number": 6,
+      "tag": "Auto Repair",
+      "headline": "THE APPROVAL GAP"
+    },
+    {
+      "number": 7,
+      "tag": "Gyms",
+      "headline": "HABIT DRIFT"
+    },
+    {
+      "number": 8,
+      "tag": "Salons",
+      "headline": "THE COLOR HOLE"
+    },
+    {
+      "number": 9,
+      "tag": "The Work",
+      "headline": "Pick your vertical. Name the unnamed problem."
+    }
+  ]
+}

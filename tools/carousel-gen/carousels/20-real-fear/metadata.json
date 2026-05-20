@@ -1,0 +1,44 @@
+{
+  "id": "20-real-fear",
+  "name": "The Real Fear Isn't Job Loss",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:31.668Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "The Headline",
+      "headline": "52% of workers fear AI will displace their job."
+    },
+    {
+      "number": 2,
+      "tag": "But Ask Owners",
+      "headline": "Ask owners what they actually fear?"
+    },
+    {
+      "number": 3,
+      "tag": "Employee Concerns",
+      "headline": "Top employee concerns:"
+    },
+    {
+      "number": 4,
+      "tag": "Owner Concerns",
+      "headline": "Top owner concerns:"
+    },
+    {
+      "number": 5,
+      "tag": "The Barrier",
+      "headline": "49% of SMB owners say \"I don't know what I don't know\""
+    },
+    {
+      "number": 6,
+      "tag": "The Real Objection",
+      "headline": "The objection you hear is almost never the objection underneath it."
+    },
+    {
+      "number": 7,
+      "tag": "The Approach",
+      "headline": "Respect the fear."
+    }
+  ]
+}

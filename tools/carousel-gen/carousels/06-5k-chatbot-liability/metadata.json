@@ -1,0 +1,49 @@
+{
+  "id": "06-5k-chatbot-liability",
+  "name": "$5K Chatbot Made You the Defendant",
+  "slideCount": 8,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:37.595Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Legal Risk",
+      "headline": "You paid an agency $5,000 for a voice agent."
+    },
+    {
+      "number": 2,
+      "tag": "The Case",
+      "headline": "Taylor v. ConverseNow Technologies"
+    },
+    {
+      "number": 3,
+      "tag": "What Happened",
+      "headline": "Plaintiff called Domino's. AI answered."
+    },
+    {
+      "number": 4,
+      "tag": "The Ruling",
+      "headline": "The court adopted the \"capability test.\""
+    },
+    {
+      "number": 5,
+      "tag": "The Penalty",
+      "headline": "CIPA §§ 631/632: $5,000 per violation."
+    },
+    {
+      "number": 6,
+      "tag": "Two-Party Consent States",
+      "headline": "10 states require both parties to consent:"
+    },
+    {
+      "number": 7,
+      "tag": "The Reality",
+      "headline": "The agency isn't holding the bag."
+    },
+    {
+      "number": 8,
+      "tag": "The Question",
+      "headline": "Ask before signing:"
+    }
+  ]
+}

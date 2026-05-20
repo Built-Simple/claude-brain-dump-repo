@@ -1,0 +1,44 @@
+{
+  "id": "07-hipaa-compliance",
+  "name": "HIPAA-Compliant Agency Probably Isn't",
+  "slideCount": 7,
+  "lawyerReview": true,
+  "generatedAt": "2026-05-15T15:44:41.850Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Healthcare AI",
+      "headline": "If you run a dental practice or med spa:"
+    },
+    {
+      "number": 2,
+      "tag": "What They're Missing",
+      "headline": "Three things they likely don't have:"
+    },
+    {
+      "number": 3,
+      "tag": "The OpenAI Problem",
+      "headline": "OpenAI does not sign BAAs on consumer ChatGPT."
+    },
+    {
+      "number": 4,
+      "tag": "GoHighLevel",
+      "headline": "GHL HIPAA add-on: $297/mo"
+    },
+    {
+      "number": 5,
+      "tag": "The Penalties",
+      "headline": "2025 HIPAA penalty range:"
+    },
+    {
+      "number": 6,
+      "tag": "Shadow AI Cost",
+      "headline": "Shadow AI in a breach adds $670,000 to your average cost."
+    },
+    {
+      "number": 7,
+      "tag": "The Test",
+      "headline": "Don't ask if your AI tool is HIPAA-compliant."
+    }
+  ]
+}

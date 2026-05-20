@@ -1,0 +1,39 @@
+{
+  "id": "02-ai-receptionist-phone-bot",
+  "name": "AI Receptionist is a Phone Bot",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:22.807Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Hard Truth",
+      "headline": "You bought an \"AI Receptionist.\""
+    },
+    {
+      "number": 2,
+      "tag": "Where Leads Actually Come From",
+      "headline": "Your leads arrive on 7 channels:"
+    },
+    {
+      "number": 3,
+      "tag": "The Coverage Gap",
+      "headline": "Nobody covers it all."
+    },
+    {
+      "number": 4,
+      "tag": "The Math",
+      "headline": "52% of leads arrive after hours."
+    },
+    {
+      "number": 5,
+      "tag": "The Cost",
+      "headline": "$349–$599/mo for one channel out of seven."
+    },
+    {
+      "number": 6,
+      "tag": "The Fix",
+      "headline": "Multi-channel coverage on the channels your customers actually use."
+    }
+  ]
+}

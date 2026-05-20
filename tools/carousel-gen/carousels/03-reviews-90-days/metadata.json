@@ -1,0 +1,44 @@
+{
+  "id": "03-reviews-90-days",
+  "name": "Reviews Older Than 90 Days",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:26.189Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Review Reality",
+      "headline": "You've been collecting trophies that expire."
+    },
+    {
+      "number": 2,
+      "tag": "The Bar Is Rising",
+      "headline": "In 2025, 17% required 4.5+ stars."
+    },
+    {
+      "number": 3,
+      "tag": "The Threshold",
+      "headline": "68% won't use a business rated under 4 stars."
+    },
+    {
+      "number": 4,
+      "tag": "The New Search",
+      "headline": "45% now use ChatGPT to find local businesses."
+    },
+    {
+      "number": 5,
+      "tag": "Platform Shift",
+      "headline": "Google's review share dropped from 83% to 71% in 12 months."
+    },
+    {
+      "number": 6,
+      "tag": "The Metric",
+      "headline": "The metric that matters isn't total count."
+    },
+    {
+      "number": 7,
+      "tag": "The Warning",
+      "headline": "No review in 3 months?"
+    }
+  ]
+}

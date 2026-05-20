@@ -1,0 +1,39 @@
+{
+  "id": "09-95-percent-ai-pilots-fail",
+  "name": "95% of AI Pilots Fail",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:50.453Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "MIT Research",
+      "headline": "MIT studied $30–40 billion in enterprise AI spending."
+    },
+    {
+      "number": 2,
+      "tag": "The Pattern",
+      "headline": "The 5% that worked had one thing in common:"
+    },
+    {
+      "number": 3,
+      "tag": "The Numbers",
+      "headline": "Vendor-purchased AI: ~67% succeed."
+    },
+    {
+      "number": 4,
+      "tag": "The Variable",
+      "headline": "The companies that won didn't have better engineers."
+    },
+    {
+      "number": 5,
+      "tag": "The Divide",
+      "headline": "MIT calls it \"the GenAI Divide\""
+    },
+    {
+      "number": 6,
+      "tag": "The Playbook",
+      "headline": "Stop building. Start buying."
+    }
+  ]
+}

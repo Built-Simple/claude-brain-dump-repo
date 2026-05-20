@@ -1,0 +1,44 @@
+{
+  "id": "11-76-percent-lie",
+  "name": "The 76% Lie",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:58.356Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Survey Artifact",
+      "headline": "You've been told 76% of small businesses use AI."
+    },
+    {
+      "number": 2,
+      "tag": "Goldman Sachs",
+      "headline": "Goldman Sachs says 76%."
+    },
+    {
+      "number": 3,
+      "tag": "US Chamber",
+      "headline": "The US Chamber says 58%."
+    },
+    {
+      "number": 4,
+      "tag": "NFIB",
+      "headline": "NFIB says 24%."
+    },
+    {
+      "number": 5,
+      "tag": "Census Bureau",
+      "headline": "Census Bureau (BTOS): 8.8%"
+    },
+    {
+      "number": 6,
+      "tag": "The Reality",
+      "headline": "The average Main Street operator is average."
+    },
+    {
+      "number": 7,
+      "tag": "The Right Question",
+      "headline": "The right question isn't \"am I behind?\""
+    }
+  ]
+}

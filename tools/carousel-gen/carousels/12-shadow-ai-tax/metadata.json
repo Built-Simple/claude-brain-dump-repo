@@ -1,0 +1,39 @@
+{
+  "id": "12-shadow-ai-tax",
+  "name": "The Shadow AI Tax",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:02.029Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "The Hidden Use",
+      "headline": "Your front desk is already using ChatGPT."
+    },
+    {
+      "number": 2,
+      "tag": "The Cost",
+      "headline": "When shadow AI is involved in a breach:"
+    },
+    {
+      "number": 3,
+      "tag": "The Numbers",
+      "headline": "20% of breaches in 2025 involved shadow AI."
+    },
+    {
+      "number": 4,
+      "tag": "The Gap",
+      "headline": "63% of breached organizations have no AI governance policy."
+    },
+    {
+      "number": 5,
+      "tag": "Why Bans Fail",
+      "headline": "Banning ChatGPT doesn't prevent its use."
+    },
+    {
+      "number": 6,
+      "tag": "The Fix",
+      "headline": "The fix isn't a ban."
+    }
+  ]
+}

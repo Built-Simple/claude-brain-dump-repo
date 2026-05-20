@@ -1,0 +1,39 @@
+{
+  "id": "01-5-minute-cliff",
+  "name": "The 5-minute Cliff",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:44:19.541Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Speed to Lead",
+      "headline": "Your customer expects a reply in 10 minutes."
+    },
+    {
+      "number": 2,
+      "tag": "The Math",
+      "headline": "66% of B2C buyers want a response inside 10 minutes."
+    },
+    {
+      "number": 3,
+      "tag": "The 5-Minute Cliff",
+      "headline": "Respond in 5 minutes: 21× more likely to close."
+    },
+    {
+      "number": 4,
+      "tag": "The Reality",
+      "headline": "Most SMBs respond in 42 hours. Or never."
+    },
+    {
+      "number": 5,
+      "tag": "The Diagnosis",
+      "headline": "You don't have a sales problem."
+    },
+    {
+      "number": 6,
+      "tag": "The Fix",
+      "headline": "The fix isn't another rep."
+    }
+  ]
+}

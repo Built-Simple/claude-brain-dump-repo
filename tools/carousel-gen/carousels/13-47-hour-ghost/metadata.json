@@ -1,0 +1,44 @@
+{
+  "id": "13-47-hour-ghost",
+  "name": "The 47-Hour Ghost",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:05.601Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Invisible Work",
+      "headline": "Every owner has 47 hours a week of work no customer ever sees."
+    },
+    {
+      "number": 2,
+      "tag": "Bookkeeping",
+      "headline": "Bookkeeping + invoice chasing: 10 hrs/week"
+    },
+    {
+      "number": 3,
+      "tag": "Social Media",
+      "headline": "Social posting: 6 hrs/week"
+    },
+    {
+      "number": 4,
+      "tag": "Lead Follow-up",
+      "headline": "Quote rewriting + lead follow-up: 8 hrs/week"
+    },
+    {
+      "number": 5,
+      "tag": "Tax Admin",
+      "headline": "1 in 4 owners spends 120+ hours/year on federal taxes."
+    },
+    {
+      "number": 6,
+      "tag": "Work About Work",
+      "headline": "Knowledge workers spend 60% of time on \"work about work.\""
+    },
+    {
+      "number": 7,
+      "tag": "The Opportunity",
+      "headline": "You don't need to delegate everything."
+    }
+  ]
+}

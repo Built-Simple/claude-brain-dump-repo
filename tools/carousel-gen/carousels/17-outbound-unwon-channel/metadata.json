@@ -1,0 +1,44 @@
+{
+  "id": "17-outbound-unwon-channel",
+  "name": "Outbound Is the Unwon Channel",
+  "slideCount": 7,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:19.654Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Market Gap",
+      "headline": "Every AI agency is selling \"AI Receptionist.\""
+    },
+    {
+      "number": 2,
+      "tag": "The Difference",
+      "headline": "Inbound: someone calls, AI answers. Saturated."
+    },
+    {
+      "number": 3,
+      "tag": "Outbound Use Cases",
+      "headline": "What outbound AI does:"
+    },
+    {
+      "number": 4,
+      "tag": "Win-Back Math",
+      "headline": "Structured reactivation campaigns recover 15–25% of cancelled members in 60 days."
+    },
+    {
+      "number": 5,
+      "tag": "Salon Math",
+      "headline": "10% no-show on $85 avg ticket = $30–$60K/year per chair."
+    },
+    {
+      "number": 6,
+      "tag": "The Timing",
+      "headline": "46–50% of salon bookings happen when the salon is closed."
+    },
+    {
+      "number": 7,
+      "tag": "The Difference",
+      "headline": "Inbound saves missed revenue."
+    }
+  ]
+}

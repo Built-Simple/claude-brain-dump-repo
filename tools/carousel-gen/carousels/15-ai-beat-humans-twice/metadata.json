@@ -1,0 +1,39 @@
+{
+  "id": "15-ai-beat-humans-twice",
+  "name": "AI Beat Humans Twice",
+  "slideCount": 6,
+  "lawyerReview": false,
+  "generatedAt": "2026-05-15T15:45:12.097Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Research",
+      "headline": "Consumers prefer AI-written review responses over human-written ones."
+    },
+    {
+      "number": 2,
+      "tag": "2024 Test",
+      "headline": "BrightLocal 2024: restaurant review, two responses."
+    },
+    {
+      "number": 3,
+      "tag": "2025 Test",
+      "headline": "BrightLocal 2025: vet clinic review."
+    },
+    {
+      "number": 4,
+      "tag": "Why",
+      "headline": "It's not that AI sounds more human."
+    },
+    {
+      "number": 5,
+      "tag": "The Expectations",
+      "headline": "89% of consumers expect a reply."
+    },
+    {
+      "number": 6,
+      "tag": "The Real Risk",
+      "headline": "The risk isn't that AI sounds robotic."
+    }
+  ]
+}

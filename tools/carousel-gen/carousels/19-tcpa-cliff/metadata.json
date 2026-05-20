@@ -1,0 +1,39 @@
+{
+  "id": "19-tcpa-cliff",
+  "name": "The TCPA Cliff Under Your AI SMS",
+  "slideCount": 6,
+  "lawyerReview": true,
+  "generatedAt": "2026-05-15T15:45:27.930Z",
+  "slides": [
+    {
+      "number": 1,
+      "tag": "Compliance Risk",
+      "headline": "Your AI sends 200 confirmation texts a week."
+    },
+    {
+      "number": 2,
+      "tag": "The Penalty",
+      "headline": "TCPA damages: $500 per text"
+    },
+    {
+      "number": 3,
+      "tag": "FCC Ruling",
+      "headline": "FCC Feb 8, 2024 Declaratory Ruling:"
+    },
+    {
+      "number": 4,
+      "tag": "10DLC",
+      "headline": "10DLC brand + campaign registration has been mandatory at every major carrier since 2023."
+    },
+    {
+      "number": 5,
+      "tag": "Why It Matters",
+      "headline": "SMS opens at 98%."
+    },
+    {
+      "number": 6,
+      "tag": "Before You Scale",
+      "headline": "Before you scale outbound SMS or voice:"
+    }
+  ]
+}
