@@ -106,3 +106,54 @@ sshpass -p 'Jasper123' sftp jaspersoft@192.168.1.126 << EOF
 cd uploads
 put /tmp/test.txt
 bye
+EOF
+
+# Check logs
+pct exec 501 -- tail -20 /var/log/report-mailer.log
+```
+
+## Troubleshooting
+
+### Email not sending
+1. Check Resend domain verification: https://resend.com/domains
+2. Verify API key in config.env
+3. Check logs: `pct exec 501 -- tail -50 /var/log/report-mailer.log`
+
+### SFTP connection refused
+```bash
+pct exec 501 -- systemctl status sshd
+pct exec 501 -- systemctl restart sshd
+```
+
+### File stuck in uploads
+```bash
+# Check if service is running
+pct exec 501 -- systemctl status report-mailer
+
+# Manually trigger reprocessing by restarting
+pct exec 501 -- systemctl restart report-mailer
+```
+
+### Change password
+```bash
+pct exec 501 -- bash -c 'echo "jaspersoft:NewPassword123" | chpasswd'
+```
+
+## Adding More Recipients
+
+To send to multiple recipients, modify `/opt/report-mailer/report_mailer.py`:
+
+```python
+# Change this line:
+"to": [CLIENT_EMAIL],
+
+# To:
+"to": [CLIENT_EMAIL, "another@email.com", "third@email.com"],
+```
+
+Or add a `CLIENT_EMAILS` config option (comma-separated).
+
+---
+
+*Created: May 20, 2026*
+*Container: CT 501 on Giratina*
