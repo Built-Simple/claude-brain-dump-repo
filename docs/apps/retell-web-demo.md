@@ -64,6 +64,36 @@ PORT=3100
 | **Voice Provider** | Cartesia |
 | **Dashboard** | https://dashboard.retellai.com |
 
+### 4. Post-Call Webhook (Cloudflare Worker)
+
+| Property | Value |
+|----------|-------|
+| **Worker URL** | `https://retell-webhook.soft-lake-c6ea.workers.dev` |
+| **Source** | Giratina `/root/retell-webhook-worker/` |
+| **Email Service** | Resend (noreply@built-simple.ai) |
+| **Notification Email** | info@built-simple.ai |
+
+**What it does:**
+- Receives `call_analyzed` webhook from Retell after each call
+- Sends email notification with call summary, transcript, caller info
+- Red "ACTION REQUIRED" email if `callback_required` is true
+- Blue informational email if no callback needed
+
+**Secrets (stored in Cloudflare):**
+- `RESEND_API_KEY` - Resend API key for email delivery
+
+**Redeploy:**
+```bash
+cd /root/retell-webhook-worker
+CLOUDFLARE_API_TOKEN="$CLOUDFLARE_WORKERS_TOKEN" wrangler deploy
+```
+
+**View logs:**
+```bash
+cd /root/retell-webhook-worker
+CLOUDFLARE_API_TOKEN="$CLOUDFLARE_WORKERS_TOKEN" wrangler tail
+```
+
 ---
 
 ## Rate Limiting
@@ -131,6 +161,8 @@ pct exec 400 -- /usr/local/lib/node_modules/pm2/bin/pm2 restart retell-api
 | `.env` | CT 400 `/opt/retell-api/` | Retell credentials |
 | `retell-bundle.js` | CT 400 `/var/www/built-simple.ai/js/` | Bundled Retell SDK |
 | `index.html` | CT 400 `/var/www/built-simple.ai/` | Homepage with button + script |
+| `src/index.js` | Giratina `/root/retell-webhook-worker/` | Cloudflare Worker webhook handler |
+| `wrangler.toml` | Giratina `/root/retell-webhook-worker/` | Worker config |
 
 ---
 
