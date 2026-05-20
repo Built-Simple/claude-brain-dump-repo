@@ -2,7 +2,8 @@
 
 **Container:** CT 501 (trails-end)
 **Host:** Giratina (192.168.1.100)
-**IP:** 192.168.1.126
+**Internal IP:** 192.168.1.126
+**External Access:** Via Mew VPS (137.184.235.100:2222)
 **Purpose:** SFTP server for receiving Jaspersoft reports, automatically emails them to clients
 
 ---
@@ -10,24 +11,54 @@
 ## Overview
 
 Trails End is an automated report delivery system that:
-1. Receives report files via SFTP from Jaspersoft
+1. Receives report files via SFTP from Jaspersoft (external access via Mew VPS relay)
 2. Watches for new uploads using inotify
 3. Emails reports to clients via Resend API
 4. Archives processed reports with timestamps
 
 ## SFTP Access
 
-**Host:** 192.168.1.126
-**Port:** 22 (standard SSH/SFTP)
+### External Access (for Jaspersoft - cloud/internet)
+**Host:** 137.184.235.100 (Mew VPS)
+**Port:** 2222
 **Username:** jaspersoft
 **Password:** Jasper123
 **Upload Directory:** /uploads (chrooted)
 
-### Jaspersoft Configuration
+### Internal Access (local network only)
+**Host:** 192.168.1.126
+**Port:** 22
+**Username:** jaspersoft
+**Password:** Jasper123
+
+### Jaspersoft Configuration (EXTERNAL - USE THIS)
 Configure Jaspersoft to output reports to:
+```
+sftp://jaspersoft:Jasper123@137.184.235.100:2222/uploads/
+```
+
+### Internal Testing
 ```
 sftp://jaspersoft:Jasper123@192.168.1.126/uploads/
 ```
+
+## Architecture
+
+```
+Jaspersoft (Cloud)
+       │
+       ▼
+Mew VPS (137.184.235.100:2222)  ← Public Internet
+       │
+       │ (Reverse SSH Tunnel)
+       ▼
+trails-end (192.168.1.126:22)   ← Internal Network
+       │
+       ▼
+Report Mailer → Resend API → Client Email
+```
+
+The reverse SSH tunnel is maintained by `sftp-tunnel.service` on trails-end.
 
 ## Directory Structure
 
@@ -125,6 +156,18 @@ pct exec 501 -- systemctl status sshd
 pct exec 501 -- systemctl restart sshd
 ```
 
+### External SFTP not working (tunnel down)
+```bash
+# Check tunnel status
+pct exec 501 -- systemctl status sftp-tunnel
+
+# Restart tunnel
+pct exec 501 -- systemctl restart sftp-tunnel
+
+# Verify tunnel is listening on Mew
+ssh root@137.184.235.100 "ss -tlnp | grep 2222"
+```
+
 ### File stuck in uploads
 ```bash
 # Check if service is running
@@ -153,7 +196,15 @@ To send to multiple recipients, modify `/opt/report-mailer/report_mailer.py`:
 
 Or add a `CLIENT_EMAILS` config option (comma-separated).
 
+## Services
+
+| Service | Purpose |
+|---------|---------|
+| `report-mailer.service` | Watches uploads, sends emails |
+| `sftp-tunnel.service` | Maintains reverse SSH tunnel to Mew for external access |
+
 ---
 
 *Created: May 20, 2026*
+*Updated: May 20, 2026 - Added external SFTP access via Mew VPS relay*
 *Container: CT 501 on Giratina*
