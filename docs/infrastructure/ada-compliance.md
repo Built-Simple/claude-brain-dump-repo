@@ -1,11 +1,21 @@
 # ADA/WCAG 2.1 AA Compliance
 
 **Last Updated:** May 23, 2026
-**Status:** Implemented on built-simple.ai
+**Status:** Implemented across all sites
 
 ## Overview
 
-The main marketing site (built-simple.ai) has been updated to meet WCAG 2.1 AA accessibility standards.
+All Built Simple websites have been updated to meet WCAG 2.1 AA accessibility standards.
+
+### Sites Updated
+
+| Site | Container | Status |
+|------|-----------|--------|
+| built-simple.ai | CT 400 on Giratina | ✅ Compliant |
+| fixitapi.built-simple.ai | CT 103 on Giratina | ✅ Compliant |
+| pubmed.built-simple.ai | CT 108 on Giratina | ✅ Compliant |
+| arxiv.built-simple.ai | CT 122 on Giratina | ✅ Compliant |
+| wikipedia.built-simple.ai | CT 213 on Hoopa | ✅ Compliant |
 
 ## Implementation Details
 
@@ -70,7 +80,11 @@ Automated audit using axe-core (May 23, 2026):
 
 ## Files Modified
 
-- **CT 400:** `/var/www/built-simple.ai/index.html`
+- **CT 400:** `/var/www/built-simple.ai/index.html` (built-simple.ai)
+- **CT 103:** `/var/www/talon-api/index.html` (fixitapi.built-simple.ai)
+- **CT 108:** `/opt/pubmed-web/templates/index.html` (pubmed.built-simple.ai)
+- **CT 122:** `/opt/arxiv/modules/templates.py` (arxiv.built-simple.ai)
+- **CT 213:** `/opt/wikipedia_api_production.py` (wikipedia.built-simple.ai)
 
 ## Testing Checklist
 
