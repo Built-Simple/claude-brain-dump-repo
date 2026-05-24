@@ -116,6 +116,8 @@ Automated audit using axe-core (May 23, 2026):
   - Highlight animations
 - Fixed inline link colors from `#6366F1` to `#B5AEA4` (secondary text)
 - Updated cache-busting version on brand.css link
+- Fixed CSP to allow `built-simple.ai` styles/scripts and Google Fonts
+- Fixed generic `header` CSS selector conflict → renamed to `.page-header`
 
 ## Related
 
