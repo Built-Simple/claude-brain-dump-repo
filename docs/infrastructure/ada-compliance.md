@@ -1,6 +1,6 @@
 # ADA/WCAG 2.1 AA Compliance
 
-**Last Updated:** May 23, 2026
+**Last Updated:** May 24, 2026
 **Status:** Implemented across all sites
 
 ## Overview
@@ -104,6 +104,18 @@ Automated audit using axe-core (May 23, 2026):
 | `--text-tertiary` | `#8A847A` | Tertiary text (updated for contrast) |
 | `--bg-primary` | `#0F0D0B` | Page background |
 | `--bg-card` | `#1C1916` | Card backgrounds |
+
+## Additional Fixes (May 24, 2026)
+
+### PubMed Branding Cleanup
+- Removed duplicate footers (inline and "Powered by" footers)
+- Changed all `rgba(99, 102, 241)` (indigo) to `rgba(196, 30, 58)` (burgundy) for:
+  - Search input focus shadows
+  - Button hover glows
+  - Loading states
+  - Highlight animations
+- Fixed inline link colors from `#6366F1` to `#B5AEA4` (secondary text)
+- Updated cache-busting version on brand.css link
 
 ## Related
 
